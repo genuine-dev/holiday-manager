@@ -1,4 +1,4 @@
-package jp.co.genuine.hm.api.holidaymanagerapi;
+package jp.co.genuine.hm.api;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
