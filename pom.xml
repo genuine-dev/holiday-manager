@@ -14,30 +14,7 @@
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>2.1.1.RELEASE</version>
         <relativePath/>
-    </parent>
-		<groupId>jp.co.genuine</groupId>
-		<artifactId>holiday-manager</artifactId>
-		<version>0.0.1-SNAPSHOT</version>
 	</parent>
-	<artifactId>holiday-manager-web</artifactId>
-	<name>holiday-manager-web</name>
-	<url>http://maven.apache.org</url>
-
-		<groupId>jp.co.genuine</groupId>
-		<artifactId>holiday-manager</artifactId>
-		<version>0.0.1-SNAPSHOT</version>
-	</parent>
-	<artifactId>holiday-manager-web</artifactId>
-	<name>holiday-manager-web</name>
-	<url>http://maven.apache.org</url>
-
-		<groupId>jp.co.genuine</groupId>
-		<artifactId>holiday-manager</artifactId>
-		<version>0.0.1-SNAPSHOT</version>
-	</parent>
-	<artifactId>holiday-manager-web</artifactId>
-	<name>holiday-manager-web</name>
-	<url>http://maven.apache.org</url>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
