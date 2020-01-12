@@ -1,2 +1,0 @@
-# holiday-manager
-Yeah！めっちゃホリディ
