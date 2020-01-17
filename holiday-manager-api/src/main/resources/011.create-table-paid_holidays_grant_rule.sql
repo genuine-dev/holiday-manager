@@ -2,16 +2,14 @@
 
 --CREATE SEQUENCE contract.original_file_download_started_id_seq;
 
-DROP TABLE IF EXISTS user.account CASCADE;
+DROP TABLE IF EXISTS paid_holidays_grant_rule.paid_holidays_grant_rule_detail CASCADE;
 
-CREATE TABLE user.account
+CREATE TABLE paid_holidays_grant_rule.paid_holidays_grant_rule_detail
 (
-    user_id integer NOT NULL,
-    account_id character varying() NOT NULL,
-    password character varying() NOT NULL,
-    admin_flg boolean NOT NULL,
-    register_datetime timestamp DEFAULT now(),
-    update_datetime timestamp DEFAULT now(),
+    id integer NOT NULL,
+    rule_id integer NOT NULL,
+    elapsed_months month NOT NULL,
+    granted_days integer NOT NULL,
     CONSTRAINT pk_account PRIMARY KEY (user_id),
 --    CONSTRAINT fk_original_file_download_started_contract_started FOREIGN KEY (contract_id)
 --        REFERENCES contract.contract_started (id) MATCH SIMPLE
