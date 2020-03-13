@@ -1,19 +1,11 @@
---DROP SEQUENCE IF EXISTS contract.original_file_download_started_id_seq CASCADE;
+DROP TABLE IF EXISTS "user".group CASCADE;
 
---CREATE SEQUENCE contract.original_file_download_started_id_seq;
-
-DROP TABLE IF EXISTS event.event_store CASCADE;
-
-CREATE TABLE user.group
+CREATE TABLE "user".group
 (
     id integer NOT NULL,
-    name character varying() NOT NULL,
-    payload text NOT NULL,
+    name character varying(100) NOT NULL,
+    register_datetime timestamp DEFAULT now(),
     update_datetime timestamp DEFAULT now(),
-    CONSTRAINT pk_event_store PRIMARY KEY (aggregate_id),
---    CONSTRAINT fk_original_file_download_started_contract_started FOREIGN KEY (contract_id)
---        REFERENCES contract.contract_started (id) MATCH SIMPLE
---        ON UPDATE NO ACTION
---        ON DELETE NO ACTION
+    CONSTRAINT pk_event_store PRIMARY KEY (id)
 )
 ;
