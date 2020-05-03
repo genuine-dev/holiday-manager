@@ -1,0 +1,8 @@
+swagger: "2.0"
+info:
+  description: "これはペットストアに関するAPIです。"
+  version: "1.0.0"
+  termsOfService: "http://swagger.io/terms/"
+  contact:
+    email: "apiterm@swagger.io"
+paths:
