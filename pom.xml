@@ -139,5 +139,6 @@
 	<artifactId>holiday-manager</artifactId>
 	<modules>
 		<module>holiday-manager-web</module>
+		<module>holiday-manager-core</module>
 	</modules>
 </project>
