@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="jp.co.genuine.hm.api.dataaccess.user.UserMapper">
+
+	<resultMap id="userMap" type="jp.co.genuine.hm.api.domain.user.User">
+		<id     property="userId.value" column="user_id" />
+		<result property="mailAddress.value" column="mail_address"/>
+		<result property="password.value" column="password"/>
+		<result property="userName.value" column="user_name"/>
+		<result property="userStatus.label" column="user_status"/>
+		<result property="hireDate.value" column="hire_date"/>
+	</resultMap>
+
+	<resultMap id="groupNameMap" type="jp.co.genuine.hm.api.domain.user.GroupName">
+		<id     property="value" column="name" />
+	</resultMap>
+
+	<insert id="create">
+		INSERT INTO "user".user
+			(
+				id,
+				status,
+				email,
+				name,
+				hire_date,
+				update_datetime
+			)
+		VALUES
+			(
+				#{userForm.userId.value},
+				#{userForm.userStatus},
+				#{userForm.mailAddress.value},
+				#{userForm.userName.value},
+				now(),
+				now()
+			)
+	</insert>
+
+	<update id="update">
+		UPDATE
+			"user".user
+		SET
+			email = #{userForm.mailAddress.value},
+			"name" = #{userForm.userName.value}
+		WHERE
+			"id" = #{userId.value}
+	</update>
+
+	<select id="findManagerList" resultMap="userMap">
+		SELECT
+			"user".id         AS user_id
+			,"user".email     AS mail_address
+			,account.password AS password
+			,"user".name      AS user_name
+			,"user".status    AS user_status
+			,"user".hire_date AS hire_date
+		FROM
+			"user"."user"
+		INNER JOIN
+			"user".account
+			ON account.user_id = "user".id
+		INNER JOIN
+			"user".manager
+			ON manager.user_id = "user".id
+		INNER JOIN
+			"user"."group"
+			ON "group".id = manager.group_id
+		WHERE
+			"group".id = #{groupId.value}
+	</select>
+
+	<select id="findMemberList" resultMap="userMap">
+		SELECT
+			"user".id         AS user_id
+			,"user".email     AS mail_address
+			,account.password AS password
+			,"user".name      AS user_name
+			,"user".status    AS user_status
+			,"user".hire_date AS hire_date
+		FROM
+			"user"."user"
+		INNER JOIN
+			"user".account
+			ON account.user_id = "user".id
+		INNER JOIN
+			"user".member
+			ON member.user_id = "user".id
+		INNER JOIN
+			"user"."group"
+			ON "group".id = member.group_id
+		WHERE
+			"group".id = #{groupId.value}
+	</select>
+
+	<select id="findGroupName" resultMap="groupNameMap">
+		SELECT
+			name
+		FROM
+			"user".group
+		WHERE
+			"group".id = #{groupId.value}
+	</select>
+
+	<insert id="createGroup">
+		INSERT INTO "user".group
+			(
+				id,
+				name,
+				register_datetime,
+				update_datetime
+			)
+		VALUES
+			(
+				#{userForm.groupId.value},
+				#{userForm.groupName.value},
+				now(),
+				now()
+			)
+	</insert>
+
+	<select id="findUsersByGroupId" resultMap="userMap">
+		SELECT
+			"user".id         AS user_id
+			,"user".email     AS mail_address
+			,account.password AS password
+			,"user".name      AS user_name
+			,"user".status    AS user_status
+			,"user".hire_date AS hire_date
+		FROM
+			"user"."user"
+		INNER JOIN
+			"user".account
+			ON account.user_id = "user".id
+		LEFT OUTER JOIN
+			(
+				SELECT
+					id AS group_id,
+					user_id AS user_id
+				FROM
+					"user".member
+				INNER JOIN
+					"user".group
+					ON "group".id = member.group_id
+			) AS member
+			ON member.user_id = "user".id
+		LEFT OUTER JOIN
+			(
+				SELECT
+					id AS group_id,
+					user_id AS user_id
+				FROM
+					"user".manager
+				INNER JOIN
+					"user"."group"
+					ON "group".id = manager.group_id
+			) AS manager
+			ON manager.user_id = "user".id
+		WHERE
+			member.group_id = #{groupId.value}
+		OR
+			manager.group_id = #{groupId.value}
+	</select>
+
+	<update id="updateGroup">
+		UPDATE
+			"user".group
+		SET
+			"name" = #{userForm.groupName.value},
+			update_datetime = now()
+		WHERE
+			"id" = #{groupId.value}
+	</update>
+
+	<insert id="insertMember">
+		INSERT INTO "user".member
+			(
+				group_id,
+				user_id
+			)
+		VALUES
+			(
+				#{userForm.groupId.value},
+				#{userForm.userId.value}
+			)
+	</insert>
+
+	<insert id="insertAccount">
+		INSERT INTO "user".account
+			(
+				user_id,
+				account_id,
+				password,
+				admin_flg
+			)
+		VALUES
+			(
+				#{userForm.userId.value},
+				'account_id',
+				#{userForm.password.value},
+				false
+			)
+	</insert>
+</mapper>
