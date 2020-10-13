@@ -5,7 +5,7 @@ import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import holiday.manager.domain.model.holiday.event.HolidayApplicationApplied;
+import holiday.manager.domain.model.holiday.application.event.HolidayApplicationApplied;
 import holiday.manager.event.sourcing.EventPublisher;
 import holiday.manager.event.sourcing.EventSubscriber;
 import holiday.manager.port.adapter.persistence.repository.holiday.query.HolidayApplicationEntity;

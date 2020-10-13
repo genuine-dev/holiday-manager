@@ -1,4 +1,4 @@
-package holiday.manager.domain.model.holiday;
+package holiday.manager.domain.model.holiday.application;
 
 public enum HolidayType {
 	/**

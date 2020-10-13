@@ -1,4 +1,4 @@
-package holiday.manager.domain.model.holiday;
+package holiday.manager.domain.model.holiday.application;
 
 import java.util.Date;
 import java.util.List;
@@ -6,10 +6,10 @@ import java.util.List;
 import holiday.manager.domain.model.AggregateRoot;
 import holiday.manager.domain.model.AuthenticationException;
 import holiday.manager.domain.model.DomainEvent;
-import holiday.manager.domain.model.holiday.event.HolidayApplicationApplied;
-import holiday.manager.domain.model.holiday.event.HolidayApplicationApproved;
-import holiday.manager.domain.model.holiday.event.HolidayApplicationCanceled;
-import holiday.manager.domain.model.holiday.event.HolidayApplicationRejected;
+import holiday.manager.domain.model.holiday.application.event.HolidayApplicationApplied;
+import holiday.manager.domain.model.holiday.application.event.HolidayApplicationApproved;
+import holiday.manager.domain.model.holiday.application.event.HolidayApplicationCanceled;
+import holiday.manager.domain.model.holiday.application.event.HolidayApplicationRejected;
 import holiday.manager.domain.model.user.User;
 import holiday.manager.domain.model.user.UserId;
 

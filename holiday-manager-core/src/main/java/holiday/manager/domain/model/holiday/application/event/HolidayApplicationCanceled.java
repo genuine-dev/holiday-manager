@@ -1,30 +1,30 @@
-package holiday.manager.domain.model.holiday.event;
+package holiday.manager.domain.model.holiday.application.event;
 
 import java.util.Date;
 
 import holiday.manager.domain.model.DomainEvent;
-import holiday.manager.domain.model.holiday.HolidayApplicationId;
+import holiday.manager.domain.model.holiday.application.HolidayApplicationId;
 import holiday.manager.domain.model.user.UserId;
 
-public class HolidayApplicationApproved implements DomainEvent {
+public class HolidayApplicationCanceled implements DomainEvent {
 	private int version = 1;
 
 	private Date occurredOn;
 
 	private HolidayApplicationId id;
 
-	private UserId approverId;
+	private UserId applicantId;
 
 	@SuppressWarnings("unused")
-	private HolidayApplicationApproved() {
+	private HolidayApplicationCanceled() {
 	}
 
-	public HolidayApplicationApproved(HolidayApplicationId id, UserId approverId) {
+	public HolidayApplicationCanceled(HolidayApplicationId id, UserId applicantId) {
 		super();
 		this.version = 1;
 		this.occurredOn = new Date();
 		this.id = id;
-		this.approverId = approverId;
+		this.applicantId = applicantId;
 	}
 
 	@Override
@@ -41,8 +41,8 @@ public class HolidayApplicationApproved implements DomainEvent {
 		return id;
 	}
 
-	public UserId getApproverId() {
-		return approverId;
+	public UserId getApplicantId() {
+		return applicantId;
 	}
 
 }

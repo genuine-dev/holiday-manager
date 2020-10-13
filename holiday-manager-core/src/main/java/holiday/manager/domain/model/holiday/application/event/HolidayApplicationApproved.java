@@ -1,12 +1,12 @@
-package holiday.manager.domain.model.holiday.event;
+package holiday.manager.domain.model.holiday.application.event;
 
 import java.util.Date;
 
 import holiday.manager.domain.model.DomainEvent;
-import holiday.manager.domain.model.holiday.HolidayApplicationId;
+import holiday.manager.domain.model.holiday.application.HolidayApplicationId;
 import holiday.manager.domain.model.user.UserId;
 
-public class HolidayApplicationRejected implements DomainEvent {
+public class HolidayApplicationApproved implements DomainEvent {
 	private int version = 1;
 
 	private Date occurredOn;
@@ -16,10 +16,10 @@ public class HolidayApplicationRejected implements DomainEvent {
 	private UserId approverId;
 
 	@SuppressWarnings("unused")
-	private HolidayApplicationRejected() {
+	private HolidayApplicationApproved() {
 	}
 
-	public HolidayApplicationRejected(HolidayApplicationId id, UserId approverId) {
+	public HolidayApplicationApproved(HolidayApplicationId id, UserId approverId) {
 		super();
 		this.version = 1;
 		this.occurredOn = new Date();

@@ -6,11 +6,11 @@ import java.util.Date;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import holiday.manager.domain.model.holiday.HolidayApplication;
-import holiday.manager.domain.model.holiday.HolidayApplicationId;
-import holiday.manager.domain.model.holiday.HolidayApplicationRepository;
-import holiday.manager.domain.model.holiday.HolidayType;
-import holiday.manager.domain.model.holiday.KindOfHoliday;
+import holiday.manager.domain.model.holiday.application.HolidayApplication;
+import holiday.manager.domain.model.holiday.application.HolidayApplicationId;
+import holiday.manager.domain.model.holiday.application.HolidayApplicationRepository;
+import holiday.manager.domain.model.holiday.application.HolidayType;
+import holiday.manager.domain.model.holiday.application.KindOfHoliday;
 import holiday.manager.domain.model.user.User;
 
 @Service
