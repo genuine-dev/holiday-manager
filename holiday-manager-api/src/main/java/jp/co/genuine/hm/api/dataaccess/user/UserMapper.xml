@@ -15,7 +15,25 @@
 		<id     property="value" column="name" />
 	</resultMap>
 
-	<insert id="create">
+	<resultMap id="userIdMap" type="jp.co.genuine.hm.api.domain.user.UserId">
+		<id     property="value" column="user_id" />
+	</resultMap>
+
+	<resultMap id="gropuIdMap" type="jp.co.genuine.hm.api.domain.user.GroupId">
+		<id     property="value" column="group_id" />
+	</resultMap>
+
+	<select id="nextUserId" resultMap="userIdMap">
+		SELECT
+			nextval('user.user_id_seq') AS user_id
+	</select>
+
+	<select id="nextGroupId" resultMap="gropuIdMap">
+		SELECT
+			nextval('user.group_id_seq') AS group_id
+	</select>
+
+	<insert id="insertUser">
 		INSERT INTO "user".user
 			(
 				id,
@@ -27,21 +45,39 @@
 			)
 		VALUES
 			(
-				#{userForm.userId.value},
-				#{userForm.userStatus},
-				#{userForm.mailAddress.value},
-				#{userForm.userName.value},
-				now(),
+				#{userId.value},
+				#{userStatus},
+				#{mailAddress.value},
+				#{userName.value},
+				#{hireDate.value},
 				now()
 			)
 	</insert>
 
-	<update id="update">
+	<insert id="insertAccount">
+		INSERT INTO "user".account
+			(
+				user_id,
+				account_id,
+				password,
+				admin_flg
+			)
+		VALUES
+			(
+				#{userId.value},
+				#{accountId.value},
+				#{password.value},
+				false
+			)
+	</insert>
+
+	<update id="updateUser">
 		UPDATE
 			"user".user
 		SET
-			email = #{userForm.mailAddress.value},
-			"name" = #{userForm.userName.value}
+			email = #{mailAddress.value},
+			"name" = #{userName.value},
+			update_datetime = now()
 		WHERE
 			"id" = #{userId.value}
 	</update>
@@ -101,7 +137,7 @@
 			"group".id = #{groupId.value}
 	</select>
 
-	<insert id="createGroup">
+	<insert id="insertGroup">
 		INSERT INTO "user".group
 			(
 				id,
@@ -111,12 +147,51 @@
 			)
 		VALUES
 			(
-				#{userForm.groupId.value},
-				#{userForm.groupName.value},
+				#{groupId.value},
+				#{groupName.value},
 				now(),
 				now()
 			)
 	</insert>
+
+	<select id="findAllUser" resultMap="userMap">
+		SELECT
+			"user".id         AS user_id
+			,"user".email     AS mail_address
+			,account.password AS password
+			,"user".name      AS user_name
+			,"user".status    AS user_status
+			,"user".hire_date AS hire_date
+		FROM
+			"user"."user"
+		INNER JOIN
+			"user".account
+			ON account.user_id = "user".id
+		LEFT OUTER JOIN
+			(
+				SELECT
+					id AS group_id,
+					user_id AS user_id
+				FROM
+					"user".member
+				INNER JOIN
+					"user".group
+					ON "group".id = member.group_id
+			) AS member
+			ON member.user_id = "user".id
+		LEFT OUTER JOIN
+			(
+				SELECT
+					id AS group_id,
+					user_id AS user_id
+				FROM
+					"user".manager
+				INNER JOIN
+					"user"."group"
+					ON "group".id = manager.group_id
+			) AS manager
+			ON manager.user_id = "user".id
+	</select>
 
 	<select id="findUsersByGroupId" resultMap="userMap">
 		SELECT
@@ -165,7 +240,7 @@
 		UPDATE
 			"user".group
 		SET
-			"name" = #{userForm.groupName.value},
+			"name" = #{groupName.value},
 			update_datetime = now()
 		WHERE
 			"id" = #{groupId.value}
@@ -184,20 +259,4 @@
 			)
 	</insert>
 
-	<insert id="insertAccount">
-		INSERT INTO "user".account
-			(
-				user_id,
-				account_id,
-				password,
-				admin_flg
-			)
-		VALUES
-			(
-				#{userForm.userId.value},
-				'account_id',
-				#{userForm.password.value},
-				false
-			)
-	</insert>
 </mapper>

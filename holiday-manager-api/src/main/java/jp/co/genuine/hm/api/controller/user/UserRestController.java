@@ -15,29 +15,38 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import jp.co.genuine.hm.api.domain.request.PostGroupRequest;
 import jp.co.genuine.hm.api.domain.request.PostUserRequest;
+import jp.co.genuine.hm.api.domain.request.PutGroupRequest;
+import jp.co.genuine.hm.api.domain.request.PutUserRequest;
 import jp.co.genuine.hm.api.domain.user.GroupId;
-import jp.co.genuine.hm.api.domain.user.UserForm;
 import jp.co.genuine.hm.api.domain.user.UserId;
 import jp.co.genuine.hm.api.domain.user.UserList;
-import jp.co.genuine.hm.api.service.user.UserService;
+import jp.co.genuine.hm.api.service.user.UserServiceImpl;
 
 @RestController
 @RequestMapping("user")
 public class UserRestController {
 	@Autowired
-	UserService userService;
+	UserServiceImpl userService;
 
-	@PostMapping("member")
+	@GetMapping
+	@ResponseBody
+	ResponseEntity<UserList> getUser() {
+		UserList userList = userService.getUser();
+		return new ResponseEntity<UserList>(userList, HttpStatus.OK);
+	}
+
+	@PostMapping
 	@ResponseStatus(HttpStatus.OK)
-	void postMember(@RequestBody @Valid PostUserRequest request) {
-		userService.postMember(request);
+	void postUser(@RequestBody @Valid PostUserRequest request) {
+		userService.postUser(request);
 	}
 
 	@PutMapping("{user_id}")
 	@ResponseStatus(HttpStatus.OK)
-	void putUser(@PathVariable("user_id") UserId userId, @RequestBody UserForm userForm) {
-		userService.update(userId, userForm);
+	void putUser(@PathVariable("user_id") UserId userId, @RequestBody @Valid PutUserRequest request) {
+		userService.putUser(userId, request);
 	}
 
 	@GetMapping("{group_id}")
@@ -49,13 +58,13 @@ public class UserRestController {
 
 	@PostMapping("group")
 	@ResponseStatus(HttpStatus.OK)
-	void postGroup(@RequestBody UserForm userForm) {
-		userService.createGroup(userForm);
+	void postGroup(@RequestBody @Valid PostGroupRequest request) {
+		userService.postGroup(request);
 	}
 
 	@PutMapping("group/{group_id}")
 	@ResponseStatus(HttpStatus.OK)
-	void putGroup(@PathVariable("group_id") GroupId groupId, @RequestBody UserForm userForm) {
-		userService.updateGroup(groupId, userForm);
+	void putGroup(@PathVariable("group_id") GroupId groupId, @RequestBody @Valid PutGroupRequest request) {
+		userService.putGroup(groupId, request);
 	}
 }

@@ -4,65 +4,50 @@ import javax.validation.constraints.NotNull;
 
 public class PostUserRequest {
 	@NotNull
-	private String userId;
+	private String accountId;
+	@NotNull
+	private String password;
 	@NotNull
 	private String mailAddress;
 	@NotNull
 	private String userName;
 	@NotNull
-	private String groupId;
+	private String hireDate;
 	@NotNull
-	private String password;
+	private String status;
 
-	public PostUserRequest(@NotNull String userId, @NotNull String mailAddress, @NotNull String userName,
-			@NotNull String groupId, @NotNull String password) {
-		this.userId = userId;
-		this.mailAddress = mailAddress;
-		this.userName = userName;
-		this.groupId = groupId;
+	public PostUserRequest(@NotNull String accountId, @NotNull String password, @NotNull String mailAddress,
+			@NotNull String userName, @NotNull String hireDate, @NotNull String status) {
+		this.accountId = accountId;
 		this.password = password;
-	}
-
-	public PostUserRequest() {
-	}
-
-	public String getUserId() {
-		return userId;
-	}
-
-	public void setUserId(String userId) {
-		this.userId = userId;
-	}
-
-	public String getMailAddress() {
-		return mailAddress;
-	}
-
-	public void setMailAddress(String mailAddress) {
 		this.mailAddress = mailAddress;
-	}
-
-	public String getUserName() {
-		return userName;
-	}
-
-	public void setUserName(String userName) {
 		this.userName = userName;
+		this.hireDate = hireDate;
+		this.status = status;
 	}
 
-	public String getGroupId() {
-		return groupId;
-	}
-
-	public void setGroupId(String groupId) {
-		this.groupId = groupId;
+	public String getAccountId() {
+		return accountId;
 	}
 
 	public String getPassword() {
 		return password;
 	}
 
-	public void setPassword(String password) {
-		this.password = password;
+	public String getMailAddress() {
+		return mailAddress;
 	}
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public String getHireDate() {
+		return hireDate;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
 }

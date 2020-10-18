@@ -1,12 +1,12 @@
 package jp.co.genuine.hm.api.domain.user;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
 public class HireDate {
+	private static final SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+
 	private Date value;
 
 	public HireDate() {
@@ -14,6 +14,10 @@ public class HireDate {
 
 	public HireDate(Date value) {
 		this.value = value;
+	}
+
+	public HireDate(String hireDate) throws ParseException {
+		value = format.parse(hireDate);
 	}
 
 	public Date getValue() {
