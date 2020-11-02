@@ -5,14 +5,13 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
-import jp.co.genuine.hm.api.domain.common.MailAddress;
 import jp.co.genuine.hm.api.domain.user.AccountId;
 import jp.co.genuine.hm.api.domain.user.GroupId;
 import jp.co.genuine.hm.api.domain.user.GroupName;
 import jp.co.genuine.hm.api.domain.user.HireDate;
+import jp.co.genuine.hm.api.domain.user.MailAddress;
 import jp.co.genuine.hm.api.domain.user.Password;
 import jp.co.genuine.hm.api.domain.user.User;
-import jp.co.genuine.hm.api.domain.user.UserForm;
 import jp.co.genuine.hm.api.domain.user.UserId;
 import jp.co.genuine.hm.api.domain.user.UserName;
 import jp.co.genuine.hm.api.domain.user.UserStatus;
@@ -46,7 +45,7 @@ public interface UserMapper {
 
 	List<User> findUsersByGroupId(@Param("groupId") GroupId groupId);
 
-	void insertMember(@Param("userForm") UserForm userForm);
+	void insertMember(@Param("groupId") GroupId groupId, @Param("userId") UserId userId);
 
 	GroupId nextGroupId();
 }

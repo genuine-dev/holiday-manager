@@ -1,8 +1,4 @@
-package jp.co.genuine.hm.api.domain.common;
-
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+package jp.co.genuine.hm.api.domain.user;
 
 public class MailAddress {
 	private String value;

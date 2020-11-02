@@ -254,8 +254,8 @@
 			)
 		VALUES
 			(
-				#{userForm.groupId.value},
-				#{userForm.userId.value}
+				#{groupId.value},
+				#{userId.value}
 			)
 	</insert>
 

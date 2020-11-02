@@ -5,7 +5,6 @@ import java.text.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import jp.co.genuine.hm.api.domain.common.MailAddress;
 import jp.co.genuine.hm.api.domain.request.PostGroupRequest;
 import jp.co.genuine.hm.api.domain.request.PostUserRequest;
 import jp.co.genuine.hm.api.domain.request.PutGroupRequest;
@@ -15,6 +14,7 @@ import jp.co.genuine.hm.api.domain.user.Group;
 import jp.co.genuine.hm.api.domain.user.GroupId;
 import jp.co.genuine.hm.api.domain.user.GroupName;
 import jp.co.genuine.hm.api.domain.user.HireDate;
+import jp.co.genuine.hm.api.domain.user.MailAddress;
 import jp.co.genuine.hm.api.domain.user.Password;
 import jp.co.genuine.hm.api.domain.user.UserId;
 import jp.co.genuine.hm.api.domain.user.UserList;
@@ -24,11 +24,12 @@ import jp.co.genuine.hm.api.domain.user.UserStatus;
 
 @Service
 public class UserServiceImpl implements UserService {
+
 	@Autowired
 	UserRepository userRepository;
 
 	public UserList getUser() {
-		return userRepository.findAllUser();
+		return userRepository.findAll();
 	}
 
 	public void postUser(PostUserRequest request) {

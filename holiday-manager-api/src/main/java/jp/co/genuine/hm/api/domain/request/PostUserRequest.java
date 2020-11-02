@@ -1,23 +1,33 @@
 package jp.co.genuine.hm.api.domain.request;
 
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+
+import org.hibernate.validator.constraints.Length;
 
 public class PostUserRequest {
-	@NotNull
+	@NotBlank
+	@Length(max = 20)
 	private String accountId;
-	@NotNull
+	@NotBlank
+	@Length(max = 20)
 	private String password;
-	@NotNull
+	@NotBlank
+	@Email
+	@Length(max = 20)
 	private String mailAddress;
-	@NotNull
+	@NotBlank
+	@Length(max = 20)
 	private String userName;
-	@NotNull
+	@NotBlank
+	@Length(max = 20)
 	private String hireDate;
-	@NotNull
+	@NotBlank
+	@Length(max = 20)
 	private String status;
 
-	public PostUserRequest(@NotNull String accountId, @NotNull String password, @NotNull String mailAddress,
-			@NotNull String userName, @NotNull String hireDate, @NotNull String status) {
+	public PostUserRequest(@NotBlank String accountId, @NotBlank String password, @NotBlank String mailAddress,
+			@NotBlank String userName, @NotBlank String hireDate, @NotBlank String status) {
 		this.accountId = accountId;
 		this.password = password;
 		this.mailAddress = mailAddress;

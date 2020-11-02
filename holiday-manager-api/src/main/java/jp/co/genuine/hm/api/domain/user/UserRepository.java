@@ -1,7 +1,5 @@
 package jp.co.genuine.hm.api.domain.user;
 
-import jp.co.genuine.hm.api.domain.common.MailAddress;
-
 public interface UserRepository {
 	UserId nextUserId();
 
@@ -12,7 +10,7 @@ public interface UserRepository {
 
 	void updateUser(UserId userId, MailAddress mailAddress, UserName userName);
 
-	UserList findAllUser();
+	UserList findAll();
 
 	Group findGroup(GroupId groupId);
 

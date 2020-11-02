@@ -1,15 +1,18 @@
 package jp.co.genuine.hm.api.domain.request;
 
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.NotBlank;
+
+import org.hibernate.validator.constraints.Length;
 
 public class PostGroupRequest {
-	@NotNull
+	@NotBlank
+	@Length(max = 20)
 	private String groupName;
 
 	public PostGroupRequest() {
 	}
 
-	public PostGroupRequest(@NotNull String groupName) {
+	public PostGroupRequest(@NotBlank String groupName) {
 		this.groupName = groupName;
 	}
 

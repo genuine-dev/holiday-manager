@@ -1,6 +1,5 @@
 package jp.co.genuine.hm.api.domain.user;
 
-import jp.co.genuine.hm.api.domain.common.MailAddress;
 import jp.co.genuine.hm.api.domain.paid_leave.PaidLeaveList;
 
 public class User {

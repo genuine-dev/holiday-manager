@@ -5,12 +5,12 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import jp.co.genuine.hm.api.domain.common.MailAddress;
 import jp.co.genuine.hm.api.domain.user.AccountId;
 import jp.co.genuine.hm.api.domain.user.Group;
 import jp.co.genuine.hm.api.domain.user.GroupId;
 import jp.co.genuine.hm.api.domain.user.GroupName;
 import jp.co.genuine.hm.api.domain.user.HireDate;
+import jp.co.genuine.hm.api.domain.user.MailAddress;
 import jp.co.genuine.hm.api.domain.user.Password;
 import jp.co.genuine.hm.api.domain.user.User;
 import jp.co.genuine.hm.api.domain.user.UserId;
@@ -46,7 +46,7 @@ public class UserDatasource implements UserRepository {
 	}
 
 	@Override
-	public UserList findAllUser() {
+	public UserList findAll() {
 		List<User> userList = userMapper.findAllUser();
 		return new UserList(userList);
 	}
