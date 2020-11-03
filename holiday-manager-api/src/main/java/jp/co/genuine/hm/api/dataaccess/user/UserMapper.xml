@@ -9,6 +9,7 @@
 		<result property="userName.value" column="user_name"/>
 		<result property="userStatus.label" column="user_status"/>
 		<result property="hireDate.value" column="hire_date"/>
+		<result property="admin" column="admin_flg"/>
 	</resultMap>
 
 	<resultMap id="groupNameMap" type="jp.co.genuine.hm.api.domain.user.GroupName">
@@ -84,12 +85,13 @@
 
 	<select id="findManagerList" resultMap="userMap">
 		SELECT
-			"user".id         AS user_id
-			,"user".email     AS mail_address
-			,account.password AS password
-			,"user".name      AS user_name
-			,"user".status    AS user_status
-			,"user".hire_date AS hire_date
+			"user".id          AS user_id
+			,"user".email      AS mail_address
+			,account.password  AS password
+			,"user".name       AS user_name
+			,"user".status     AS user_status
+			,"user".hire_date  AS hire_date
+			,account.admin_flg AS admin_flg
 		FROM
 			"user"."user"
 		INNER JOIN
@@ -113,6 +115,7 @@
 			,"user".name      AS user_name
 			,"user".status    AS user_status
 			,"user".hire_date AS hire_date
+			,account.admin_flg AS admin_flg
 		FROM
 			"user"."user"
 		INNER JOIN
@@ -162,6 +165,7 @@
 			,"user".name      AS user_name
 			,"user".status    AS user_status
 			,"user".hire_date AS hire_date
+			,account.admin_flg AS admin_flg
 		FROM
 			"user"."user"
 		INNER JOIN
@@ -201,6 +205,7 @@
 			,"user".name      AS user_name
 			,"user".status    AS user_status
 			,"user".hire_date AS hire_date
+			,account.admin_flg AS admin_flg
 		FROM
 			"user"."user"
 		INNER JOIN
@@ -258,5 +263,23 @@
 				#{userId.value}
 			)
 	</insert>
+
+	<select id="findByEmail" resultMap="userMap">
+		SELECT
+			"user".id          AS user_id
+			,"user".email      AS mail_address
+			,account.password  AS password
+			,"user".name       AS user_name
+			,"user".status     AS user_status
+			,"user".hire_date  AS hire_date
+			,account.admin_flg AS admin_flg
+		FROM
+			"user"."user"
+		INNER JOIN
+			"user".account
+			ON account.user_id = "user".id
+		WHERE
+			"user".email = #{email}
+	</select>
 
 </mapper>

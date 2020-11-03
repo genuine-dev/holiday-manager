@@ -1,6 +1,7 @@
 package jp.co.genuine.hm.api.dataaccess.user;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -78,5 +79,10 @@ public class UserDatasource implements UserRepository {
 	@Override
 	public GroupId nextGroupId() {
 		return userMapper.nextGroupId();
+	}
+
+	@Override
+	public Optional<User> findByEmail(String email) {
+		return Optional.ofNullable(userMapper.findByEmail(email));
 	}
 }

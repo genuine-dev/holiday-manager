@@ -10,6 +10,7 @@ public class User {
 	private UserStatus userStatus;
 	private HireDate hireDate;
 	private PaidLeaveList paidLeaveList;
+	private boolean admin;
 
 	public User() {
 		userId = new UserId();
@@ -19,10 +20,11 @@ public class User {
 		userStatus = UserStatus.ACTIVE;
 		hireDate = new HireDate();
 		paidLeaveList = new PaidLeaveList();
+		admin = false;
 	}
 
 	public User(UserId userId, MailAddress mailAddress, Password password, UserName userName, UserStatus userStatus,
-			HireDate hireDate, PaidLeaveList paidLeaveList) {
+			HireDate hireDate, PaidLeaveList paidLeaveList, boolean admin) {
 		this.userId = userId;
 		this.mailAddress = mailAddress;
 		this.password = password;
@@ -30,6 +32,7 @@ public class User {
 		this.userStatus = userStatus;
 		this.hireDate = hireDate;
 		this.paidLeaveList = paidLeaveList;
+		this.admin = admin;
 	}
 
 	public UserId getUserId() {
@@ -86,5 +89,13 @@ public class User {
 
 	public void setPaidLeaveList(PaidLeaveList paidLeaveList) {
 		this.paidLeaveList = paidLeaveList;
+	}
+
+	public boolean isAdmin() {
+		return admin;
+	}
+
+	public void setAdmin(boolean admin) {
+		this.admin = admin;
 	}
 }

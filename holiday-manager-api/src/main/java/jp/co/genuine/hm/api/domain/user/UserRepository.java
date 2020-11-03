@@ -1,5 +1,7 @@
 package jp.co.genuine.hm.api.domain.user;
 
+import java.util.Optional;
+
 public interface UserRepository {
 	UserId nextUserId();
 
@@ -21,4 +23,6 @@ public interface UserRepository {
 	UserList findUsersByGroupId(GroupId groupId);
 
 	GroupId nextGroupId();
+
+	Optional<User> findByEmail(String email);
 }

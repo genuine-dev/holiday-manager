@@ -48,4 +48,6 @@ public interface UserMapper {
 	void insertMember(@Param("groupId") GroupId groupId, @Param("userId") UserId userId);
 
 	GroupId nextGroupId();
+
+	User findByEmail(@Param("email") String email);
 }
