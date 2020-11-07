@@ -1,9 +1,6 @@
 package jp.co.genuine.hm.api.domain.user;
 
-import javax.validation.constraints.Max;
-
 public class GroupId {
-	@Max(999)
 	private Integer value;
 
 	public GroupId() {

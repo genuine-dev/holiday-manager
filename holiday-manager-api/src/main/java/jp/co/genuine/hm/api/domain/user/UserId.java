@@ -1,13 +1,10 @@
 package jp.co.genuine.hm.api.domain.user;
 
-import javax.validation.constraints.Max;
-
 public class UserId {
-	@Max(999)
 	private Integer value;
 
-	public UserId(String userId) {
-		this.value = Integer.valueOf(userId);
+	public UserId(String value) {
+		this.value = Integer.parseInt(value);
 	}
 
 	public UserId() {

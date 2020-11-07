@@ -4,7 +4,6 @@ public class AccountId {
 	String value;
 
 	public AccountId(String value) {
-		super();
 		this.value = value;
 	}
 

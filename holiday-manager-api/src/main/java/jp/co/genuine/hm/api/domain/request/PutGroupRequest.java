@@ -5,19 +5,24 @@ import javax.validation.constraints.NotBlank;
 
 import org.hibernate.validator.constraints.Length;
 
+import io.swagger.annotations.ApiModelProperty;
+import jp.co.genuine.hm.api.domain.user.GroupName;
+
 public class PutGroupRequest {
 	@NotBlank
-	@Valid @Length(max = 20)
+	@Valid
+	@Length(max = 20)
+	@ApiModelProperty(example = "システム開発本部", required = true)
 	private String groupName;
 
 	public PutGroupRequest() {
 	}
 
-	public PutGroupRequest(@NotBlank String groupName) {
+	public PutGroupRequest(String groupName) {
 		this.groupName = groupName;
 	}
 
-	public String getGroupName() {
-		return groupName;
+	public GroupName getGroupName() {
+		return new GroupName(groupName);
 	}
 }
