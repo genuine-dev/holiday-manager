@@ -25,4 +25,12 @@ public interface UserRepository {
 	GroupId nextGroupId();
 
 	Optional<User> findByEmail(String email);
+
+	void insertManager(UserId userId, GroupId groupId);
+
+	void insertMember(UserId userId, GroupId groupId);
+
+	void deleteManager(UserId userId);
+
+	void deleteMember(UserId userId);
 }

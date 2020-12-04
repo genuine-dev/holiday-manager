@@ -7,6 +7,8 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import jp.co.genuine.hm.api.domain.request.PostGroupOfManagerRequest;
+import jp.co.genuine.hm.api.domain.request.PostGroupOfMemberRequest;
 import jp.co.genuine.hm.api.domain.request.PostGroupRequest;
 import jp.co.genuine.hm.api.domain.request.PostUserRequest;
 import jp.co.genuine.hm.api.domain.request.PutGroupRequest;
@@ -65,6 +67,18 @@ public class UserServiceImpl implements UserService {
 
 	public UserList findUsers(GroupId groupId) {
 		return userRepository.findUsersByGroupId(groupId);
+	}
+
+	public void postGroupOfManager(PostGroupOfManagerRequest request) {
+		userRepository.deleteManager(request.getUserId());
+		userRepository.deleteMember(request.getUserId());
+		userRepository.insertManager(request.getUserId(), request.getGroupId());
+	}
+
+	public void postGroupOfMember(PostGroupOfMemberRequest request) {
+		userRepository.deleteManager(request.getUserId());
+		userRepository.deleteMember(request.getUserId());
+		userRepository.insertMember(request.getUserId(), request.getGroupId());
 	}
 
 	private void logError(ParseException e) {
