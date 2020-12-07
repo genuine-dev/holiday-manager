@@ -1,0 +1,77 @@
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>holiday-manager</title>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<script th:src="@{/webjars/vue/2.6.10/vue.js}"></script>
+<script th:src="@{/webjars/jquery/3.3.1/jquery.min.js}"></script>
+<script type="text/javascript">
+</script>
+</head>
+<body>
+	<!-- index.html -->
+	<div id="app-root">
+
+		<div class="header">
+			<h1>ユーザ登録</h1>
+		</div>
+
+		<div class="contents">
+			<form class="form-horizontal" v-validator>
+
+				<div class="panel panel-default">
+					<div class="panel-body">
+						<div class="form-group">
+							<label class="col-md-2 control-label">ID</label>
+							<div class="col-md-10">
+								<p class="form-control-static">{{user.id}}</p>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-md-2 control-label">ユーザ名</label>
+							<div class="col-md-10">
+								<p>
+									<input class="form-control input-lg" type="text" name=""
+										v-model="user.name | nameValidator" placeholder="Your name">
+								</p>
+								<p class="text-danger v-fade" v-if="!validation.name"
+									v-transition>{{validation.msg.name}}</p>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-md-2 control-label">ログインID</label>
+							<div class="col-md-10">
+								<p>
+									<input class="form-control" type="text" name=""
+										v-model="user.login | loginValidator" placeholder="Login ID">
+								</p>
+								<p class="text-danger v-fade" v-if="!validation.login"
+									v-transition>{{validation.msg.login}}</p>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-md-2 control-label">メールアドレス</label>
+							<div class="col-md-10">
+								<p>
+									<input class="form-control" type="text" name="" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"placeholder="exampla@mail.com">
+								</p>
+							</div>
+						</div>
+
+					</div>
+					<div class="panel-footer text-right">
+						<button class="btn btn-primary v-fade" type="submit">確認画面に進む</button>
+					</div>
+				</div>
+
+			</form>
+		</div>
+	</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+	<script th:src="@{/user_register.js}"></script>
+</body>
+</html>

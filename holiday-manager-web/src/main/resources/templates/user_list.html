@@ -1,0 +1,19 @@
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>holiday-manager</title>
+  <script th:src="@{/webjars/vue/2.6.10/vue.js}"></script>
+  <script th:src="@{/webjars/jquery/3.3.1/jquery.min.js}"></script>
+</head>
+<body>
+  <div id="user">
+    <ul v-for="user in users" v-bind:key="user.id">
+        <li>{{ user.userName.value }}</li>
+    </ul>
+  </div>
+
+  <script th:src="@{/user_list.js}"></script>
+</body>
+</html>

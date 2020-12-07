@@ -20,14 +20,18 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 		// 認可の設定
 		http.authorizeRequests()
-				.antMatchers("/", "/login").permitAll()
+				.antMatchers(
+									"/login",
+									"/js/**",
+									"/css/**"
+								).permitAll()
 				.anyRequest().authenticated(); // それ以外は全て認証無しの場合アクセス不許可
 
 		// ログイン設定
 		http.formLogin()
 				.loginProcessingUrl("/login") // 認証処理のパス
 				.loginPage("/login") // ログインフォームのパス
-				.defaultSuccessUrl("/top") // 認証成功時の遷移先
+				.defaultSuccessUrl("/userlist") // 認証成功時の遷移先
 				.usernameParameter("username").passwordParameter("password") // ユーザー名、パスワードのパラメータ名
 				.and();
 
