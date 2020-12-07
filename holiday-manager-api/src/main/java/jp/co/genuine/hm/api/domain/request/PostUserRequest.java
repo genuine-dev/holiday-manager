@@ -30,7 +30,7 @@ public class PostUserRequest {
 	private String password;
 	@NotBlank
 	@Email
-	@Length(max = 20)
+	@Length(max = 255)
 	@ApiModelProperty(example = "example@example.com", required = true)
 	private String mailAddress;
 	@NotBlank

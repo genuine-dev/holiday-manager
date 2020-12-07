@@ -140,5 +140,6 @@
 	<modules>
 		<module>holiday-manager-web</module>
 		<module>holiday-manager-core</module>
+		<module>holiday-manager-api</module>
 	</modules>
 </project>

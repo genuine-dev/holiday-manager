@@ -85,4 +85,24 @@ public class UserDatasource implements UserRepository {
 	public Optional<User> findByEmail(String email) {
 		return Optional.ofNullable(userMapper.findByEmail(email));
 	}
+
+	@Override
+	public void insertManager(UserId userId, GroupId groupId) {
+		userMapper.insertManager(userId, groupId);
+	}
+
+	@Override
+	public void insertMember(UserId userId, GroupId groupId) {
+		userMapper.insertMember(userId, groupId);
+	}
+
+	@Override
+	public void deleteManager(UserId userId) {
+		userMapper.deleteManager(userId);
+	}
+
+	@Override
+	public void deleteMember(UserId userId) {
+		userMapper.deleteMember(userId);
+	}
 }

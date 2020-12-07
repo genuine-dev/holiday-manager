@@ -45,9 +45,15 @@ public interface UserMapper {
 
 	List<User> findUsersByGroupId(@Param("groupId") GroupId groupId);
 
-	void insertMember(@Param("groupId") GroupId groupId, @Param("userId") UserId userId);
-
 	GroupId nextGroupId();
 
 	User findByEmail(@Param("email") String email);
+
+	void insertManager(@Param("userId") UserId userId, @Param("groupId") GroupId groupId);
+
+	void insertMember(@Param("userId") UserId userId, @Param("groupId") GroupId groupId);
+
+	void deleteManager(@Param("userId") UserId userId);
+
+	void deleteMember(@Param("userId") UserId userId);
 }

@@ -251,19 +251,6 @@
 			"id" = #{groupId.value}
 	</update>
 
-	<insert id="insertMember">
-		INSERT INTO "user".member
-			(
-				group_id,
-				user_id
-			)
-		VALUES
-			(
-				#{groupId.value},
-				#{userId.value}
-			)
-	</insert>
-
 	<select id="findByEmail" resultMap="userMap">
 		SELECT
 			"user".id          AS user_id
@@ -281,5 +268,47 @@
 		WHERE
 			"user".email = #{email}
 	</select>
+
+	<insert id="insertManager">
+		INSERT INTO "user".manager
+			(
+				group_id,
+				user_id,
+				update_datetime
+			)
+		VALUES
+			(
+				#{groupId.value},
+				#{userId.value},
+				now()
+			)
+	</insert>
+
+	<insert id="insertMember">
+		INSERT INTO "user".member
+			(
+				group_id,
+				user_id,
+				update_datetime
+			)
+		VALUES
+			(
+				#{groupId.value},
+				#{userId.value},
+				now()
+			)
+	</insert>
+
+	<delete id="deleteManager">
+		DELETE FROM "user".manager
+		WHERE
+			user_id = #{userId.value}
+	</delete>
+
+	<delete id="deleteMember">
+		DELETE FROM "user".member
+		WHERE
+			user_id = #{userId.value}
+	</delete>
 
 </mapper>
