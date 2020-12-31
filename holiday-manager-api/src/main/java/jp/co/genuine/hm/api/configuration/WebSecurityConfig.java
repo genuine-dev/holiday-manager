@@ -34,9 +34,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 		http
 			.authorizeRequests()
-				.mvcMatchers("/prelogin", "/ping")
+				.antMatchers("/prelogin", "/ping")
 					.permitAll()
-				.mvcMatchers("/user/**")
+				.antMatchers("/user/**")
 					.hasRole("USER")
 				.anyRequest()
 					.authenticated()
