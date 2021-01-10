@@ -1,11 +1,15 @@
 package jp.co.genuine.hm.api.controller.user;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,6 +29,7 @@ import jp.co.genuine.hm.api.domain.request.PutUserRequest;
 import jp.co.genuine.hm.api.domain.user.GroupId;
 import jp.co.genuine.hm.api.domain.user.UserId;
 import jp.co.genuine.hm.api.domain.user.UserList;
+import jp.co.genuine.hm.api.domain.user.UserStatus;
 import jp.co.genuine.hm.api.service.user.UserServiceImpl;
 
 @RestController
@@ -63,6 +68,17 @@ public class UserController {
 		return new ResponseEntity<UserList>(userList, HttpStatus.OK);
 	}
 
+	@GetMapping("user/status")
+	@ResponseBody
+	@ApiOperation("ユーザーステータスのキーとバリュー一覧取得")
+	public ResponseEntity<Map<String, String>> getUserStatus() {
+		Map<String, String> userStatusMap = new HashMap<>();
+		for(UserStatus userStatus : UserStatus.values()) {
+			userStatusMap.put(userStatus.name(), userStatus.getLabel());
+		}
+		return new ResponseEntity<Map<String, String>>(userStatusMap, HttpStatus.OK);
+	}
+
 	@PostMapping("group")
 	@ResponseStatus(HttpStatus.OK)
 	@ApiOperation("グループ登録")
@@ -76,6 +92,13 @@ public class UserController {
 	public void putGroup(@PathVariable("group_id") @Valid GroupId groupId,
 			@RequestBody @Valid PutGroupRequest request) {
 		userService.putGroup(groupId, request);
+	}
+
+	@DeleteMapping("group/{group_id}")
+	@ResponseStatus(HttpStatus.OK)
+	@ApiOperation("グループ削除")
+	public void deleteGroup(@PathVariable("group_id") @Valid GroupId groupId) {
+		userService.deleteGroup(groupId);
 	}
 
 	@PostMapping("group/manager")

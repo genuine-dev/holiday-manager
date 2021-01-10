@@ -56,4 +56,6 @@ public interface UserMapper {
 	void deleteManager(@Param("userId") UserId userId);
 
 	void deleteMember(@Param("userId") UserId userId);
+
+	void deleteGroup(@Param("groupId") GroupId groupId);
 }

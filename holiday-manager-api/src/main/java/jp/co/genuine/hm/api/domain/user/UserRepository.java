@@ -33,4 +33,6 @@ public interface UserRepository {
 	void deleteManager(UserId userId);
 
 	void deleteMember(UserId userId);
+
+	void deleteGroup(GroupId groupId);
 }

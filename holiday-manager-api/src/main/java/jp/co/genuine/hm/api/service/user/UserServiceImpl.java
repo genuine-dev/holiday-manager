@@ -93,4 +93,8 @@ public class UserServiceImpl implements UserService {
 	private String encodePassword(Password password) {
 		return passwordEncoder.encode(password.getValue());
 	}
+
+	public void deleteGroup(GroupId groupId) {
+		userRepository.deleteGroup(groupId);
+	}
 }

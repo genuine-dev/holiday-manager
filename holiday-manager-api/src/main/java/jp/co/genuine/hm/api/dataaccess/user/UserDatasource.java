@@ -105,4 +105,9 @@ public class UserDatasource implements UserRepository {
 	public void deleteMember(UserId userId) {
 		userMapper.deleteMember(userId);
 	}
+
+	@Override
+	public void deleteGroup(GroupId groupId) {
+		userMapper.deleteGroup(groupId);
+	}
 }

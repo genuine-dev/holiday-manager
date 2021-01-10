@@ -311,4 +311,13 @@
 			user_id = #{userId.value}
 	</delete>
 
+	<update id="deleteGroup">
+		UPDATE
+			"user".group
+		SET
+			deleted = true
+		WHERE
+			id = #{groupId.value}
+	</update>
+
 </mapper>
