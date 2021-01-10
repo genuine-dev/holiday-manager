@@ -36,7 +36,7 @@ public class UserController {
 	@GetMapping("user")
 	@ResponseBody
 	@ApiOperation("全ユーザー取得")
-	ResponseEntity<UserList> getUser() {
+	public ResponseEntity<UserList> getUser() {
 		UserList userList = userService.getUser();
 		return new ResponseEntity<UserList>(userList, HttpStatus.OK);
 	}
@@ -44,21 +44,21 @@ public class UserController {
 	@PostMapping("user")
 	@ResponseStatus(HttpStatus.OK)
 	@ApiOperation("ユーザー登録")
-	void postUser(@RequestBody @Valid PostUserRequest request) {
+	public void postUser(@RequestBody @Valid PostUserRequest request) {
 		userService.postUser(request);
 	}
 
 	@PutMapping("user/{user_id}")
 	@ResponseStatus(HttpStatus.OK)
 	@ApiOperation("ユーザー更新")
-	void putUser(@PathVariable("user_id") @Valid UserId userId, @RequestBody @Valid PutUserRequest request) {
+	public void putUser(@PathVariable("user_id") @Valid UserId userId, @RequestBody @Valid PutUserRequest request) {
 		userService.putUser(userId, request);
 	}
 
 	@GetMapping("user/{group_id}")
 	@ResponseBody
 	@ApiOperation("グループIDに紐づくユーザー取得")
-	ResponseEntity<UserList> getUsers(@PathVariable("group_id") @Valid GroupId groupId) {
+	public ResponseEntity<UserList> getUsers(@PathVariable("group_id") @Valid GroupId groupId) {
 		UserList userList = userService.findUsers(groupId);
 		return new ResponseEntity<UserList>(userList, HttpStatus.OK);
 	}
@@ -66,14 +66,14 @@ public class UserController {
 	@PostMapping("group")
 	@ResponseStatus(HttpStatus.OK)
 	@ApiOperation("グループ登録")
-	void postGroup(@RequestBody @Valid PostGroupRequest request) {
+	public void postGroup(@RequestBody @Valid PostGroupRequest request) {
 		userService.postGroup(request);
 	}
 
 	@PutMapping("group/{group_id}")
 	@ResponseStatus(HttpStatus.OK)
 	@ApiOperation("グループ更新")
-	void putGroup(@PathVariable("group_id") @Valid GroupId groupId,
+	public void putGroup(@PathVariable("group_id") @Valid GroupId groupId,
 			@RequestBody @Valid PutGroupRequest request) {
 		userService.putGroup(groupId, request);
 	}
@@ -81,14 +81,14 @@ public class UserController {
 	@PostMapping("group/manager")
 	@ResponseStatus(HttpStatus.OK)
 	@ApiOperation("マネージャーのグループ登録")
-	void postGroupOfManager(@RequestBody @Valid PostGroupOfManagerRequest request) {
+	public void postGroupOfManager(@RequestBody @Valid PostGroupOfManagerRequest request) {
 		userService.postGroupOfManager(request);
 	}
 
 	@PostMapping("group/member")
 	@ResponseStatus(HttpStatus.OK)
 	@ApiOperation("メンバーのグループ登録")
-	void postGroupOfMember(@RequestBody @Valid PostGroupOfMemberRequest request) {
+	public void postGroupOfMember(@RequestBody @Valid PostGroupOfMemberRequest request) {
 		userService.postGroupOfMember(request);
 	}
 }
