@@ -1,0 +1,1 @@
+ALTER TABLE "user".group ADD COLUMN deleted boolean DEFAULT false;

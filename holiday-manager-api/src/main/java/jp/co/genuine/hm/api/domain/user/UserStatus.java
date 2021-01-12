@@ -1,7 +1,7 @@
 package jp.co.genuine.hm.api.domain.user;
 
 public enum UserStatus {
-	ACTIVE("在籍"),
+	ACTIVE("在籍中"),
 	LEAVE("休職中"),
 	RETIRED("退職");
 

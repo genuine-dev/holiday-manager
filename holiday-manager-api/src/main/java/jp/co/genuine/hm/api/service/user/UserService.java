@@ -17,4 +17,5 @@ public interface UserService {
 	public void putGroup(GroupId groupId, PutGroupRequest request);
 	public UserList findUsers(GroupId groupId);
 	public void postUser(PostUserRequest request);
+	public void deleteGroup(GroupId groupId);
 }
