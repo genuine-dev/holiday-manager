@@ -11,6 +11,11 @@ import jp.co.genuine.hm.model.user.LoginUser;
 import jp.co.genuine.hm.model.user.UserAccount;
 import jp.co.genuine.hm.repository.user.UserAccountRepository;
 
+/**
+ * ログイン用サービス
+ *
+ * @author JUNYA
+ */
 @Component
 public class UserDetailsServiceImpl implements UserDetailsService {
 
