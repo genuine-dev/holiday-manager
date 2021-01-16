@@ -8,7 +8,7 @@ INSERT INTO "user".account
 SELECT
 	id,
 	'admin',
-	'pass',
+	'$2a$10$WHjHECVs1dJKJYSLq.yfi.ETr0plkJASzCdiKTEU45G56CH832Rb6',
 	true
 FROM
 	"user".user

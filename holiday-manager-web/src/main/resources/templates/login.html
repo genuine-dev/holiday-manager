@@ -1,23 +1,21 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
-<head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>holiday-manager</title>
+<head th:replace="common/head :: head_fragment(title = 'ログイン')">
 </head>
+<link rel="stylesheet" th:href="@{/css/login.css}" />
 <body>
-<div class="box">
-   <h1>ログイン</h1>
-   <form role="form" id="login" th:action="@{/login}" method="post">
-        <div th:if="${iserror}" style="color:red;">
-            <p>ログインできませんでした。やりなおしてください。</p>
-        </div>
-        <p>ユーザID</p>
-        <input type="text" id="username" name="username" autofocus="autofocus" />
-        <p>パスワード</p>
-        <input type="password" id="password" name="password" /><br/>
-        <button type="submit">ログイン</button>
-   </form>
+<div class = "container">
+	<div class="wrapper">
+		<form role="form" id="login" th:action="@{/login}" method="post" class="form-signin">
+		    <h3 class="form-signin-heading">有給管理システム</h3>
+			  <hr class="colorgraph"><br>
+
+			  <input type="text" class="form-control" name="username" placeholder="ユーザID" required autofocus/>
+			  <input type="password" class="form-control" name="password" placeholder="パスワード" required/>
+
+			  <button class="btn btn-lg btn-primary btn-block" type="submit">ログイン</button>
+		</form>
+	</div>
 </div>
+  <div th:replace="common/footer :: footer_fragment"></div>
 </body>
 </html>

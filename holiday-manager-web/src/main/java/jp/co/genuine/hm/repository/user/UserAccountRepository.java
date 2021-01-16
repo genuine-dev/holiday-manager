@@ -6,6 +6,5 @@ import jp.co.genuine.hm.model.user.UserAccount;
 
 @Mapper
 public interface UserAccountRepository {
-	UserAccount findOne (String userId);
-	void register (String userId, String password);
+	UserAccount findOne (String accountId);
 }

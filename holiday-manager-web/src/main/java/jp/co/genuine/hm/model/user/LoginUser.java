@@ -8,7 +8,7 @@ public class LoginUser extends User {
 	private final UserAccount account;
 
 	public LoginUser(UserAccount account) {
-		super(account.getUserId(), account.getPassword(), AuthorityUtils.createAuthorityList("ROLE_USER"));
+		super(account.getAccountId(), account.getPassword(), AuthorityUtils.createAuthorityList("ROLE_USER"));
 		this.account = account;
 	}
 

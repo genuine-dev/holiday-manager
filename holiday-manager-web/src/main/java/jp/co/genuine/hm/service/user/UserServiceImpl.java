@@ -23,7 +23,7 @@ public class UserServiceImpl implements UserService {
 	CloseableHttpClient client = HttpClients.createDefault();
 	ObjectMapper mapper = new ObjectMapper();
 	String contentType = "content-type";
-	String headerValue = "appication/json; charset=UTF-8";
+	String headerValue = "application/json; charset=UTF-8";
 	static String API_ROOT = "http://localhost:8082/";
 
 
@@ -51,7 +51,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public void postUser(RegisterUserRequest parameter) {
-		String url = API_ROOT + "user/register";
+		String url = API_ROOT + "user";
 		String json;
 		try {
 			json = mapper.writeValueAsString(parameter);

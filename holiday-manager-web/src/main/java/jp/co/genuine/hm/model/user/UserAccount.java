@@ -2,7 +2,7 @@ package jp.co.genuine.hm.model.user;
 
 public class UserAccount {
 	private int id;
-	private String userId;
+	private String accountId;
 	private String password;
 
 	public int getId() {
@@ -11,11 +11,11 @@ public class UserAccount {
 	public void setId(int id) {
 		this.id = id;
 	}
-	public String getUserId() {
-		return userId;
+	public String getAccountId() {
+		return accountId;
 	}
-	public void setUserId(String userId) {
-		this.userId = userId;
+	public void setAccountId(String accountId) {
+		this.accountId = accountId;
 	}
 	public String getPassword() {
 		return password;
