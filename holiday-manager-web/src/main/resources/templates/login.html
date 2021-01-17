@@ -6,16 +6,16 @@
 <div class = "container">
 	<div class="wrapper">
 		<form role="form" id="login" th:action="@{/login}" method="post" class="form-signin">
-		    <h3 class="form-signin-heading">有給管理システム</h3>
-			  <hr class="colorgraph"><br>
+				<h3 class="form-signin-heading text-secondary">有給管理システム</h3>
+				<hr class="colorgraph"><br>
 
-			  <input type="text" class="form-control" name="username" placeholder="ユーザID" required autofocus/>
-			  <input type="password" class="form-control" name="password" placeholder="パスワード" required/>
+				<input type="text" class="form-control" name="username" placeholder="ユーザID" required autofocus/>
+				<input type="password" class="form-control" name="password" placeholder="パスワード" required/>
 
-			  <button class="btn btn-lg btn-primary btn-block" type="submit">ログイン</button>
+				<button class="btn btn-lg btn-secondary btn-block" type="submit">ログイン</button>
 		</form>
 	</div>
 </div>
-  <div th:replace="common/footer :: footer_fragment"></div>
+	<div th:replace="common/footer :: footer_fragment"></div>
 </body>
 </html>

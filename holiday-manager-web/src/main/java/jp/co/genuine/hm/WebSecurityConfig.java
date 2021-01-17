@@ -25,13 +25,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 									"/js/**",
 									"/css/**"
 								).permitAll()
+				.antMatchers("/user/register/**").hasRole("ADMIN")
 				.anyRequest().authenticated(); // それ以外は全て認証無しの場合アクセス不許可
 
 		// ログイン設定
 		http.formLogin()
 				.loginProcessingUrl("/login") // 認証処理のパス
 				.loginPage("/login") // ログインフォームのパス
-				.defaultSuccessUrl("/top") // 認証成功時の遷移先
+				.defaultSuccessUrl("/") // 認証成功時の遷移先
 				.usernameParameter("username").passwordParameter("password") // ユーザー名、パスワードのパラメータ名
 				.and();
 
@@ -43,19 +44,19 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	}
 
 	@Configuration
-    protected static class AuthenticationConfiguration
-    extends GlobalAuthenticationConfigurerAdapter {
-        @Autowired
-        UserDetailsService userDetailsService;
+	protected static class AuthenticationConfiguration
+	extends GlobalAuthenticationConfigurerAdapter {
+		@Autowired
+		UserDetailsService userDetailsService;
 
-        @Override
-        public void init(AuthenticationManagerBuilder auth) throws Exception {
-            // 認証するユーザーを設定する
-            auth.userDetailsService(userDetailsService)
-            // 入力値をbcryptでハッシュ化した値でパスワード認証を行う
-            .passwordEncoder(new BCryptPasswordEncoder());
+		@Override
+		public void init(AuthenticationManagerBuilder auth) throws Exception {
+			// 認証するユーザーを設定する
+			auth.userDetailsService(userDetailsService)
+			// 入力値をbcryptでハッシュ化した値でパスワード認証を行う
+			.passwordEncoder(new BCryptPasswordEncoder());
 
-        }
+		}
 	}
 
 }

@@ -2,6 +2,7 @@ package jp.co.genuine.hm.service.user;
 
 import java.io.IOException;
 
+import org.apache.http.HttpEntity;
 import org.apache.http.HttpStatus;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
@@ -24,33 +25,33 @@ public class UserServiceImpl implements UserService {
 	ObjectMapper mapper = new ObjectMapper();
 	String contentType = "content-type";
 	String headerValue = "application/json; charset=UTF-8";
-	static String API_ROOT = "http://localhost:8082/";
+	static String API_ROOT = "http://holiday-manager.genuine-pt.jp/";
 
 
 	@Override
 	public UserList getUserList() throws IOException {
 		String url = API_ROOT + "user";
-		UserList result = null;
+		UserList result = new UserList();
 
 		HttpGet request = new HttpGet(url);
 		request.addHeader(contentType, headerValue);
-		// HTTPリクエストを実行します。 HTTPステータスが200の場合は取得したHTMLを表示します。
 		try (CloseableHttpResponse response = client.execute(request);) {
-			if (response.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
-				String jsonString = EntityUtils.toString(response.getEntity());
+				if(response.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
+				HttpEntity entity = response.getEntity();
+				String jsonString = EntityUtils.toString(entity);
 				result = mapper.readValue(jsonString, UserList.class);
 
+				return result;
 			} else {
-				System.out.println("200以外のステータスコードが返却されました。");
+				return result;
 			}
 		} catch (IOException e) {
 			throw e;
 		}
-		return result;
 	}
 
 	@Override
-	public void postUser(RegisterUserRequest parameter) {
+	public CloseableHttpResponse postUser(RegisterUserRequest parameter) throws IOException {
 		String url = API_ROOT + "user";
 		String json;
 		try {
@@ -60,17 +61,12 @@ public class UserServiceImpl implements UserService {
 			request.addHeader(contentType, headerValue);
 			request.setEntity(entity);
 			try (CloseableHttpResponse response = client.execute(request)) {
-				if (response.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
-					System.out.println(EntityUtils.toString(response.getEntity()));
-				} else {
-					System.out.println("200以外のステータスコードが返却されました。");
-				}
+				return response;
 			} catch (IOException e){
-
+				throw e;
 			}
 		} catch (JsonProcessingException e) {
-			// TODO 自動生成された catch ブロック
-			e.printStackTrace();
+			throw e;
 		}
 	}
 

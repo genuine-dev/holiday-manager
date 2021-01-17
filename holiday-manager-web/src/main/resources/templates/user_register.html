@@ -3,84 +3,84 @@
 <head th:replace="common/head :: head_fragment(title = 'ユーザ登録')">
 </head>
 <body>
-	<!-- index.html -->
 	<div th:replace="common/header :: header_fragment(title = 'ユーザ登録')"></div>
-		<div class="header">
+
+	<div class="container">
+		<div class="header text-secondary">
 			<h1>ユーザ登録</h1>
 		</div>
-
-	    <div class="container">
-	      <form data-toggle="validator" role="form" th:action="@{/user/register/confirm}" method="post" th:object="${registerUserRequest}">
-	        <div class="form-group has-feedback">
-	          <label for="inputName" class="control-label">
-	            <span class="label label-danger">必須項目</span>　名前
-	          </label>
-	          <input th:field="*{userName}" type="text" data-maxlength="20" class="form-control" id="inputName" placeholder="名前を入力" data-required-error="名前の入力は必須です" required>
-	          <div class="help-block">20文字以内で設定してください。</div>
-	          <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
-	          <div class="help-block with-errors"></div>
-	        </div>
-	        <div class="form-group has-feedback">
-	          <label for="inputName" class="control-label">
-	            <span class="label label-danger">必須項目</span>　ユーザID
-	          </label>
-	          <input th:field="*{accountId}" type="text" data-maxlength="20" class="form-control" id="inputId" placeholder="ユーザIDを入力" data-required-error="ユーザIDの入力は必須です" required>
-	          <div class="help-block">20文字以内で設定してください。</div>
-	          <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
-	          <div class="help-block with-errors"></div>
-	        </div>
-				<div class="form-group has-feedback">
-	          <label for="inputName" class="control-label">
-	            <span class="label label-danger">必須項目</span>　在籍区分
-	          </label>
-					<div class="col-sm-10">
-						<select th:field="*{status}" id="singleSelect" name="selectedItem">
-							<option th:each="item : ${statusList}" th:value="${item.value}"
-								th:text="${item.value}"></option>
-						</select>
+		<form data-toggle="validator" role="form" th:action="@{/user/register/confirm}" method="post" th:object="${registerUserRequest}">
+			<div class="form-group has-feedback">
+				<label for="inputName" class="control-label text-secondary">
+					<span class="label label-danger">必須項目</span>　名前
+				</label>
+				<input th:field="*{userName}" type="text" maxlength="20" class="form-control" id="inputName" placeholder="名前を入力" data-required-error="名前の入力は必須です" required>
+				<div class="help-block">20文字以内で設定してください。</div>
+				<span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+				<div class="help-block with-errors"></div>
+			</div>
+			<div class="form-group has-feedback">
+				<label for="inputName" class="control-label text-secondary">
+					<span class="label label-danger">必須項目</span>　ユーザID
+				</label>
+				<input th:field="*{accountId}" type="text" maxlength="20" class="form-control" id="inputId" placeholder="ユーザIDを入力" data-required-error="ユーザIDの入力は必須です" required>
+				<div class="help-block">20文字以内で設定してください。</div>
+				<span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+				<div class="help-block with-errors"></div>
+			</div>
+		<div class="form-group has-feedback">
+				<label for="inputName" class="control-label text-secondary">
+					<span class="label label-danger">必須項目</span>　在籍区分
+				</label>
+			<div class="col-sm-10">
+				<select th:field="*{status}" id="singleSelect" name="selectedItem">
+					<option th:each="item : ${statusList}" th:value="${item.key}"
+						th:text="${item.value}"></option>
+				</select>
+			</div>
+		</div>
+			<div class="form-group has-feedback">
+				<label for="inputName" class="control-label text-secondary">
+					<span class="label label-danger">必須項目</span>　入社日
+				</label>
+				<div class="input-group date" id="datetimepicker1" data-target-input="nearest">
+									<input th:field="*{hireDate}" type="text" class="form-control datetimepicker-input" data-target="#datetimepicker1" placeholder="yyyy-MM-dd で入力してください" data-required-error="入社日の入力は必須です" required/>
+									<div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker">
+											<div class="input-group-text"><i class="fa fa-calendar"></i></div>
+									</div>
+							</div>
+				<span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+				<div class="help-block with-errors"></div>
+			</div>
+			<div class="form-group has-feedback">
+				<label for="inputEmail" class="control-label text-secondary">
+					<span class="label label-danger">必須項目</span>　メールアドレス
+				</label>
+				<input th:field="*{mailAddress}" type="email" class="form-control" id="inputEmail" placeholder="Email" data-error="メールアドレスが正しく入力されておりません" data-required-error="メールアドレスの入力は必須です" required>
+				<span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+				<div class="help-block with-errors"></div>
+			</div>
+			<div class="form-group">
+				<label for="inputPassword" class="control-label text-secondary">
+					<span class="label label-danger">必須項目</span>　パスワード
+				</label>
+				<div class="row">
+					<div class="form-group has-feedback col-sm-6">
+						<input type="password" data-minlength="6" maxlength="20" class="form-control" id="inputPassword" placeholder="パスワードを入力" data-required-error="パスワードの入力は必須です" required>
+						<div class="help-block">6文字以上20文字以内で設定してください。</div>
+					</div>
+					<div class="form-group has-feedback col-sm-6">
+						<input th:field="*{password}" type="password" maxlength="20" class="form-control" id="inputPasswordConfirm" data-match="#inputPassword" data-required-error="確認用パスワードの入力は必須です" data-match-error="パスワードが一致しません" placeholder="確認用パスワードを入力" required>
+						<div class="help-block with-errors"></div>
 					</div>
 				</div>
-	        <div class="form-group has-feedback">
-	          <label for="inputName" class="control-label">
-	            <span class="label label-danger">必須項目</span>　入社日
-	          </label>
-	          <div class="input-group date" id="datetimepicker1" data-target-input="nearest">
-                      <input th:field="*{hireDate}" type="text" class="form-control datetimepicker-input" data-target="#datetimepicker1" placeholder="yyyy-MM-dd で入力してください"/>
-                      <div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker">
-                          <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                      </div>
-                  </div>
-	          <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
-	          <div class="help-block with-errors"></div>
-	        </div>
-	        <div class="form-group has-feedback">
-	          <label for="inputEmail" class="control-label">
-	            <span class="label label-danger">必須項目</span>　メールアドレス
-	          </label>
-	          <input th:field="*{mailAddress}" type="email" class="form-control" id="inputEmail" placeholder="Email" data-error="メールアドレスが正しく入力されておりません" data-required-error="メールアドレスの入力は必須です" required>
-	          <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
-	          <div class="help-block with-errors"></div>
-	        </div>
-	        <div class="form-group">
-	          <label for="inputPassword" class="control-label">
-	            <span class="label label-danger">必須項目</span>　パスワード
-	          </label>
-	          <div class="row">
-	            <div class="form-group has-feedback col-sm-6">
-	              <input type="password" data-minlength="6" data-maxlength="20" class="form-control" id="inputPassword" placeholder="パスワードを入力" data-required-error="パスワードの入力は必須です" required>
-	              <div class="help-block">6文字以上20文字以内で設定してください。</div>
-	            </div>
-	            <div class="form-group has-feedback col-sm-6">
-	              <input th:field="*{password}" type="password" class="form-control" id="inputPasswordConfirm" data-match="#inputPassword" data-required-error="確認用パスワードの入力は必須です" data-match-error="パスワードが一致しません" placeholder="確認用パスワードを入力" required>
-	              <div class="help-block with-errors"></div>
-	            </div>
-	          </div>
-	        </div>
-	        <div class="form-group">
-	          <button type="submit" class="btn btn-primary">送信</button>
-	        </div>
-	      </form>
-	    </div>
-  <div th:replace="common/footer :: footer_fragment"></div>
+			</div>
+			<div class="form-group">
+				<button type="submit" class="btn btn-secondary btn-block">確認画面に進む</button>
+			</div>
+		</form>
+	</div>
+
+	<div th:replace="common/footer :: footer_fragment"></div>
 </body>
 </html>

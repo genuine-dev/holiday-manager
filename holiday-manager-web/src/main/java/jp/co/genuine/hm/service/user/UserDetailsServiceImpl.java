@@ -27,13 +27,19 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
 		try {
 			user = repository.findOne(username);
+			if(user == null) {
+				throw new UsernameNotFoundException("User not found. UserId:"+ username);
+			}
+
+			if(user.isAdminFlg()) {
+				user.setRole("ADMIN");
+			} else {
+				user.setRole("USER");
+			}
 		} catch (Exception e) {
 			throw new UsernameNotFoundException("It could not be got the user");
 		}
 
-		if(user == null) {
-			throw new UsernameNotFoundException("User not fround. UserId:"+ username);
-		}
 		return new LoginUser(user);
 	}
 }
