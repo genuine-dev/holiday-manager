@@ -5,8 +5,9 @@
 <body>
 	<div th:replace="common/header :: header_fragment(title = 'ユーザ登録')"></div>
 	<div class="container">
-		<div class="header text-secondary">
-			<h1>ユーザ登録完了</h1>
+		<div class="header">
+			<h1 class="text-secondary" th:if="${!isError}">ユーザ登録完了</h1>
+			<h1 class="text-danger" th:if="${isError}">ユーザ登録失敗　APIサーバー通信に失敗しました</h1>
 		</div>
 	</div>
 	<div th:replace="common/footer :: footer_fragment"></div>

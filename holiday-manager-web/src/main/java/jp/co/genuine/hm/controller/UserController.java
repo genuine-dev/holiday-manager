@@ -60,6 +60,7 @@ public class UserController {
 		if(response.getStatusLine().getStatusCode() != HttpStatus.SC_OK) {
 			model.addAttribute("isError", true);
 		}
+		model.addAttribute("isError", false);
 		return "user_register_complete";
 	}
 }
