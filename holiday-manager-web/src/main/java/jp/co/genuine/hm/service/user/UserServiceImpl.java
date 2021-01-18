@@ -25,7 +25,7 @@ public class UserServiceImpl implements UserService {
 	ObjectMapper mapper = new ObjectMapper();
 	String contentType = "content-type";
 	String headerValue = "application/json; charset=UTF-8";
-	static String API_ROOT = "http://holiday-manager.genuine-pt.jp/";
+	static String API_ROOT = "http://localhost:8082/";
 
 
 	@Override
