@@ -110,4 +110,14 @@ public class UserDatasource implements UserRepository {
 	public void deleteGroup(GroupId groupId) {
 		userMapper.deleteGroup(groupId);
 	}
+
+	@Override
+	public void deleteUser(UserId userId) {
+		userMapper.deleteUser(userId);
+	}
+
+	@Override
+	public User findBy(UserId userId) {
+		return userMapper.findBy(userId);
+	}
 }

@@ -1,0 +1,1 @@
+ALTER TABLE "user".user ADD COLUMN deleted boolean DEFAULT false;

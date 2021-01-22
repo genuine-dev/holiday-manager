@@ -27,6 +27,7 @@ import jp.co.genuine.hm.api.domain.request.PostUserRequest;
 import jp.co.genuine.hm.api.domain.request.PutGroupRequest;
 import jp.co.genuine.hm.api.domain.request.PutUserRequest;
 import jp.co.genuine.hm.api.domain.user.GroupId;
+import jp.co.genuine.hm.api.domain.user.User;
 import jp.co.genuine.hm.api.domain.user.UserId;
 import jp.co.genuine.hm.api.domain.user.UserList;
 import jp.co.genuine.hm.api.domain.user.UserStatus;
@@ -41,7 +42,7 @@ public class UserController {
 	@GetMapping("user")
 	@ResponseBody
 	@ApiOperation("全ユーザー取得")
-	public ResponseEntity<UserList> getUser() {
+	public ResponseEntity<UserList> getUsers() {
 		UserList userList = userService.getUser();
 		return new ResponseEntity<UserList>(userList, HttpStatus.OK);
 	}
@@ -60,12 +61,19 @@ public class UserController {
 		userService.putUser(userId, request);
 	}
 
-	@GetMapping("user/{group_id}")
+	@DeleteMapping("user/{user_id}")
+	@ResponseStatus(HttpStatus.OK)
+	@ApiOperation("ユーザー削除")
+	public void deleteUser(@PathVariable("user_id") @Valid UserId userId) {
+		userService.deleteUser(userId);
+	}
+
+	@GetMapping("user/{user_id}")
 	@ResponseBody
-	@ApiOperation("グループIDに紐づくユーザー取得")
-	public ResponseEntity<UserList> getUsers(@PathVariable("group_id") @Valid GroupId groupId) {
-		UserList userList = userService.findUsers(groupId);
-		return new ResponseEntity<UserList>(userList, HttpStatus.OK);
+	@ApiOperation("UserId（DBのシーケンス番号）から特定の一人の情報を取得")
+	public ResponseEntity<User> getUser(@PathVariable("user_id") @Valid UserId userId) {
+		User user = userService.findUser(userId);
+		return new ResponseEntity<User>(user, HttpStatus.OK);
 	}
 
 	@GetMapping("user/status")

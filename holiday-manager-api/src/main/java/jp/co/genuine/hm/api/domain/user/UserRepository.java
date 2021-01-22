@@ -35,4 +35,8 @@ public interface UserRepository {
 	void deleteMember(UserId userId);
 
 	void deleteGroup(GroupId groupId);
+
+	void deleteUser(UserId userId);
+
+	User findBy(UserId userId);
 }

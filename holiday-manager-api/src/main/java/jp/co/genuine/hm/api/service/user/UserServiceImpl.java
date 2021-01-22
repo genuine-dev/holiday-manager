@@ -2,6 +2,8 @@ package jp.co.genuine.hm.api.service.user;
 
 import java.text.ParseException;
 
+import javax.validation.Valid;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +19,7 @@ import jp.co.genuine.hm.api.domain.request.PutUserRequest;
 import jp.co.genuine.hm.api.domain.user.Group;
 import jp.co.genuine.hm.api.domain.user.GroupId;
 import jp.co.genuine.hm.api.domain.user.Password;
+import jp.co.genuine.hm.api.domain.user.User;
 import jp.co.genuine.hm.api.domain.user.UserId;
 import jp.co.genuine.hm.api.domain.user.UserList;
 import jp.co.genuine.hm.api.domain.user.UserRepository;
@@ -96,5 +99,13 @@ public class UserServiceImpl implements UserService {
 
 	public void deleteGroup(GroupId groupId) {
 		userRepository.deleteGroup(groupId);
+	}
+
+	public void deleteUser(@Valid UserId userId) {
+		userRepository.deleteUser(userId);
+	}
+
+	public User findUser(UserId userId) {
+		return userRepository.findBy(userId);
 	}
 }
