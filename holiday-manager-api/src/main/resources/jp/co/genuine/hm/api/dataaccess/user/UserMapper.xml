@@ -376,4 +376,45 @@
 			id = #{userId.value}
 	</update>
 
+	<select id="findByAccountId" resultMap="userMap">
+		SELECT
+			"user".id         AS user_id
+			,"user".email     AS mail_address
+			,account.password AS password
+			,"user".name      AS user_name
+			,"user".status    AS user_status
+			,"user".hire_date AS hire_date
+			,account.admin_flg AS admin_flg
+		FROM
+			"user"."user"
+		INNER JOIN
+			"user".account
+			ON account.user_id = "user".id
+		LEFT OUTER JOIN
+			(
+				SELECT
+					id AS group_id,
+					user_id AS user_id
+				FROM
+					"user".member
+				INNER JOIN
+					"user".group
+					ON "group".id = member.group_id
+			) AS member
+			ON member.user_id = "user".id
+		LEFT OUTER JOIN
+			(
+				SELECT
+					id AS group_id,
+					user_id AS user_id
+				FROM
+					"user".manager
+				INNER JOIN
+					"user"."group"
+					ON "group".id = manager.group_id
+			) AS manager
+			ON manager.user_id = "user".id
+		WHERE
+			account.account_id = #{accountId.value}
+	</select>
 </mapper>

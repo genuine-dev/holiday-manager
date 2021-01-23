@@ -121,4 +121,10 @@ public class UserDatasource implements UserRepository {
 	public User findBy(UserId userId) {
 		return userMapper.findBy(userId);
 	}
+
+	@Override
+	public Boolean existAccountId(AccountId accountId) {
+		Optional<User> user = Optional.ofNullable(userMapper.findByAccountId(accountId));
+		return user.isPresent();
+	}
 }

@@ -17,6 +17,7 @@ import jp.co.genuine.hm.api.domain.request.PostUserRequest;
 import jp.co.genuine.hm.api.domain.request.PutGroupRequest;
 import jp.co.genuine.hm.api.domain.request.PutUserRequest;
 import jp.co.genuine.hm.api.domain.request.parameter.Sorts;
+import jp.co.genuine.hm.api.domain.user.AccountId;
 import jp.co.genuine.hm.api.domain.user.Group;
 import jp.co.genuine.hm.api.domain.user.GroupId;
 import jp.co.genuine.hm.api.domain.user.Password;
@@ -108,5 +109,9 @@ public class UserServiceImpl implements UserService {
 
 	public User findUser(UserId userId) {
 		return userRepository.findBy(userId);
+	}
+
+	public Boolean existAccountId(AccountId accountId) {
+		return userRepository.existAccountId(accountId);
 	}
 }

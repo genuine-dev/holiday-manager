@@ -41,4 +41,6 @@ public interface UserRepository {
 	void deleteUser(UserId userId);
 
 	User findBy(UserId userId);
+
+	Boolean existAccountId(AccountId accountId);
 }

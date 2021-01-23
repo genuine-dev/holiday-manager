@@ -63,4 +63,6 @@ public interface UserMapper {
 	void deleteUser(@Param("userId") UserId userId);
 
 	User findBy(@Param("userId") UserId userId);
+
+	User findByAccountId(@Param("accountId") AccountId accountId);
 }

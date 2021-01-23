@@ -31,6 +31,7 @@ import jp.co.genuine.hm.api.domain.request.PutGroupRequest;
 import jp.co.genuine.hm.api.domain.request.PutUserRequest;
 import jp.co.genuine.hm.api.domain.request.parameter.Sort;
 import jp.co.genuine.hm.api.domain.request.parameter.Sorts;
+import jp.co.genuine.hm.api.domain.user.AccountId;
 import jp.co.genuine.hm.api.domain.user.GroupId;
 import jp.co.genuine.hm.api.domain.user.User;
 import jp.co.genuine.hm.api.domain.user.UserId;
@@ -126,5 +127,13 @@ public class UserController {
 	@ApiOperation("メンバーのグループ登録")
 	public void postGroupOfMember(@RequestBody @Valid PostGroupOfMemberRequest request) {
 		userService.postGroupOfMember(request);
+	}
+
+	@GetMapping("exist/accountId/{account_id}")
+	@ResponseBody
+	@ApiOperation("DBにアカウントIDが存在するかチェック")
+	public ResponseEntity<Boolean> getExistAccountId(@PathVariable("account_id") AccountId accountId) {
+		Boolean existAccountId = userService.existAccountId(accountId);
+		return new ResponseEntity<Boolean>(existAccountId, HttpStatus.OK);
 	}
 }
