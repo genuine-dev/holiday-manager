@@ -1,6 +1,7 @@
 package jp.co.genuine.hm.api.controller.user;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.validation.Valid;
@@ -15,17 +16,21 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.annotations.ApiOperation;
+import jp.co.genuine.hm.api.domain.annotation.ContainsUserSortType;
 import jp.co.genuine.hm.api.domain.request.PostGroupOfManagerRequest;
 import jp.co.genuine.hm.api.domain.request.PostGroupOfMemberRequest;
 import jp.co.genuine.hm.api.domain.request.PostGroupRequest;
 import jp.co.genuine.hm.api.domain.request.PostUserRequest;
 import jp.co.genuine.hm.api.domain.request.PutGroupRequest;
 import jp.co.genuine.hm.api.domain.request.PutUserRequest;
+import jp.co.genuine.hm.api.domain.request.parameter.Sort;
+import jp.co.genuine.hm.api.domain.request.parameter.Sorts;
 import jp.co.genuine.hm.api.domain.user.GroupId;
 import jp.co.genuine.hm.api.domain.user.User;
 import jp.co.genuine.hm.api.domain.user.UserId;
@@ -42,8 +47,8 @@ public class UserController {
 	@GetMapping("user")
 	@ResponseBody
 	@ApiOperation("全ユーザー取得")
-	public ResponseEntity<UserList> getUsers() {
-		UserList userList = userService.getUser();
+	public ResponseEntity<UserList> getUsers(@ContainsUserSortType @RequestParam(value = "sort", required = false) List<Sort> sortList) {
+		UserList userList = userService.getUser(new Sorts(sortList));
 		return new ResponseEntity<UserList>(userList, HttpStatus.OK);
 	}
 

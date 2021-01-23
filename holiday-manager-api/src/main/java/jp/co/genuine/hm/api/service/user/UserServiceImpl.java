@@ -16,6 +16,7 @@ import jp.co.genuine.hm.api.domain.request.PostGroupRequest;
 import jp.co.genuine.hm.api.domain.request.PostUserRequest;
 import jp.co.genuine.hm.api.domain.request.PutGroupRequest;
 import jp.co.genuine.hm.api.domain.request.PutUserRequest;
+import jp.co.genuine.hm.api.domain.request.parameter.Sorts;
 import jp.co.genuine.hm.api.domain.user.Group;
 import jp.co.genuine.hm.api.domain.user.GroupId;
 import jp.co.genuine.hm.api.domain.user.Password;
@@ -35,8 +36,8 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	PasswordEncoder passwordEncoder;
 
-	public UserList getUser() {
-		return userRepository.findAll();
+	public UserList getUser(Sorts sorts) {
+		return userRepository.findAll(sorts);
 	}
 
 	public void postUser(PostUserRequest request) {

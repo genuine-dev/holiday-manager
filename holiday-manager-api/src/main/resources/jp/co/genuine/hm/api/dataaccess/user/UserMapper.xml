@@ -195,6 +195,11 @@
 					ON "group".id = manager.group_id
 			) AS manager
 			ON manager.user_id = "user".id
+		<foreach collection="sorts.sortList" item="sort" open="ORDER BY" close="" separator=",">
+			<if test="sort.userName">
+				"user".name
+			</if>
+		</foreach>
 	</select>
 
 	<select id="findBy" resultMap="userMap">

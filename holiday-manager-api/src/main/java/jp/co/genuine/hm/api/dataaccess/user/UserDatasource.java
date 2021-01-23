@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import jp.co.genuine.hm.api.domain.request.parameter.Sorts;
 import jp.co.genuine.hm.api.domain.user.AccountId;
 import jp.co.genuine.hm.api.domain.user.Group;
 import jp.co.genuine.hm.api.domain.user.GroupId;
@@ -47,8 +48,8 @@ public class UserDatasource implements UserRepository {
 	}
 
 	@Override
-	public UserList findAll() {
-		List<User> userList = userMapper.findAllUser();
+	public UserList findAll(Sorts sorts) {
+		List<User> userList = userMapper.findAllUser(sorts);
 		return new UserList(userList);
 	}
 

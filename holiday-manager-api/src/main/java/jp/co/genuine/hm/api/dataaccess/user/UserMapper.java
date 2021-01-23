@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import jp.co.genuine.hm.api.domain.request.parameter.Sorts;
 import jp.co.genuine.hm.api.domain.user.AccountId;
 import jp.co.genuine.hm.api.domain.user.GroupId;
 import jp.co.genuine.hm.api.domain.user.GroupName;
@@ -31,7 +32,7 @@ public interface UserMapper {
 	void updateUser(@Param("userId") UserId userId, @Param("mailAddress") MailAddress mailAddress,
 			@Param("userName") UserName userName);
 
-	List<User> findAllUser();
+	List<User> findAllUser(@Param("sorts") Sorts sorts);
 
 	List<User> findManagerList(@Param("groupId") GroupId groupId);
 
