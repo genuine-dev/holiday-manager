@@ -13,6 +13,7 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import jp.co.genuine.hm.api.domain.user.AccountId;
 import jp.co.genuine.hm.api.domain.user.HireDate;
+import jp.co.genuine.hm.api.domain.user.LeftoverHoliday;
 import jp.co.genuine.hm.api.domain.user.MailAddress;
 import jp.co.genuine.hm.api.domain.user.Password;
 import jp.co.genuine.hm.api.domain.user.UserName;
@@ -44,15 +45,19 @@ public class PostUserRequest {
 	@Length(max = 20)
 	@ApiModelProperty(example = "ACTIVE", required = true)
 	private String status;
+	@NotBlank
+	@ApiModelProperty(example = "20", required = true)
+	private String leftoverHoliday;
 
 	public PostUserRequest(String accountId, String password, String mailAddress,
-			String userName, String hireDate, String status) {
+			String userName, String hireDate, String status, String leftoverHoliday) {
 		this.accountId = accountId;
 		this.password = password;
 		this.mailAddress = mailAddress;
 		this.userName = userName;
 		this.hireDate = hireDate;
 		this.status = status;
+		this.leftoverHoliday = leftoverHoliday;
 	}
 
 	@AssertTrue(message = "日付の形式が正しくありません。")
@@ -99,6 +104,10 @@ public class PostUserRequest {
 
 	public UserStatus getStatus() {
 		return UserStatus.valueOf(status);
+	}
+
+	public LeftoverHoliday getLeftoverHoliday() {
+		return new LeftoverHoliday(leftoverHoliday);
 	}
 
 }

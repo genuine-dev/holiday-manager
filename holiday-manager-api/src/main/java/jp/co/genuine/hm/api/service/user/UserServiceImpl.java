@@ -51,7 +51,7 @@ public class UserServiceImpl implements UserService {
 		try {
 			userRepository.insertUser(userId, request.getStatus(),
 					request.getMailAddress(), request.getUserName(),
-					request.getHireDate());
+					request.getHireDate(), request.getLeftoverHoliday());
 		} catch (ParseException e) {
 			logError(e);
 			throw new RuntimeException(e);

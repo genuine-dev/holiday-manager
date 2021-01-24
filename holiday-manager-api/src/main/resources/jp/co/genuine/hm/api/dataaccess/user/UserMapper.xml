@@ -42,6 +42,7 @@
 				email,
 				name,
 				hire_date,
+				leftover_holiday,
 				update_datetime
 			)
 		VALUES
@@ -51,6 +52,7 @@
 				#{mailAddress.value},
 				#{userName.value},
 				#{hireDate.value},
+				#{leftoverHoliday.value},
 				now()
 			)
 	</insert>

@@ -12,6 +12,7 @@ import jp.co.genuine.hm.api.domain.user.Group;
 import jp.co.genuine.hm.api.domain.user.GroupId;
 import jp.co.genuine.hm.api.domain.user.GroupName;
 import jp.co.genuine.hm.api.domain.user.HireDate;
+import jp.co.genuine.hm.api.domain.user.LeftoverHoliday;
 import jp.co.genuine.hm.api.domain.user.MailAddress;
 import jp.co.genuine.hm.api.domain.user.Password;
 import jp.co.genuine.hm.api.domain.user.User;
@@ -33,8 +34,8 @@ public class UserDatasource implements UserRepository {
 
 	@Override
 	public void insertUser(UserId userId, UserStatus userStatus, MailAddress mailAddress, UserName userName,
-			HireDate hireDate) {
-		userMapper.insertUser(userId, userStatus, mailAddress, userName, hireDate);
+			HireDate hireDate, LeftoverHoliday leftoverHoliday) {
+		userMapper.insertUser(userId, userStatus, mailAddress, userName, hireDate, leftoverHoliday);
 	}
 
 	@Override

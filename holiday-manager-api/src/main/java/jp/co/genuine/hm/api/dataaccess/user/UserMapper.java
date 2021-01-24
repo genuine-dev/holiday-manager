@@ -10,6 +10,7 @@ import jp.co.genuine.hm.api.domain.user.AccountId;
 import jp.co.genuine.hm.api.domain.user.GroupId;
 import jp.co.genuine.hm.api.domain.user.GroupName;
 import jp.co.genuine.hm.api.domain.user.HireDate;
+import jp.co.genuine.hm.api.domain.user.LeftoverHoliday;
 import jp.co.genuine.hm.api.domain.user.MailAddress;
 import jp.co.genuine.hm.api.domain.user.Password;
 import jp.co.genuine.hm.api.domain.user.User;
@@ -24,7 +25,7 @@ public interface UserMapper {
 
 	void insertUser(@Param("userId") UserId userId, @Param("userStatus") UserStatus userStatus,
 			@Param("mailAddress") MailAddress mailAddress, @Param("userName") UserName userName,
-			@Param("hireDate") HireDate hireDate);
+			@Param("hireDate") HireDate hireDate, @Param("leftoverHoliday") LeftoverHoliday leftoverHoliday);
 
 	void insertAccount(@Param("userId") UserId userId, @Param("accountId") AccountId accountId,
 			@Param("password") Password password);

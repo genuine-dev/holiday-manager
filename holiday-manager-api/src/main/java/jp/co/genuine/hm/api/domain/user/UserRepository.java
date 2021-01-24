@@ -8,7 +8,7 @@ public interface UserRepository {
 	UserId nextUserId();
 
 	void insertUser(UserId userId, UserStatus userStatus, MailAddress mailAddress, UserName userName,
-			HireDate hireDate);
+			HireDate hireDate, LeftoverHoliday leftoverHoliday);
 
 	void insertAccount(UserId userId, AccountId accountId, Password password);
 
