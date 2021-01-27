@@ -11,7 +11,7 @@ import javax.persistence.Lob;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "event_store")
+@Table(name = "event_store", schema = "event")
 public class EventStoreEntity {
 	@Id
 	@Column(name = "id")
