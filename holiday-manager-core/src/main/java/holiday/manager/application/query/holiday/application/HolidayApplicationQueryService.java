@@ -1,4 +1,4 @@
-package holiday.manager.application.query.holiday;
+package holiday.manager.application.query.holiday.application;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -7,8 +7,8 @@ import java.util.stream.StreamSupport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import holiday.manager.application.query.holiday.dto.HolidayApplicationDto;
-import holiday.manager.port.adapter.persistence.repository.holiday.query.HolidayApplicationQueryRepository;
+import holiday.manager.application.query.holiday.application.dto.HolidayApplicationDto;
+import holiday.manager.port.adapter.persistence.repository.holiday.application.query.HolidayApplicationQueryRepository;
 
 @Component
 public class HolidayApplicationQueryService {

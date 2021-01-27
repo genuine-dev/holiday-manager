@@ -1,4 +1,4 @@
-package holiday.manager.port.adapter.persistence.repository.holiday.query;
+package holiday.manager.port.adapter.persistence.repository.holiday.application.query;
 
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;

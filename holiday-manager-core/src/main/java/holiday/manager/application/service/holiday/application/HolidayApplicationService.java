@@ -1,4 +1,4 @@
-package holiday.manager.application.service.holiday;
+package holiday.manager.application.service.holiday.application;
 
 
 import java.util.Date;
@@ -6,11 +6,11 @@ import java.util.Date;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import holiday.manager.domain.model.holiday.KindOfHoliday;
 import holiday.manager.domain.model.holiday.application.HolidayApplication;
 import holiday.manager.domain.model.holiday.application.HolidayApplicationId;
 import holiday.manager.domain.model.holiday.application.HolidayApplicationRepository;
 import holiday.manager.domain.model.holiday.application.HolidayType;
-import holiday.manager.domain.model.holiday.application.KindOfHoliday;
 import holiday.manager.domain.model.user.User;
 
 @Service

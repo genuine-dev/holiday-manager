@@ -1,4 +1,4 @@
-package holiday.manager.port.adapter.persistence.repository.holiday;
+package holiday.manager.port.adapter.persistence.repository.holiday.holiday;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -11,7 +11,7 @@ import holiday.manager.event.sourcing.EventStream;
 import holiday.manager.event.sourcing.EventStreamId;
 
 @Repository
-public class EventStoreHolidayApplicationRepository implements HolidayApplicationRepository {
+public class EventStoreHolidayListRepository implements HolidayApplicationRepository {
 
 	@Autowired
 	private EventStore eventStore;

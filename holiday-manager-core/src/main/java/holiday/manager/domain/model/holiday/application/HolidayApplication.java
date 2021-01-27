@@ -6,6 +6,7 @@ import java.util.List;
 import holiday.manager.domain.model.AggregateRoot;
 import holiday.manager.domain.model.AuthenticationException;
 import holiday.manager.domain.model.DomainEvent;
+import holiday.manager.domain.model.holiday.KindOfHoliday;
 import holiday.manager.domain.model.holiday.application.event.HolidayApplicationApplied;
 import holiday.manager.domain.model.holiday.application.event.HolidayApplicationApproved;
 import holiday.manager.domain.model.holiday.application.event.HolidayApplicationCanceled;
@@ -85,7 +86,7 @@ public class HolidayApplication extends AggregateRoot {
 		return this;
 	}
 
-	public void on(HolidayApplicationApplied event) {
+	protected void on(HolidayApplicationApplied event) {
 		id = event.getId();
 		kindOfHoliday = event.getKindOfHoliday();
 		holidayType = event.getHolidayType();
@@ -94,17 +95,17 @@ public class HolidayApplication extends AggregateRoot {
 		applicantId = event.getApplicantId();
 	}
 
-	public void on(HolidayApplicationApproved event) {
+	protected void on(HolidayApplicationApproved event) {
 		status = HolidayApplicationStatus.APPROVED;
 		approverId = event.getApproverId();
 	}
 
-	public void on(HolidayApplicationRejected event) {
+	protected void on(HolidayApplicationRejected event) {
 		status = HolidayApplicationStatus.REJECTED;
 		approverId = event.getApproverId();
 	}
 
-	public void on(HolidayApplicationCanceled event) {
+	protected void on(HolidayApplicationCanceled event) {
 		status = HolidayApplicationStatus.CANCELED;
 	}
 

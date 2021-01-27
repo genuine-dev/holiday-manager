@@ -6,7 +6,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "dispatcher_latest_event")
+@Table(name = "dispatcher_latest_event", schema = "event")
 public class DipatcherLatestEventEntity {
 	@Id
 	@Column(name = "id")

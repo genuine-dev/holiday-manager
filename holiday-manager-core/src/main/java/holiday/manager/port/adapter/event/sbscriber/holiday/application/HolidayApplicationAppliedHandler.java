@@ -1,4 +1,4 @@
-package holiday.manager.port.adapter.event.sbscriber.holiday;
+package holiday.manager.port.adapter.event.sbscriber.holiday.application;
 
 import javax.annotation.PostConstruct;
 
@@ -8,8 +8,8 @@ import org.springframework.stereotype.Component;
 import holiday.manager.domain.model.holiday.application.event.HolidayApplicationApplied;
 import holiday.manager.event.sourcing.EventPublisher;
 import holiday.manager.event.sourcing.EventSubscriber;
-import holiday.manager.port.adapter.persistence.repository.holiday.query.HolidayApplicationEntity;
-import holiday.manager.port.adapter.persistence.repository.holiday.query.HolidayApplicationQueryRepository;
+import holiday.manager.port.adapter.persistence.repository.holiday.application.query.HolidayApplicationEntity;
+import holiday.manager.port.adapter.persistence.repository.holiday.application.query.HolidayApplicationQueryRepository;
 
 @Component
 public class HolidayApplicationAppliedHandler implements EventSubscriber<HolidayApplicationApplied> {

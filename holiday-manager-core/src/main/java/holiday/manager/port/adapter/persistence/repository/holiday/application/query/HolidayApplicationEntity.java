@@ -1,26 +1,42 @@
-package holiday.manager.application.query.holiday.dto;
+package holiday.manager.port.adapter.persistence.repository.holiday.application.query;
 
 import java.util.Date;
 
-public class HolidayApplicationDto {
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
+@Entity
+@Table(name = "holiday_applicatoin", schema="user")
+public class HolidayApplicationEntity {
+	@Id
+	@Column(name = "id", length = 36)
 	private String id;
 
+	@Column(name = "kind", length = 20)
 	private String kind;
 
+	@Column(name = "type", length = 20)
 	private String type;
 
+	@Column(name = "status", length = 20)
 	private String status;
 
+	@Column(name = "date")
 	private Date date;
 
+	@Column(name = "applicant_id", length = 36)
 	private String aplicantId;
 
+	@Column(name = "approver_id", length = 36)
 	private String approverId;
 
-	private Date applyDate;
+	@Column(name = "created_at")
+	private Date createdAt;
 
-	private Date approveDate;
+	@Column(name = "updated_at")
+	private Date updateedAt;
 
 	public String getId() {
 		return id;
@@ -78,20 +94,20 @@ public class HolidayApplicationDto {
 		this.approverId = approverId;
 	}
 
-	public Date getApplyDate() {
-		return applyDate;
+	public Date getCreatedAt() {
+		return createdAt;
 	}
 
-	public void setApplyDate(Date applyDate) {
-		this.applyDate = applyDate;
+	public void setCreatedAt(Date createdAt) {
+		this.createdAt = createdAt;
 	}
 
-	public Date getApproveDate() {
-		return approveDate;
+	public Date getUpdateedAt() {
+		return updateedAt;
 	}
 
-	public void setApproveDate(Date approveDate) {
-		this.approveDate = approveDate;
+	public void setUpdateedAt(Date updateedAt) {
+		this.updateedAt = updateedAt;
 	}
 
 }

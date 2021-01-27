@@ -3,10 +3,10 @@ package holiday.manager.domain.model.holiday.application.event;
 import java.util.Date;
 
 import holiday.manager.domain.model.DomainEvent;
+import holiday.manager.domain.model.holiday.KindOfHoliday;
 import holiday.manager.domain.model.holiday.application.HolidayApplicationId;
 import holiday.manager.domain.model.holiday.application.HolidayApplicationStatus;
 import holiday.manager.domain.model.holiday.application.HolidayType;
-import holiday.manager.domain.model.holiday.application.KindOfHoliday;
 import holiday.manager.domain.model.user.UserId;
 
 public class HolidayApplicationApplied implements DomainEvent {

@@ -1,4 +1,4 @@
-package holiday.manager.application;
+package holiday.manager.application.holiday.application;
 
 import static org.assertj.core.api.Assertions.*;
 
@@ -13,15 +13,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import holiday.manager.application.query.holiday.HolidayApplicationQueryService;
-import holiday.manager.application.query.holiday.dto.HolidayApplicationDto;
-import holiday.manager.application.service.holiday.HolidayApplicationService;
+import holiday.manager.application.query.holiday.application.HolidayApplicationQueryService;
+import holiday.manager.application.query.holiday.application.dto.HolidayApplicationDto;
+import holiday.manager.application.service.holiday.application.HolidayApplicationService;
 import holiday.manager.domain.model.AuthenticationException;
+import holiday.manager.domain.model.holiday.KindOfHoliday;
 import holiday.manager.domain.model.holiday.application.HolidayApplication;
 import holiday.manager.domain.model.holiday.application.HolidayApplicationRepository;
 import holiday.manager.domain.model.holiday.application.HolidayApplicationStatus;
 import holiday.manager.domain.model.holiday.application.HolidayType;
-import holiday.manager.domain.model.holiday.application.KindOfHoliday;
 import holiday.manager.domain.model.holiday.application.event.HolidayApplicationApplied;
 import holiday.manager.domain.model.holiday.application.event.HolidayApplicationApproved;
 import holiday.manager.domain.model.holiday.application.event.HolidayApplicationCanceled;
