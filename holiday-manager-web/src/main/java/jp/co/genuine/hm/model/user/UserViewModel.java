@@ -5,7 +5,7 @@ import javax.validation.constraints.NotBlank;
 
 import org.hibernate.validator.constraints.Length;
 
-public class RegisterUserRequest {
+public class UserViewModel {
 	@NotBlank
 	@Length(max = 20)
 	private String accountId;
