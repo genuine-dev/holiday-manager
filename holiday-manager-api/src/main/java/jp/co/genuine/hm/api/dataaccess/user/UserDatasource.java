@@ -11,16 +11,10 @@ import jp.co.genuine.hm.api.domain.user.AccountId;
 import jp.co.genuine.hm.api.domain.user.Group;
 import jp.co.genuine.hm.api.domain.user.GroupId;
 import jp.co.genuine.hm.api.domain.user.GroupName;
-import jp.co.genuine.hm.api.domain.user.HireDate;
-import jp.co.genuine.hm.api.domain.user.LeftoverHoliday;
-import jp.co.genuine.hm.api.domain.user.MailAddress;
-import jp.co.genuine.hm.api.domain.user.Password;
 import jp.co.genuine.hm.api.domain.user.User;
 import jp.co.genuine.hm.api.domain.user.UserId;
 import jp.co.genuine.hm.api.domain.user.UserList;
-import jp.co.genuine.hm.api.domain.user.UserName;
 import jp.co.genuine.hm.api.domain.user.UserRepository;
-import jp.co.genuine.hm.api.domain.user.UserStatus;
 
 @Repository
 public class UserDatasource implements UserRepository {
@@ -33,19 +27,23 @@ public class UserDatasource implements UserRepository {
 	}
 
 	@Override
-	public void insertUser(UserId userId, UserStatus userStatus, MailAddress mailAddress, UserName userName,
-			HireDate hireDate, LeftoverHoliday leftoverHoliday) {
-		userMapper.insertUser(userId, userStatus, mailAddress, userName, hireDate, leftoverHoliday);
+	public void insertUser(User user) {
+		userMapper.insertUser(user);
 	}
 
 	@Override
-	public void insertAccount(UserId userId, AccountId accountId, Password password) {
-		userMapper.insertAccount(userId, accountId, password);
+	public void insertAccount(User user) {
+		userMapper.insertAccount(user);
 	}
 
 	@Override
-	public void updateUser(UserId userId, MailAddress mailAddress, UserName userName) {
-		userMapper.updateUser(userId, mailAddress, userName);
+	public void updateUser(User user) {
+		userMapper.updateUser(user);
+	}
+
+	@Override
+	public void updateAccount(User user) {
+		userMapper.updateAccount(user);
 	}
 
 	@Override

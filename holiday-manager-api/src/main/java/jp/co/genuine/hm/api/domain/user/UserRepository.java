@@ -7,12 +7,13 @@ import jp.co.genuine.hm.api.domain.request.parameter.Sorts;
 public interface UserRepository {
 	UserId nextUserId();
 
-	void insertUser(UserId userId, UserStatus userStatus, MailAddress mailAddress, UserName userName,
-			HireDate hireDate, LeftoverHoliday leftoverHoliday);
+	void insertUser(User user);
 
-	void insertAccount(UserId userId, AccountId accountId, Password password);
+	void insertAccount(User user);
 
-	void updateUser(UserId userId, MailAddress mailAddress, UserName userName);
+	void updateUser(User user);
+
+	void updateAccount(User user);
 
 	UserList findAll(Sorts sorts);
 

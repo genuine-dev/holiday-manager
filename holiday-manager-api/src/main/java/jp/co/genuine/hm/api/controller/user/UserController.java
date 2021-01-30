@@ -22,7 +22,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.annotations.ApiOperation;
-import jp.co.genuine.hm.api.domain.annotation.ContainsUserSortType;
 import jp.co.genuine.hm.api.domain.request.PostGroupOfManagerRequest;
 import jp.co.genuine.hm.api.domain.request.PostGroupOfMemberRequest;
 import jp.co.genuine.hm.api.domain.request.PostGroupRequest;
@@ -37,6 +36,7 @@ import jp.co.genuine.hm.api.domain.user.User;
 import jp.co.genuine.hm.api.domain.user.UserId;
 import jp.co.genuine.hm.api.domain.user.UserList;
 import jp.co.genuine.hm.api.domain.user.UserStatus;
+import jp.co.genuine.hm.api.domain.validation.ContainsUserSortType;
 import jp.co.genuine.hm.api.service.user.UserServiceImpl;
 
 @RestController

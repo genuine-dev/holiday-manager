@@ -1,6 +1,9 @@
 package jp.co.genuine.hm.api.domain.user;
 
+import javax.validation.constraints.Email;
+
 public class MailAddress {
+	@Email
 	private String value;
 
 	public MailAddress(String value) {

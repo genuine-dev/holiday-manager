@@ -9,29 +9,21 @@ import jp.co.genuine.hm.api.domain.request.parameter.Sorts;
 import jp.co.genuine.hm.api.domain.user.AccountId;
 import jp.co.genuine.hm.api.domain.user.GroupId;
 import jp.co.genuine.hm.api.domain.user.GroupName;
-import jp.co.genuine.hm.api.domain.user.HireDate;
-import jp.co.genuine.hm.api.domain.user.LeftoverHoliday;
-import jp.co.genuine.hm.api.domain.user.MailAddress;
-import jp.co.genuine.hm.api.domain.user.Password;
 import jp.co.genuine.hm.api.domain.user.User;
 import jp.co.genuine.hm.api.domain.user.UserId;
-import jp.co.genuine.hm.api.domain.user.UserName;
-import jp.co.genuine.hm.api.domain.user.UserStatus;
 
 @Mapper
 public interface UserMapper {
 
 	UserId nextUserId();
 
-	void insertUser(@Param("userId") UserId userId, @Param("userStatus") UserStatus userStatus,
-			@Param("mailAddress") MailAddress mailAddress, @Param("userName") UserName userName,
-			@Param("hireDate") HireDate hireDate, @Param("leftoverHoliday") LeftoverHoliday leftoverHoliday);
+	void insertUser(@Param("user") User user);
 
-	void insertAccount(@Param("userId") UserId userId, @Param("accountId") AccountId accountId,
-			@Param("password") Password password);
+	void insertAccount(@Param("user") User user);
 
-	void updateUser(@Param("userId") UserId userId, @Param("mailAddress") MailAddress mailAddress,
-			@Param("userName") UserName userName);
+	void updateUser(@Param("user") User user);
+
+	void updateAccount(@Param("user") User user);
 
 	List<User> findAllUser(@Param("sorts") Sorts sorts);
 

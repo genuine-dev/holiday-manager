@@ -1,13 +1,8 @@
 package jp.co.genuine.hm.api.service.user;
 
-import java.text.ParseException;
-
 import javax.validation.Valid;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import jp.co.genuine.hm.api.domain.request.PostGroupOfManagerRequest;
@@ -20,46 +15,48 @@ import jp.co.genuine.hm.api.domain.request.parameter.Sorts;
 import jp.co.genuine.hm.api.domain.user.AccountId;
 import jp.co.genuine.hm.api.domain.user.Group;
 import jp.co.genuine.hm.api.domain.user.GroupId;
-import jp.co.genuine.hm.api.domain.user.Password;
 import jp.co.genuine.hm.api.domain.user.User;
+import jp.co.genuine.hm.api.domain.user.UserFactory;
 import jp.co.genuine.hm.api.domain.user.UserId;
 import jp.co.genuine.hm.api.domain.user.UserList;
 import jp.co.genuine.hm.api.domain.user.UserRepository;
+import jp.co.genuine.hm.api.service.validation.ValidateService;
 
 @Service
 public class UserServiceImpl implements UserService {
-
-	private static Log log = LogFactory.getLog(UserServiceImpl.class);
 
 	@Autowired
 	UserRepository userRepository;
 
 	@Autowired
-	PasswordEncoder passwordEncoder;
+	UserFactory userFactory;
+
+	@Autowired
+	ValidateService validateService;
 
 	public UserList getUser(Sorts sorts) {
 		return userRepository.findAll(sorts);
 	}
 
 	public void postUser(PostUserRequest request) {
-		UserId userId = userRepository.nextUserId();
-		insertUser(userId, request);
-		userRepository.insertAccount(userId, request.getAccountId(), new Password(encodePassword(request.getPassword())));
-	}
-
-	private void insertUser(UserId userId, PostUserRequest request) {
-		try {
-			userRepository.insertUser(userId, request.getStatus(),
-					request.getMailAddress(), request.getUserName(),
-					request.getHireDate(), request.getLeftoverHoliday());
-		} catch (ParseException e) {
-			logError(e);
-			throw new RuntimeException(e);
-		}
+		User user = userFactory.create(request);
+		validateService.validate(user);
+		userRepository.insertUser(user);
+		userRepository.insertAccount(user);
 	}
 
 	public void putUser(UserId userId, PutUserRequest request) {
-		userRepository.updateUser(userId, request.getMailAddress(), request.getUserName());
+		User user = userFactory.create(userId, request);
+		validateService.validate(user);
+		userRepository.updateUser(user);
+		updateAccount(user);
+	}
+
+	private void updateAccount(User user) {
+		if(user.isEmptyPassword()) {
+			return;
+		}
+		userRepository.updateAccount(user);
 	}
 
 	public Group findGroup(GroupId groupId) {
@@ -89,14 +86,6 @@ public class UserServiceImpl implements UserService {
 		userRepository.deleteManager(request.getUserId());
 		userRepository.deleteMember(request.getUserId());
 		userRepository.insertMember(request.getUserId(), request.getGroupId());
-	}
-
-	private void logError(ParseException e) {
-		log.error(e);
-	}
-
-	private String encodePassword(Password password) {
-		return passwordEncoder.encode(password.getValue());
 	}
 
 	public void deleteGroup(GroupId groupId) {

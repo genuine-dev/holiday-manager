@@ -1,4 +1,4 @@
-package jp.co.genuine.hm.api.domain.annotation;
+package jp.co.genuine.hm.api.domain.validation;
 
 import static java.lang.annotation.ElementType.*;
 
@@ -11,9 +11,9 @@ import javax.validation.Payload;
 
 @Target({METHOD, FIELD, CONSTRUCTOR, PARAMETER, TYPE_USE})
 @Retention(RetentionPolicy.RUNTIME)
-@Constraint(validatedBy = {ContainsUserSortTypeValidator.class})
-public @interface ContainsUserSortType {
-	String message() default "";
+@Constraint(validatedBy = {DuplicateAccountIdValidator.class})
+public @interface DuplicateAccountId {
+	String message() default "既に存在します";
 	Class<?>[] groups() default {};
 	Class<? extends Payload>[] payload() default {};
 }

@@ -1,4 +1,4 @@
-package jp.co.genuine.hm.api.domain.annotation;
+package jp.co.genuine.hm.api.domain.validation;
 
 import java.util.List;
 
