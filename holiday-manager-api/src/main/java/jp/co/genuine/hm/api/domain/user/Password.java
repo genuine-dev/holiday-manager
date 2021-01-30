@@ -10,6 +10,13 @@ public class Password {
 		this.value = value;
 	}
 
+	public boolean isEmpty() {
+		if (value == null || value.isEmpty()) {
+			return true;
+		}
+		return false;
+	}
+
 	public String getValue() {
 		return value;
 	}

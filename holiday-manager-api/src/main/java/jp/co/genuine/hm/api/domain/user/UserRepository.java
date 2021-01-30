@@ -2,7 +2,8 @@ package jp.co.genuine.hm.api.domain.user;
 
 import java.util.Optional;
 
-import jp.co.genuine.hm.api.domain.request.parameter.Sorts;
+import jp.co.genuine.hm.api.domain.request.user.parameter.UserQueries;
+import jp.co.genuine.hm.api.domain.request.user.parameter.UserSorts;
 
 public interface UserRepository {
 	UserId nextUserId();
@@ -15,7 +16,7 @@ public interface UserRepository {
 
 	void updateAccount(User user);
 
-	UserList findAll(Sorts sorts);
+	UserList findAll(UserSorts sorts, UserQueries queries);
 
 	Group findGroup(GroupId groupId);
 

@@ -216,6 +216,9 @@
 			ON manager.user_id = "user".id
 		WHERE
 			"user".deleted = false
+		<if test="queries.isNotEmptyUserNameQuery">
+			AND "user".name like '%${queries.userNameQuery}%'
+		</if>
 		<foreach collection="sorts.sortList" item="sort" open="ORDER BY" close="" separator=",">
 			<if test="sort.userName">
 				"user".name

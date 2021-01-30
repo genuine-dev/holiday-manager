@@ -22,14 +22,15 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.annotations.ApiOperation;
-import jp.co.genuine.hm.api.domain.request.PostGroupOfManagerRequest;
-import jp.co.genuine.hm.api.domain.request.PostGroupOfMemberRequest;
-import jp.co.genuine.hm.api.domain.request.PostGroupRequest;
-import jp.co.genuine.hm.api.domain.request.PostUserRequest;
-import jp.co.genuine.hm.api.domain.request.PutGroupRequest;
-import jp.co.genuine.hm.api.domain.request.PutUserRequest;
-import jp.co.genuine.hm.api.domain.request.parameter.Sort;
-import jp.co.genuine.hm.api.domain.request.parameter.Sorts;
+import jp.co.genuine.hm.api.domain.request.user.PostGroupOfManagerRequest;
+import jp.co.genuine.hm.api.domain.request.user.PostGroupOfMemberRequest;
+import jp.co.genuine.hm.api.domain.request.user.PostGroupRequest;
+import jp.co.genuine.hm.api.domain.request.user.PostUserRequest;
+import jp.co.genuine.hm.api.domain.request.user.PutGroupRequest;
+import jp.co.genuine.hm.api.domain.request.user.PutUserRequest;
+import jp.co.genuine.hm.api.domain.request.user.parameter.UserQueries;
+import jp.co.genuine.hm.api.domain.request.user.parameter.UserSort;
+import jp.co.genuine.hm.api.domain.request.user.parameter.UserSorts;
 import jp.co.genuine.hm.api.domain.user.AccountId;
 import jp.co.genuine.hm.api.domain.user.GroupId;
 import jp.co.genuine.hm.api.domain.user.User;
@@ -48,8 +49,10 @@ public class UserController {
 	@GetMapping("user")
 	@ResponseBody
 	@ApiOperation("全ユーザー取得")
-	public ResponseEntity<UserList> getUsers(@ContainsUserSortType @RequestParam(value = "sort", required = false) List<Sort> sortList) {
-		UserList userList = userService.getUser(new Sorts(sortList));
+	public ResponseEntity<UserList> getUsers(
+			@ContainsUserSortType @RequestParam(value = "sort", required = false) List<UserSort> sortList,
+			@RequestParam(value = "queryusername", required = false) String userNameQuery) {
+		UserList userList = userService.getUser(new UserSorts(sortList), new UserQueries(userNameQuery));
 		return new ResponseEntity<UserList>(userList, HttpStatus.OK);
 	}
 

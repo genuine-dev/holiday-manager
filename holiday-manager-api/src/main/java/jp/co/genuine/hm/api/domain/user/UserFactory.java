@@ -4,8 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
-import jp.co.genuine.hm.api.domain.request.PostUserRequest;
-import jp.co.genuine.hm.api.domain.request.PutUserRequest;
+import jp.co.genuine.hm.api.domain.request.user.PostUserRequest;
+import jp.co.genuine.hm.api.domain.request.user.PutUserRequest;
 
 @Component
 public class UserFactory {
