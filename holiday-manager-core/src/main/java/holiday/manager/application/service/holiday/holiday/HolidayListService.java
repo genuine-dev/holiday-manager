@@ -25,7 +25,7 @@ public class HolidayListService {
 
 	public HolidayList grantHoliday(UserId owner, KindOfHoliday kind, double days, Date grantedDate,
 			Date expirationDate) {
-		HolidayList holidayList = repository.findById(new HolidayListId(owner.getValue()));
+		HolidayList holidayList = repository.findById(new HolidayListId(owner.getValue().toString()));
 		holidayList.grant(kind, days, grantedDate, expirationDate);
 		repository.save(holidayList);
 		return holidayList;
@@ -34,9 +34,13 @@ public class HolidayListService {
 
 	public HolidayList takeHoliday(UserId owner, KindOfHoliday kind, double days, Date date,
 			HolidayApplicationId applicationId) {
-		HolidayList holidayList = repository.findById(new HolidayListId(owner.getValue()));
+		HolidayList holidayList = repository.findById(new HolidayListId(owner.getValue().toString()));
 		holidayList.take(kind, days, date, applicationId);
 		repository.save(holidayList);
 		return holidayList;
+	}
+
+	public HolidayList findHolidayList(UserId owner) {
+		return  repository.findById(new HolidayListId(owner.getValue().toString()));
 	}
 }

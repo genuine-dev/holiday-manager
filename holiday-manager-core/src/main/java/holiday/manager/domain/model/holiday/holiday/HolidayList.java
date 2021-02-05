@@ -30,7 +30,7 @@ public class HolidayList extends AggregateRoot {
 	}
 
 	public HolidayList(UserId owner) {
-		HolidayListId id = new HolidayListId(owner.getValue());
+		HolidayListId id = new HolidayListId(owner.getValue().toString());
 		apply(new HolidayListCreated(id, owner));
 	}
 

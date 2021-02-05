@@ -53,7 +53,7 @@ public class HolidayApplicationServiceTest {
 		//休暇申請時にステータスがAPPLYINGになること
 		@SuppressWarnings("deprecation")
 		Date applyDate = new Date(2020, 10, 10);
-		User applicant = new User(new UserId("test"), new ArrayList<User>());
+		User applicant = new User(new UserId(1), new ArrayList<User>());
 		HolidayApplication application = service.apply(KindOfHoliday.PAYED_LEAVE, HolidayType.FULL_OFF, applyDate,
 				applicant);
 		assertThat(application.getStatus()).isEqualTo(HolidayApplicationStatus.APPLYING);
@@ -88,8 +88,8 @@ public class HolidayApplicationServiceTest {
 		//休暇申請時にステータスがAPPROVEDになること
 		@SuppressWarnings("deprecation")
 		Date applyDate = new Date(2020, 10, 10);
-		User applicant = new User(new UserId("test"), new ArrayList<User>());
-		User approver = new User(new UserId("admin"), Arrays.asList(applicant));
+		User applicant = new User(new UserId(1), new ArrayList<User>());
+		User approver = new User(new UserId(100), Arrays.asList(applicant));
 
 		HolidayApplication application = service.apply(KindOfHoliday.PAYED_LEAVE, HolidayType.FULL_OFF, applyDate,
 				applicant);
@@ -130,8 +130,8 @@ public class HolidayApplicationServiceTest {
 		//休暇申請時にステータスがREJECTEDになること
 		@SuppressWarnings("deprecation")
 		Date applyDate = new Date(2020, 10, 10);
-		User applicant = new User(new UserId("test"), new ArrayList<User>());
-		User approver = new User(new UserId("admin"), Arrays.asList(applicant));
+		User applicant = new User(new UserId(1), new ArrayList<User>());
+		User approver = new User(new UserId(100), Arrays.asList(applicant));
 
 		HolidayApplication application = service.apply(KindOfHoliday.PAYED_LEAVE, HolidayType.FULL_OFF, applyDate,
 				applicant);
@@ -173,7 +173,7 @@ public class HolidayApplicationServiceTest {
 		//休暇申請時にステータスがCANCELEDになること
 		@SuppressWarnings("deprecation")
 		Date applyDate = new Date(2020, 10, 10);
-		User applicant = new User(new UserId("test"), new ArrayList<User>());
+		User applicant = new User(new UserId(1), new ArrayList<User>());
 
 		HolidayApplication application = service.apply(KindOfHoliday.PAYED_LEAVE, HolidayType.FULL_OFF, applyDate,
 				applicant);
@@ -211,8 +211,8 @@ public class HolidayApplicationServiceTest {
 	public void approveNoAuth() throws Exception {
 		@SuppressWarnings("deprecation")
 		Date applyDate = new Date(2020, 10, 10);
-		User applicant = new User(new UserId("test"), new ArrayList<User>());
-		User approver = new User(new UserId("admin"), new ArrayList<User>());
+		User applicant = new User(new UserId(1), new ArrayList<User>());
+		User approver = new User(new UserId(100), new ArrayList<User>());
 
 		HolidayApplication application = service.apply(KindOfHoliday.PAYED_LEAVE, HolidayType.FULL_OFF, applyDate,
 				applicant);
@@ -229,8 +229,8 @@ public class HolidayApplicationServiceTest {
 	public void rejectoAuth() throws Exception {
 		@SuppressWarnings("deprecation")
 		Date applyDate = new Date(2020, 10, 10);
-		User applicant = new User(new UserId("test"), new ArrayList<User>());
-		User approver = new User(new UserId("admin"), new ArrayList<User>());
+		User applicant = new User(new UserId(1), new ArrayList<User>());
+		User approver = new User(new UserId(100), new ArrayList<User>());
 
 		HolidayApplication application = service.apply(KindOfHoliday.PAYED_LEAVE, HolidayType.FULL_OFF, applyDate,
 				applicant);
@@ -247,8 +247,8 @@ public class HolidayApplicationServiceTest {
 	public void cancelNoAuth() throws Exception {
 		@SuppressWarnings("deprecation")
 		Date applyDate = new Date(2020, 10, 10);
-		User applicant = new User(new UserId("test"), new ArrayList<User>());
-		User approver = new User(new UserId("admin"), new ArrayList<User>());
+		User applicant = new User(new UserId(1), new ArrayList<User>());
+		User approver = new User(new UserId(100), new ArrayList<User>());
 
 		HolidayApplication application = service.apply(KindOfHoliday.PAYED_LEAVE, HolidayType.FULL_OFF, applyDate,
 				applicant);

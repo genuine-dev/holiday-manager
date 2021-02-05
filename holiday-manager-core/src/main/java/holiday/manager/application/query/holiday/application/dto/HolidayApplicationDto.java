@@ -14,9 +14,9 @@ public class HolidayApplicationDto {
 
 	private Date date;
 
-	private String aplicantId;
+	private Integer aplicantId;
 
-	private String approverId;
+	private Integer approverId;
 
 	private Date applyDate;
 
@@ -62,19 +62,19 @@ public class HolidayApplicationDto {
 		this.date = date;
 	}
 
-	public String getAplicantId() {
+	public Integer getAplicantId() {
 		return aplicantId;
 	}
 
-	public void setAplicantId(String aplicantId) {
+	public void setAplicantId(Integer aplicantId) {
 		this.aplicantId = aplicantId;
 	}
 
-	public String getApproverId() {
+	public Integer getApproverId() {
 		return approverId;
 	}
 
-	public void setApproverId(String approverId) {
+	public void setApproverId(Integer approverId) {
 		this.approverId = approverId;
 	}
 

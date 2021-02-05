@@ -32,7 +32,7 @@ public class HolidayApplicationApprovedHandler implements EventSubscriber<Holida
 				.orElseThrow(() -> new IllegalStateException());
 		entity.setStatus(HolidayApplicationStatus.APPROVED.name());
 		entity.setApproverId(event.getApproverId().getValue());
-		entity.setUpdateedAt(event.getOccurredOn());
+		entity.setUpdatedAt(event.getOccurredOn());
 
 		repository.save(entity);
 	}

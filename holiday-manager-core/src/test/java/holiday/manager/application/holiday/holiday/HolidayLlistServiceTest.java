@@ -40,7 +40,7 @@ public class HolidayLlistServiceTest {
 
 	@Test
 	public void createHolidayList() {
-		UserId owner = new UserId();
+		UserId owner = new UserId(1);
 
 		HolidayList holidayList = service.createHolidayList(owner);
 
@@ -58,7 +58,7 @@ public class HolidayLlistServiceTest {
 
 	@Test
 	public void grantHoliday() {
-		UserId owner = new UserId();
+		UserId owner = new UserId(1);
 		Date grantedDate = Date.from(ZonedDateTime.now().toInstant());
 		Date expirationDate = Date.from(ZonedDateTime.now().plusYears(2).toInstant());
 
@@ -85,7 +85,7 @@ public class HolidayLlistServiceTest {
 
 	@Test
 	public void takeHoliday() {
-		UserId owner = new UserId();
+		UserId owner = new UserId(1);
 		Date grantedDate = Date.from(ZonedDateTime.now().toInstant());
 		Date expirationDate = Date.from(ZonedDateTime.now().plusYears(2).toInstant());
 		Date today = Date.from(ZonedDateTime.now().toInstant());
@@ -112,6 +112,17 @@ public class HolidayLlistServiceTest {
 		assertThat(saved.getHolidays().get(0).getGrantedDate()).isEqualTo(grantedDate);
 		assertThat(saved.getHolidays().get(0).getExpirationDate()).isEqualTo(expirationDate);
 
+	}
+
+	@Test
+	public void findHolidayList() {
+		UserId owner = new UserId(1);
+
+		service.createHolidayList(owner);
+		//HolidayListが取得できること
+		HolidayList holidayList = service.findHolidayList(owner);
+		assertThat(holidayList.getId()).isEqualTo(holidayList.getId());
+		assertThat(holidayList.getOwner()).isEqualTo(holidayList.getOwner());
 	}
 
 	@Test

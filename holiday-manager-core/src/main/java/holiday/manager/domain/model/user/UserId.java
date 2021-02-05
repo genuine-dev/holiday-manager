@@ -1,19 +1,17 @@
 package holiday.manager.domain.model.user;
 
-import java.util.UUID;
-
 public class UserId {
-	private final String value;
+	private final Integer value;
 
 	public UserId() {
-		value = UUID.randomUUID().toString();
+		value = 0;
 	}
 
-	public UserId(String value) {
+	public UserId(Integer value) {
 		this.value = value;
 	}
 
-	public String getValue() {
+	public Integer getValue() {
 		return value;
 	}
 
@@ -39,6 +37,6 @@ public class UserId {
 
 	@Override
 	public String toString() {
-		return value;
+		return value.toString();
 	}
 }

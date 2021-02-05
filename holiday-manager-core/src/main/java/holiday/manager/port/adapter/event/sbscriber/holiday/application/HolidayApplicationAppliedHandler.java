@@ -35,6 +35,7 @@ public class HolidayApplicationAppliedHandler implements EventSubscriber<Holiday
 		entity.setStatus(event.getStatus().name());
 		entity.setAplicantId(event.getApplicantId().getValue());
 		entity.setCreatedAt(event.getOccurredOn());
+		entity.setUpdatedAt(event.getOccurredOn());
 
 		repository.save(entity);
 	}

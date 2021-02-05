@@ -11,32 +11,32 @@ import javax.persistence.Table;
 @Table(name = "holiday_applicatoin", schema="user")
 public class HolidayApplicationEntity {
 	@Id
-	@Column(name = "id", length = 36)
+	@Column(name = "id", length = 36, nullable = false)
 	private String id;
 
-	@Column(name = "kind", length = 20)
+	@Column(name = "kind", length = 20, nullable = false)
 	private String kind;
 
-	@Column(name = "type", length = 20)
+	@Column(name = "type", length = 20, nullable = false)
 	private String type;
 
-	@Column(name = "status", length = 20)
+	@Column(name = "status", length = 20, nullable = false)
 	private String status;
 
-	@Column(name = "date")
+	@Column(name = "date", nullable = false)
 	private Date date;
 
-	@Column(name = "applicant_id", length = 36)
-	private String aplicantId;
+	@Column(name = "applicant_id", nullable = false)
+	private Integer aplicantId;
 
-	@Column(name = "approver_id", length = 36)
-	private String approverId;
+	@Column(name = "approver_id")
+	private Integer approverId;
 
-	@Column(name = "created_at")
+	@Column(name = "created_at", nullable = false)
 	private Date createdAt;
 
-	@Column(name = "updated_at")
-	private Date updateedAt;
+	@Column(name = "updated_at", nullable = false)
+	private Date updatedAt;
 
 	public String getId() {
 		return id;
@@ -78,19 +78,19 @@ public class HolidayApplicationEntity {
 		this.date = date;
 	}
 
-	public String getAplicantId() {
+	public Integer getAplicantId() {
 		return aplicantId;
 	}
 
-	public void setAplicantId(String aplicantId) {
+	public void setAplicantId(Integer aplicantId) {
 		this.aplicantId = aplicantId;
 	}
 
-	public String getApproverId() {
+	public Integer getApproverId() {
 		return approverId;
 	}
 
-	public void setApproverId(String approverId) {
+	public void setApproverId(Integer approverId) {
 		this.approverId = approverId;
 	}
 
@@ -102,12 +102,12 @@ public class HolidayApplicationEntity {
 		this.createdAt = createdAt;
 	}
 
-	public Date getUpdateedAt() {
-		return updateedAt;
+	public Date getUpdatedAt() {
+		return updatedAt;
 	}
 
-	public void setUpdateedAt(Date updateedAt) {
-		this.updateedAt = updateedAt;
+	public void setUpdatedAt(Date updatedAt) {
+		this.updatedAt = updatedAt;
 	}
 
 }

@@ -28,7 +28,7 @@ public class HolidayApplicationQueryService {
 					dto.setAplicantId(entity.getAplicantId());
 					dto.setApproverId(entity.getApproverId());
 					dto.setApplyDate(entity.getCreatedAt());
-					dto.setApproveDate(entity.getUpdateedAt());
+					dto.setApproveDate(entity.getUpdatedAt());
 					return dto;
 				})
 				.collect(Collectors.toList());
