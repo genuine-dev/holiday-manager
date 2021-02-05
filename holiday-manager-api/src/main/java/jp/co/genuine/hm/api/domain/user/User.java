@@ -1,38 +1,86 @@
 package jp.co.genuine.hm.api.domain.user;
 
-import jp.co.genuine.hm.api.domain.paid_leave.PaidLeaveList;
+import javax.validation.Valid;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+
+@JsonInclude(Include.NON_EMPTY)
 public class User {
+	@Valid
+	private AccountId accountId;
 	private UserId userId;
+	@Valid
 	private MailAddress mailAddress;
+	@Valid
 	private Password password;
+	@Valid
 	private UserName userName;
 	private UserStatus userStatus;
+	@Valid
 	private HireDate hireDate;
-	private PaidLeaveList paidLeaveList;
+	private LeftoverHoliday leftoverHoliday;
 	private boolean admin;
 
 	public User() {
-		userId = new UserId();
-		mailAddress = new MailAddress();
-		password = new Password();
-		userName = new UserName();
 		userStatus = UserStatus.ACTIVE;
-		hireDate = new HireDate();
-		paidLeaveList = new PaidLeaveList();
-		admin = false;
 	}
 
-	public User(UserId userId, MailAddress mailAddress, Password password, UserName userName, UserStatus userStatus,
-			HireDate hireDate, PaidLeaveList paidLeaveList, boolean admin) {
+	public User(AccountId accountId, UserId userId, MailAddress mailAddress, Password password, UserName userName,
+			UserStatus userStatus, HireDate hireDate, LeftoverHoliday leftoverHoliday, boolean admin) {
+		this.accountId = accountId;
 		this.userId = userId;
 		this.mailAddress = mailAddress;
 		this.password = password;
 		this.userName = userName;
 		this.userStatus = userStatus;
 		this.hireDate = hireDate;
-		this.paidLeaveList = paidLeaveList;
+		this.leftoverHoliday = leftoverHoliday;
 		this.admin = admin;
+	}
+
+	public User(AccountId accountId, UserId userId, MailAddress mailAddress, Password password, UserName userName,
+			UserStatus userStatus, HireDate hireDate, LeftoverHoliday leftoverHoliday) {
+		this.accountId = accountId;
+		this.userId = userId;
+		this.mailAddress = mailAddress;
+		this.password = password;
+		this.userName = userName;
+		this.userStatus = userStatus;
+		this.hireDate = hireDate;
+		this.leftoverHoliday = leftoverHoliday;
+		this.admin = false;
+	}
+
+	public User(UserId userId, MailAddress mailAddress, Password password, UserName userName,
+			UserStatus userStatus, HireDate hireDate, LeftoverHoliday leftoverHoliday) {
+		this.userId = userId;
+		this.mailAddress = mailAddress;
+		this.password = password;
+		this.userName = userName;
+		this.userStatus = userStatus;
+		this.hireDate = hireDate;
+		this.leftoverHoliday = leftoverHoliday;
+	}
+
+	public boolean isEmptyPassword() {
+		return password.isEmpty();
+	}
+
+	public AccountId getAccountId() {
+		return accountId;
+	}
+
+	public void setAccountId(AccountId accountId) {
+		this.accountId = accountId;
+	}
+
+	public LeftoverHoliday getLeftoverHoliday() {
+		return leftoverHoliday;
+	}
+
+	public void setLeftoverHoliday(LeftoverHoliday leftoverHoliday) {
+		this.leftoverHoliday = leftoverHoliday;
 	}
 
 	public UserId getUserId() {
@@ -81,14 +129,6 @@ public class User {
 
 	public void setHireDate(HireDate hireDate) {
 		this.hireDate = hireDate;
-	}
-
-	public PaidLeaveList getPaidLeaveList() {
-		return paidLeaveList;
-	}
-
-	public void setPaidLeaveList(PaidLeaveList paidLeaveList) {
-		this.paidLeaveList = paidLeaveList;
 	}
 
 	public boolean isAdmin() {

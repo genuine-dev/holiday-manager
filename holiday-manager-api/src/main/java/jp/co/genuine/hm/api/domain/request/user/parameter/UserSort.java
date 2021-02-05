@@ -1,11 +1,11 @@
-package jp.co.genuine.hm.api.domain.request.parameter;
+package jp.co.genuine.hm.api.domain.request.user.parameter;
 
 import jp.co.genuine.hm.api.domain.user.UserSortType;
 
-public class Sort {
+public class UserSort {
 	private String value;
 
-	public Sort(String value) {
+	public UserSort(String value) {
 		this.value = value;
 	}
 

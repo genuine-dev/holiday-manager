@@ -1,4 +1,4 @@
-package jp.co.genuine.hm.api.domain.request;
+package jp.co.genuine.hm.api.domain.request.user;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;

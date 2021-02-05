@@ -8,17 +8,17 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 public class UserAccount implements UserDetails {
-	private int id;
+	private int userId;
 	private String accountId;
 	private String password;
 	private boolean adminFlg;
 	private String role;
 
-	public int getId() {
-		return id;
+	public int getUserId() {
+		return userId;
 	}
-	public void setId(int id) {
-		this.id = id;
+	public void setUserId(int userId) {
+		this.userId = userId;
 	}
 	public String getAccountId() {
 		return accountId;

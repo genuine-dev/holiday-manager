@@ -2,7 +2,7 @@
 	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head th:replace="common/head :: head_fragment(title = 'ユーザ一覧')">
 </head>
-<script th:src="@{/js/user_list.js}"></script>
+<script th:src="@{/js/user_delete.js}"></script>
 <body>
 	<div th:replace="common/header :: header_fragment(title = 'ユーザ一覧')"></div>
 
@@ -14,8 +14,12 @@
 			<tbody>
 				<tr th:each="user : ${userList}" th:object="${user}">
 					<td th:text="*{userName.value}" style="width:70%"></td>
-					<td><i class="far fa-edit" style="width:15%"></i></td>
-					<td><i class="far fa-trash-alt" style="width:15%"></i></td>
+					<td>
+						<a th:href="@{/user/update/{id}(id=*{userId.value})}"><i class="far fa-edit" style="width:15%"></i></a>
+					</td>
+					<td>
+						<a th:href="@{/user/delete/{id}(id=*{userId.value})}" onclick="return confirm('削除してもよろしいですか？')"><i class="far fa-trash-alt" style="width:15%"></i></a>
+					</td>
 				</tr>
 			</tbody>
 		</table>

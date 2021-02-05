@@ -47,12 +47,12 @@
 			)
 		VALUES
 			(
-				#{userId.value},
-				#{userStatus},
-				#{mailAddress.value},
-				#{userName.value},
-				#{hireDate.value},
-				#{leftoverHoliday.value},
+				#{user.userId.value},
+				#{user.userStatus},
+				#{user.mailAddress.value},
+				#{user.userName.value},
+				#{user.hireDate.valueOfDate},
+				#{user.leftoverHoliday.value},
 				now()
 			)
 	</insert>
@@ -67,9 +67,9 @@
 			)
 		VALUES
 			(
-				#{userId.value},
-				#{accountId.value},
-				#{password.value},
+				#{user.userId.value},
+				#{user.accountId.value},
+				#{user.password.value},
 				false
 			)
 	</insert>
@@ -78,11 +78,24 @@
 		UPDATE
 			"user".user
 		SET
-			email = #{mailAddress.value},
-			"name" = #{userName.value},
+			status = #{user.userStatus},
+			email = #{user.mailAddress.value},
+			"name" = #{user.userName.value},
+			hire_date = #{user.hireDate.valueOfDate},
+			leftover_holiday = #{user.leftoverHoliday.value},
 			update_datetime = now()
 		WHERE
-			"id" = #{userId.value}
+			"id" = #{user.userId.value}
+	</update>
+
+	<update id="updateAccount">
+		UPDATE
+			"user".account
+		SET
+			password = #{user.password.value},
+			update_datetime = now()
+		WHERE
+			user_id = #{user.userId.value}
 	</update>
 
 	<select id="findManagerList" resultMap="userMap">
@@ -107,6 +120,8 @@
 			ON "group".id = manager.group_id
 		WHERE
 			"group".id = #{groupId.value}
+		AND
+			"user".deleted = false
 	</select>
 
 	<select id="findMemberList" resultMap="userMap">
@@ -131,6 +146,8 @@
 			ON "group".id = member.group_id
 		WHERE
 			"group".id = #{groupId.value}
+		AND
+			"user".deleted = false
 	</select>
 
 	<select id="findGroupName" resultMap="groupNameMap">
@@ -197,6 +214,11 @@
 					ON "group".id = manager.group_id
 			) AS manager
 			ON manager.user_id = "user".id
+		WHERE
+			"user".deleted = false
+		<if test="queries.isNotEmptyUserNameQuery">
+			AND "user".name like '%${queries.userNameQuery}%'
+		</if>
 		<foreach collection="sorts.sortList" item="sort" open="ORDER BY" close="" separator=",">
 			<if test="sort.userName">
 				"user".name
@@ -244,6 +266,8 @@
 			ON manager.user_id = "user".id
 		WHERE
 			"user".id = #{userId.value}
+		AND
+			"user".deleted = false
 	</select>
 
 	<select id="findUsersByGroupId" resultMap="userMap">
@@ -288,6 +312,8 @@
 			member.group_id = #{groupId.value}
 		OR
 			manager.group_id = #{groupId.value}
+		AND
+			"user".deleted = false
 	</select>
 
 	<update id="updateGroup">
@@ -316,6 +342,8 @@
 			ON account.user_id = "user".id
 		WHERE
 			"user".email = #{email}
+		AND
+			"user".deleted = false
 	</select>
 
 	<insert id="insertManager">
@@ -418,5 +446,7 @@
 			ON manager.user_id = "user".id
 		WHERE
 			account.account_id = #{accountId.value}
+		AND
+			"user".deleted = false
 	</select>
 </mapper>
