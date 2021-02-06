@@ -63,10 +63,6 @@ public class User {
 		this.leftoverHoliday = leftoverHoliday;
 	}
 
-	public boolean isEmptyPassword() {
-		return password.isEmpty();
-	}
-
 	public AccountId getAccountId() {
 		return accountId;
 	}

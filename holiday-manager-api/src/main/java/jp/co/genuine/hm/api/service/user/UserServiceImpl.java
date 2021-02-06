@@ -54,7 +54,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	private void updateAccount(User user) {
-		if(user.isEmptyPassword()) {
+		if(user.getPassword().isEmpty()) {
 			return;
 		}
 		userRepository.updateAccount(user);

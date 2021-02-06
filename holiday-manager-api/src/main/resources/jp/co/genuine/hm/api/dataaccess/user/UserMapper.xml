@@ -9,6 +9,7 @@
 		<result property="userName.value" column="user_name"/>
 		<result property="userStatus.label" column="user_status"/>
 		<result property="hireDate.value" column="hire_date"/>
+		<result property="leftoverHoliday.value" column="leftover_holiday"/>
 		<result property="admin" column="admin_flg"/>
 	</resultMap>
 
@@ -185,6 +186,7 @@
 			,"user".status    AS user_status
 			,"user".hire_date AS hire_date
 			,account.admin_flg AS admin_flg
+			,"user".leftover_holiday AS leftover_holiday
 		FROM
 			"user"."user"
 		INNER JOIN
@@ -235,6 +237,7 @@
 			,"user".status    AS user_status
 			,"user".hire_date AS hire_date
 			,account.admin_flg AS admin_flg
+			,"user".leftover_holiday AS leftover_holiday
 		FROM
 			"user"."user"
 		INNER JOIN
