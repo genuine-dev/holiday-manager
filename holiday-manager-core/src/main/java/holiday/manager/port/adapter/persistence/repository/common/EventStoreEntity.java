@@ -27,8 +27,7 @@ public class EventStoreEntity {
 	@Column(name = "type", length=255)
 	private String type;
 
-	@Lob
-	@Column(name = "payload")
+	@Column(name = "payload", columnDefinition = "text")
 	private String payload;
 
 	@Column(name = "created_at")
