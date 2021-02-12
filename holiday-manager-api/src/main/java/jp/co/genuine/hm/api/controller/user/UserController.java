@@ -10,14 +10,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -46,8 +43,7 @@ public class UserController {
 	@Autowired
 	UserServiceImpl userService;
 
-	@GetMapping("user")
-	@ResponseBody
+	@RequestMapping(path = "/user", method = RequestMethod.GET)
 	@ApiOperation("全ユーザー取得")
 	public ResponseEntity<UserList> getUsers(
 			@ContainsUserSortType @RequestParam(value = "sort", required = false) List<UserSort> sortList,
@@ -56,37 +52,35 @@ public class UserController {
 		return new ResponseEntity<UserList>(userList, HttpStatus.OK);
 	}
 
-	@PostMapping("user")
+	@RequestMapping(path = "/user", method = RequestMethod.POST)
 	@ResponseStatus(HttpStatus.OK)
 	@ApiOperation("ユーザー登録")
 	public void postUser(@RequestBody @Valid PostUserRequest request) {
 		userService.postUser(request);
 	}
 
-	@PutMapping("user/{user_id}")
+	@RequestMapping(path = "/user/{user_id}", method = RequestMethod.PUT)
 	@ResponseStatus(HttpStatus.OK)
 	@ApiOperation("ユーザー更新")
 	public void putUser(@PathVariable("user_id") @Valid UserId userId, @RequestBody @Valid PutUserRequest request) {
 		userService.putUser(userId, request);
 	}
 
-	@DeleteMapping("user/{user_id}")
+	@RequestMapping(path = "/user/{user_id}", method = RequestMethod.DELETE)
 	@ResponseStatus(HttpStatus.OK)
 	@ApiOperation("ユーザー削除")
 	public void deleteUser(@PathVariable("user_id") @Valid UserId userId) {
 		userService.deleteUser(userId);
 	}
 
-	@GetMapping("user/{user_id}")
-	@ResponseBody
+	@RequestMapping(path = "/user/{user_id}", method = RequestMethod.GET)
 	@ApiOperation("UserId（DBのシーケンス番号）から特定の一人の情報を取得")
 	public ResponseEntity<User> getUser(@PathVariable("user_id") @Valid UserId userId) {
 		User user = userService.findUser(userId);
 		return new ResponseEntity<User>(user, HttpStatus.OK);
 	}
 
-	@GetMapping("user/status")
-	@ResponseBody
+	@RequestMapping(path = "/user/status", method = RequestMethod.GET)
 	@ApiOperation("ユーザーステータスのキーとバリュー一覧取得")
 	public ResponseEntity<Map<String, String>> getUserStatus() {
 		Map<String, String> userStatusMap = new HashMap<>();
@@ -96,14 +90,14 @@ public class UserController {
 		return new ResponseEntity<Map<String, String>>(userStatusMap, HttpStatus.OK);
 	}
 
-	@PostMapping("group")
+	@RequestMapping(path = "/group", method = RequestMethod.POST)
 	@ResponseStatus(HttpStatus.OK)
 	@ApiOperation("グループ登録")
 	public void postGroup(@RequestBody @Valid PostGroupRequest request) {
 		userService.postGroup(request);
 	}
 
-	@PutMapping("group/{group_id}")
+	@RequestMapping(path = "/group/{group_id}", method = RequestMethod.PUT)
 	@ResponseStatus(HttpStatus.OK)
 	@ApiOperation("グループ更新")
 	public void putGroup(@PathVariable("group_id") @Valid GroupId groupId,
@@ -111,29 +105,28 @@ public class UserController {
 		userService.putGroup(groupId, request);
 	}
 
-	@DeleteMapping("group/{group_id}")
+	@RequestMapping(path = "/group/{group_id}", method = RequestMethod.DELETE)
 	@ResponseStatus(HttpStatus.OK)
 	@ApiOperation("グループ削除")
 	public void deleteGroup(@PathVariable("group_id") @Valid GroupId groupId) {
 		userService.deleteGroup(groupId);
 	}
 
-	@PostMapping("group/manager")
+	@RequestMapping(path = "/group/manager", method = RequestMethod.POST)
 	@ResponseStatus(HttpStatus.OK)
 	@ApiOperation("マネージャーのグループ登録")
 	public void postGroupOfManager(@RequestBody @Valid PostGroupOfManagerRequest request) {
 		userService.postGroupOfManager(request);
 	}
 
-	@PostMapping("group/member")
+	@RequestMapping(path = "/group/member", method = RequestMethod.POST)
 	@ResponseStatus(HttpStatus.OK)
 	@ApiOperation("メンバーのグループ登録")
 	public void postGroupOfMember(@RequestBody @Valid PostGroupOfMemberRequest request) {
 		userService.postGroupOfMember(request);
 	}
 
-	@GetMapping("exist/accountId/{account_id}")
-	@ResponseBody
+	@RequestMapping(path = "/exist/accountId/{account_id}", method = RequestMethod.GET)
 	@ApiOperation("DBにアカウントIDが存在するかチェック")
 	public ResponseEntity<Boolean> getExistAccountId(@PathVariable("account_id") AccountId accountId) {
 		Boolean existAccountId = userService.existAccountId(accountId);

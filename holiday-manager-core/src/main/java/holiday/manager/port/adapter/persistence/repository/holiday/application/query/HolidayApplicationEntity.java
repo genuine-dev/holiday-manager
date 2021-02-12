@@ -8,7 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "holiday_applicatoin", schema="user")
+@Table(name = "holiday_applicatoin", schema="\"user\"")
 public class HolidayApplicationEntity {
 	@Id
 	@Column(name = "id", length = 36, nullable = false)

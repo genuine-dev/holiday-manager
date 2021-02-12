@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 //import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = {"jp.co.genuine.hm.api", "holiday.manager"})
 //@EnableSwagger2
 public class HolidayManagerApiApplication {
 
