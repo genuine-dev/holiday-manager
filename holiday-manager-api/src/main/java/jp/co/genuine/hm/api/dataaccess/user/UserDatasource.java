@@ -98,13 +98,13 @@ public class UserDatasource implements UserRepository {
 	}
 
 	@Override
-	public void deleteManager(UserId userId) {
-		userMapper.deleteManager(userId);
+	public void deleteManager(UserId userId, GroupId groupId) {
+		userMapper.deleteManager(userId, groupId);
 	}
 
 	@Override
-	public void deleteMember(UserId userId) {
-		userMapper.deleteMember(userId);
+	public void deleteMember(UserId userId, GroupId groupId) {
+		userMapper.deleteMember(userId, groupId);
 	}
 
 	@Override

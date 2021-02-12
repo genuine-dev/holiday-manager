@@ -6,7 +6,7 @@ import io.swagger.annotations.ApiModelProperty;
 import jp.co.genuine.hm.api.domain.user.GroupId;
 import jp.co.genuine.hm.api.domain.user.UserId;
 
-public class PostGroupOfManagerRequest {
+public class DeleteGroupMemberRequest {
 	@NotBlank
 	@ApiModelProperty(example = "5", required = true)
 	private String userId;
@@ -15,7 +15,7 @@ public class PostGroupOfManagerRequest {
 	@ApiModelProperty(example = "2", required = true)
 	private String groupId;
 
-	public PostGroupOfManagerRequest(String userId, String groupId) {
+	public DeleteGroupMemberRequest(String userId, String groupId) {
 		this.userId = userId;
 		this.groupId = groupId;
 	}
@@ -27,5 +27,4 @@ public class PostGroupOfManagerRequest {
 	public GroupId getGroupId() {
 		return new GroupId(groupId);
 	}
-
 }

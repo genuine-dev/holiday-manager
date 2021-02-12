@@ -19,8 +19,10 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.annotations.ApiOperation;
-import jp.co.genuine.hm.api.domain.request.user.PostGroupOfManagerRequest;
-import jp.co.genuine.hm.api.domain.request.user.PostGroupOfMemberRequest;
+import jp.co.genuine.hm.api.domain.request.user.DeleteGroupManagerRequest;
+import jp.co.genuine.hm.api.domain.request.user.DeleteGroupMemberRequest;
+import jp.co.genuine.hm.api.domain.request.user.PostGroupManagerRequest;
+import jp.co.genuine.hm.api.domain.request.user.PostGroupMemberRequest;
 import jp.co.genuine.hm.api.domain.request.user.PostGroupRequest;
 import jp.co.genuine.hm.api.domain.request.user.PostUserRequest;
 import jp.co.genuine.hm.api.domain.request.user.PutGroupRequest;
@@ -115,15 +117,29 @@ public class UserController {
 	@RequestMapping(path = "/group/manager", method = RequestMethod.POST)
 	@ResponseStatus(HttpStatus.OK)
 	@ApiOperation("マネージャーのグループ登録")
-	public void postGroupOfManager(@RequestBody @Valid PostGroupOfManagerRequest request) {
-		userService.postGroupOfManager(request);
+	public void postGroupManager(@RequestBody @Valid PostGroupManagerRequest request) {
+		userService.postGroupManager(request);
+	}
+
+	@RequestMapping(path = "/group/manager", method = RequestMethod.DELETE)
+	@ResponseStatus(HttpStatus.OK)
+	@ApiOperation("マネージャーのグループ削除")
+	public void deleteGroupManager(@RequestBody @Valid DeleteGroupManagerRequest request) {
+		userService.deleteGroupManager(request);
 	}
 
 	@RequestMapping(path = "/group/member", method = RequestMethod.POST)
 	@ResponseStatus(HttpStatus.OK)
 	@ApiOperation("メンバーのグループ登録")
-	public void postGroupOfMember(@RequestBody @Valid PostGroupOfMemberRequest request) {
-		userService.postGroupOfMember(request);
+	public void postGroupMember(@RequestBody @Valid PostGroupMemberRequest request) {
+		userService.postGroupMember(request);
+	}
+
+	@RequestMapping(path = "/group/member", method = RequestMethod.DELETE)
+	@ResponseStatus(HttpStatus.OK)
+	@ApiOperation("メンバーのグループ削除")
+	public void postGroupMember(@RequestBody @Valid DeleteGroupMemberRequest request) {
+		userService.deleteGroupMember(request);
 	}
 
 	@RequestMapping(path = "/exist/accountId/{account_id}", method = RequestMethod.GET)

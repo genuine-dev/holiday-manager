@@ -383,12 +383,16 @@
 		DELETE FROM "user".manager
 		WHERE
 			user_id = #{userId.value}
+		AND
+			group_id = #{groupId.value}
 	</delete>
 
 	<delete id="deleteMember">
 		DELETE FROM "user".member
 		WHERE
 			user_id = #{userId.value}
+		AND
+			group_id = #{groupId.value}
 	</delete>
 
 	<update id="deleteGroup">

@@ -48,9 +48,9 @@ public interface UserMapper {
 
 	void insertMember(@Param("userId") UserId userId, @Param("groupId") GroupId groupId);
 
-	void deleteManager(@Param("userId") UserId userId);
+	void deleteManager(@Param("userId") UserId userId, @Param("groupId") GroupId groupId);
 
-	void deleteMember(@Param("userId") UserId userId);
+	void deleteMember(@Param("userId") UserId userId, @Param("groupId") GroupId groupId);
 
 	void deleteGroup(@Param("groupId") GroupId groupId);
 

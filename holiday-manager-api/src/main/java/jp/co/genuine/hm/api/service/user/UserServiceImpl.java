@@ -5,8 +5,10 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import jp.co.genuine.hm.api.domain.request.user.PostGroupOfManagerRequest;
-import jp.co.genuine.hm.api.domain.request.user.PostGroupOfMemberRequest;
+import jp.co.genuine.hm.api.domain.request.user.DeleteGroupManagerRequest;
+import jp.co.genuine.hm.api.domain.request.user.DeleteGroupMemberRequest;
+import jp.co.genuine.hm.api.domain.request.user.PostGroupManagerRequest;
+import jp.co.genuine.hm.api.domain.request.user.PostGroupMemberRequest;
 import jp.co.genuine.hm.api.domain.request.user.PostGroupRequest;
 import jp.co.genuine.hm.api.domain.request.user.PostUserRequest;
 import jp.co.genuine.hm.api.domain.request.user.PutGroupRequest;
@@ -77,15 +79,11 @@ public class UserServiceImpl implements UserService {
 		return userRepository.findUsersByGroupId(groupId);
 	}
 
-	public void postGroupOfManager(PostGroupOfManagerRequest request) {
-		userRepository.deleteManager(request.getUserId());
-		userRepository.deleteMember(request.getUserId());
+	public void postGroupManager(PostGroupManagerRequest request) {
 		userRepository.insertManager(request.getUserId(), request.getGroupId());
 	}
 
-	public void postGroupOfMember(PostGroupOfMemberRequest request) {
-		userRepository.deleteManager(request.getUserId());
-		userRepository.deleteMember(request.getUserId());
+	public void postGroupMember(PostGroupMemberRequest request) {
 		userRepository.insertMember(request.getUserId(), request.getGroupId());
 	}
 
@@ -103,5 +101,18 @@ public class UserServiceImpl implements UserService {
 
 	public Boolean existAccountId(AccountId accountId) {
 		return userRepository.existAccountId(accountId);
+	}
+
+	public void deleteGroupManager(DeleteGroupManagerRequest request) {
+		userRepository.deleteManager(request.getUserId(), request.getGroupId());
+	}
+
+	public void deleteGroupMemr(DeleteGroupMemberRequest request) {
+		userRepository.deleteManager(request.getUserId(), request.getGroupId());
+	}
+
+
+	public void deleteGroupMember(DeleteGroupMemberRequest request) {
+		userRepository.deleteMember(request.getUserId(), request.getGroupId());
 	}
 }

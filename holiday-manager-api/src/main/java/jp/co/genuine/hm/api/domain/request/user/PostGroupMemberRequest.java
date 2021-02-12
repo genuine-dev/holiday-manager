@@ -6,7 +6,7 @@ import io.swagger.annotations.ApiModelProperty;
 import jp.co.genuine.hm.api.domain.user.GroupId;
 import jp.co.genuine.hm.api.domain.user.UserId;
 
-public class PostGroupOfMemberRequest {
+public class PostGroupMemberRequest {
 	@NotBlank
 	@ApiModelProperty(example = "5", required = true)
 	private String userId;
@@ -15,7 +15,7 @@ public class PostGroupOfMemberRequest {
 	@ApiModelProperty(example = "2", required = true)
 	private String groupId;
 
-	public PostGroupOfMemberRequest(String userId, String groupId) {
+	public PostGroupMemberRequest(String userId, String groupId) {
 		this.userId = userId;
 		this.groupId = groupId;
 	}

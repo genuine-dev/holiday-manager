@@ -34,9 +34,9 @@ public interface UserRepository {
 
 	void insertMember(UserId userId, GroupId groupId);
 
-	void deleteManager(UserId userId);
+	void deleteManager(UserId userId, GroupId groupId);
 
-	void deleteMember(UserId userId);
+	void deleteMember(UserId userId, GroupId groupId);
 
 	void deleteGroup(GroupId groupId);
 
