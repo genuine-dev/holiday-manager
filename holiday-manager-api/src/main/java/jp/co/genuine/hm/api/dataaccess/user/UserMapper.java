@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Param;
 import jp.co.genuine.hm.api.domain.request.user.parameter.UserQueries;
 import jp.co.genuine.hm.api.domain.request.user.parameter.UserSorts;
 import jp.co.genuine.hm.api.domain.user.AccountId;
+import jp.co.genuine.hm.api.domain.user.Group;
 import jp.co.genuine.hm.api.domain.user.GroupId;
 import jp.co.genuine.hm.api.domain.user.GroupName;
 import jp.co.genuine.hm.api.domain.user.User;
@@ -59,4 +60,8 @@ public interface UserMapper {
 	User findBy(@Param("userId") UserId userId);
 
 	User findByAccountId(@Param("accountId") AccountId accountId);
+
+	Group findGroupById(@Param("groupId") GroupId groupId);
+
+	List<Group> findGroups();
 }

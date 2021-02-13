@@ -18,6 +18,7 @@ import jp.co.genuine.hm.api.domain.request.user.parameter.UserSorts;
 import jp.co.genuine.hm.api.domain.user.AccountId;
 import jp.co.genuine.hm.api.domain.user.Group;
 import jp.co.genuine.hm.api.domain.user.GroupId;
+import jp.co.genuine.hm.api.domain.user.GroupList;
 import jp.co.genuine.hm.api.domain.user.User;
 import jp.co.genuine.hm.api.domain.user.UserFactory;
 import jp.co.genuine.hm.api.domain.user.UserId;
@@ -114,5 +115,13 @@ public class UserServiceImpl implements UserService {
 
 	public void deleteGroupMember(DeleteGroupMemberRequest request) {
 		userRepository.deleteMember(request.getUserId(), request.getGroupId());
+	}
+
+	public Group getGroup(GroupId groupId) {
+		return userRepository.getGroup(groupId);
+	}
+
+	public GroupList getGroups() {
+		return userRepository.getGroup();
 	}
 }

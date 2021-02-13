@@ -90,6 +90,11 @@
 		    <groupId>org.flywaydb</groupId>
 		    <artifactId>flyway-core</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>holiday.manager</groupId>
+			<artifactId>holiday-manager-core</artifactId>
+			<version>${version}</version>
+		</dependency>
 	</dependencies>
 
 	<build>

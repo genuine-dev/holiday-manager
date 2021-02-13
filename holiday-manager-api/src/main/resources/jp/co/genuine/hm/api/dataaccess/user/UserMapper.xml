@@ -13,6 +13,24 @@
 		<result property="admin" column="admin_flg"/>
 	</resultMap>
 
+	<resultMap id="groupMap" type="jp.co.genuine.hm.api.domain.user.Group">
+		<id     property="groupId.value" column="group_id" />
+		<result property="groupName.value" column="group_name"/>
+		<collection property="managerList.userList" ofType="jp.co.genuine.hm.api.domain.user.User">
+			<id     property="userId.value" column="manager_user_id" />
+			<result property="userName.value" column="manager_user_name"/>
+		</collection>
+		<collection property="memberList.userList" ofType="jp.co.genuine.hm.api.domain.user.User">
+			<id     property="userId.value" column="member_user_id" />
+			<result property="userName.value" column="member_user_name"/>
+		</collection>
+	</resultMap>
+
+	<resultMap id="groupExcludeUserMap" type="jp.co.genuine.hm.api.domain.user.Group">
+		<id     property="groupId.value" column="group_id" />
+		<result property="groupName.value" column="group_name"/>
+	</resultMap>
+
 	<resultMap id="groupNameMap" type="jp.co.genuine.hm.api.domain.user.GroupName">
 		<id     property="value" column="name" />
 	</resultMap>
@@ -455,5 +473,61 @@
 			account.account_id = #{accountId.value}
 		AND
 			"user".deleted = false
+	</select>
+
+	<select id="findGroupById" resultMap="groupMap">
+		SELECT
+			"group".id AS group_id
+			,"group".name AS group_name
+			,manager.user_id AS manager_user_id
+			,manager.user_name AS manager_user_name
+			,member.user_id AS member_user_id
+			,member.user_name AS member_user_name
+		FROM
+			"user".group
+		LEFT OUTER JOIN
+		(
+			SELECT
+				member.group_id AS group_id,
+				"user".id AS user_id,
+				"user".name AS user_name
+			FROM
+				"user".member
+			INNER JOIN
+				"user"."user"
+				ON "user".id = member.user_id
+			WHERE
+				"user".deleted = false
+		) AS member
+		ON member.group_id = "group".id
+		LEFT OUTER JOIN
+		(
+			SELECT
+				manager.group_id AS group_id,
+				"user".id AS user_id,
+				"user".name AS user_name
+			FROM
+				"user".manager
+			INNER JOIN
+				"user"."user"
+				ON "user".id = manager.user_id
+			WHERE
+				"user".deleted = false
+		) AS manager
+		ON manager.group_id = "group".id
+		WHERE
+			"group".id = #{groupId.value}
+		AND
+			"group".deleted = false
+	</select>
+
+	<select id="findGroups" resultMap="groupExcludeUserMap">
+		SELECT
+			"group".id AS group_id
+			,"group".name AS group_name
+		FROM
+			"user".group
+		WHERE
+			"group".deleted = false
 	</select>
 </mapper>

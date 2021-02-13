@@ -41,7 +41,6 @@ public class HolidayController {
 	}
 
 	@RequestMapping(path = "holiday/cancel", method = RequestMethod.DELETE)
-
 	public ResponseEntity<HolidayApplication> deleteHolidayCancel(@RequestBody DeleteHolidayCancelRequest request) {
 		HolidayApplication application = holidayService.deleteHolidayCancel(request);
 		return new ResponseEntity<HolidayApplication>(application, HttpStatus.OK);

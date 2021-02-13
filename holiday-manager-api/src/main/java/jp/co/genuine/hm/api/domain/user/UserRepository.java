@@ -45,4 +45,8 @@ public interface UserRepository {
 	User findBy(UserId userId);
 
 	Boolean existAccountId(AccountId accountId);
+
+	Group getGroup(GroupId groupId);
+
+	GroupList getGroup();
 }

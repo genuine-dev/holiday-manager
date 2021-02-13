@@ -11,6 +11,7 @@ import jp.co.genuine.hm.api.domain.request.user.parameter.UserSorts;
 import jp.co.genuine.hm.api.domain.user.AccountId;
 import jp.co.genuine.hm.api.domain.user.Group;
 import jp.co.genuine.hm.api.domain.user.GroupId;
+import jp.co.genuine.hm.api.domain.user.GroupList;
 import jp.co.genuine.hm.api.domain.user.GroupName;
 import jp.co.genuine.hm.api.domain.user.User;
 import jp.co.genuine.hm.api.domain.user.UserId;
@@ -126,5 +127,16 @@ public class UserDatasource implements UserRepository {
 	public Boolean existAccountId(AccountId accountId) {
 		Optional<User> user = Optional.ofNullable(userMapper.findByAccountId(accountId));
 		return user.isPresent();
+	}
+
+	@Override
+	public Group getGroup(GroupId groupId) {
+		return userMapper.findGroupById(groupId);
+	}
+
+	@Override
+	public GroupList getGroup() {
+		List<Group> groups = userMapper.findGroups();
+		return new GroupList(groups);
 	}
 }

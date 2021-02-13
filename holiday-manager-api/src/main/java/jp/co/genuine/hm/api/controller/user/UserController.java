@@ -31,7 +31,9 @@ import jp.co.genuine.hm.api.domain.request.user.parameter.UserQueries;
 import jp.co.genuine.hm.api.domain.request.user.parameter.UserSort;
 import jp.co.genuine.hm.api.domain.request.user.parameter.UserSorts;
 import jp.co.genuine.hm.api.domain.user.AccountId;
+import jp.co.genuine.hm.api.domain.user.Group;
 import jp.co.genuine.hm.api.domain.user.GroupId;
+import jp.co.genuine.hm.api.domain.user.GroupList;
 import jp.co.genuine.hm.api.domain.user.User;
 import jp.co.genuine.hm.api.domain.user.UserId;
 import jp.co.genuine.hm.api.domain.user.UserList;
@@ -90,6 +92,22 @@ public class UserController {
 			userStatusMap.put(userStatus.name(), userStatus.getLabel());
 		}
 		return new ResponseEntity<Map<String, String>>(userStatusMap, HttpStatus.OK);
+	}
+
+	@RequestMapping(path = "/group", method = RequestMethod.GET)
+	@ResponseStatus(HttpStatus.OK)
+	@ApiOperation("グループ一覧")
+	public ResponseEntity<GroupList> getGroups() {
+		GroupList groupList = userService.getGroups();
+		return new ResponseEntity<GroupList>(groupList, HttpStatus.OK);
+	}
+
+	@RequestMapping(path = "/group/{group_id}", method = RequestMethod.GET)
+	@ResponseStatus(HttpStatus.OK)
+	@ApiOperation("グループ詳細")
+	public ResponseEntity<Group> getGroup(@PathVariable("group_id") @Valid GroupId groupId) {
+		Group group = userService.getGroup(groupId);
+		return new ResponseEntity<Group>(group, HttpStatus.OK);
 	}
 
 	@RequestMapping(path = "/group", method = RequestMethod.POST)
