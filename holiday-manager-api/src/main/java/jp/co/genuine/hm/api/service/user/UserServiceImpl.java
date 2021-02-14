@@ -5,20 +5,12 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import jp.co.genuine.hm.api.domain.request.user.DeleteGroupManagerRequest;
-import jp.co.genuine.hm.api.domain.request.user.DeleteGroupMemberRequest;
-import jp.co.genuine.hm.api.domain.request.user.PostGroupManagerRequest;
-import jp.co.genuine.hm.api.domain.request.user.PostGroupMemberRequest;
-import jp.co.genuine.hm.api.domain.request.user.PostGroupRequest;
 import jp.co.genuine.hm.api.domain.request.user.PostUserRequest;
-import jp.co.genuine.hm.api.domain.request.user.PutGroupRequest;
 import jp.co.genuine.hm.api.domain.request.user.PutUserRequest;
 import jp.co.genuine.hm.api.domain.request.user.parameter.UserQueries;
 import jp.co.genuine.hm.api.domain.request.user.parameter.UserSorts;
 import jp.co.genuine.hm.api.domain.user.AccountId;
-import jp.co.genuine.hm.api.domain.user.Group;
 import jp.co.genuine.hm.api.domain.user.GroupId;
-import jp.co.genuine.hm.api.domain.user.GroupList;
 import jp.co.genuine.hm.api.domain.user.User;
 import jp.co.genuine.hm.api.domain.user.UserFactory;
 import jp.co.genuine.hm.api.domain.user.UserId;
@@ -38,10 +30,12 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	ValidateService validateService;
 
+	@Override
 	public UserList getUser(UserSorts sorts, UserQueries queries) {
 		return userRepository.findAll(sorts, queries);
 	}
 
+	@Override
 	public void postUser(PostUserRequest request) {
 		User user = userFactory.create(request);
 		validateService.validate(user);
@@ -49,6 +43,7 @@ public class UserServiceImpl implements UserService {
 		userRepository.insertAccount(user);
 	}
 
+	@Override
 	public void putUser(UserId userId, PutUserRequest request) {
 		User user = userFactory.create(userId, request);
 		validateService.validate(user);
@@ -63,65 +58,23 @@ public class UserServiceImpl implements UserService {
 		userRepository.updateAccount(user);
 	}
 
-	public Group findGroup(GroupId groupId) {
-		return userRepository.findGroup(groupId);
-	}
-
-	public void postGroup(PostGroupRequest request) {
-		GroupId groupId = userRepository.nextGroupId();
-		userRepository.insertGroup(groupId, request.getGroupName());
-	}
-
-	public void putGroup(GroupId groupId, PutGroupRequest request) {
-		userRepository.updateGroup(groupId, request.getGroupName());
-	}
-
+	@Override
 	public UserList findUsers(GroupId groupId) {
 		return userRepository.findUsersByGroupId(groupId);
 	}
 
-	public void postGroupManager(PostGroupManagerRequest request) {
-		userRepository.insertManager(request.getUserId(), request.getGroupId());
-	}
-
-	public void postGroupMember(PostGroupMemberRequest request) {
-		userRepository.insertMember(request.getUserId(), request.getGroupId());
-	}
-
-	public void deleteGroup(GroupId groupId) {
-		userRepository.deleteGroup(groupId);
-	}
-
+	@Override
 	public void deleteUser(@Valid UserId userId) {
 		userRepository.deleteUser(userId);
 	}
 
+	@Override
 	public User findUser(UserId userId) {
 		return userRepository.findBy(userId);
 	}
 
+	@Override
 	public Boolean existAccountId(AccountId accountId) {
 		return userRepository.existAccountId(accountId);
-	}
-
-	public void deleteGroupManager(DeleteGroupManagerRequest request) {
-		userRepository.deleteManager(request.getUserId(), request.getGroupId());
-	}
-
-	public void deleteGroupMemr(DeleteGroupMemberRequest request) {
-		userRepository.deleteManager(request.getUserId(), request.getGroupId());
-	}
-
-
-	public void deleteGroupMember(DeleteGroupMemberRequest request) {
-		userRepository.deleteMember(request.getUserId(), request.getGroupId());
-	}
-
-	public Group getGroup(GroupId groupId) {
-		return userRepository.getGroup(groupId);
-	}
-
-	public GroupList getGroups() {
-		return userRepository.getGroup();
 	}
 }

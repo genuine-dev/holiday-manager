@@ -18,35 +18,13 @@ public interface UserRepository {
 
 	UserList findAll(UserSorts sorts, UserQueries queries);
 
-	Group findGroup(GroupId groupId);
-
-	void insertGroup(GroupId groupId, GroupName groupName);
-
-	void updateGroup(GroupId groupId, GroupName groupName);
-
 	UserList findUsersByGroupId(GroupId groupId);
 
-	GroupId nextGroupId();
-
 	Optional<User> findByEmail(String email);
-
-	void insertManager(UserId userId, GroupId groupId);
-
-	void insertMember(UserId userId, GroupId groupId);
-
-	void deleteManager(UserId userId, GroupId groupId);
-
-	void deleteMember(UserId userId, GroupId groupId);
-
-	void deleteGroup(GroupId groupId);
 
 	void deleteUser(UserId userId);
 
 	User findBy(UserId userId);
 
 	Boolean existAccountId(AccountId accountId);
-
-	Group getGroup(GroupId groupId);
-
-	GroupList getGroup();
 }

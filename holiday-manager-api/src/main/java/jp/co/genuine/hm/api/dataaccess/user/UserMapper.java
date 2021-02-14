@@ -8,60 +8,36 @@ import org.apache.ibatis.annotations.Param;
 import jp.co.genuine.hm.api.domain.request.user.parameter.UserQueries;
 import jp.co.genuine.hm.api.domain.request.user.parameter.UserSorts;
 import jp.co.genuine.hm.api.domain.user.AccountId;
-import jp.co.genuine.hm.api.domain.user.Group;
 import jp.co.genuine.hm.api.domain.user.GroupId;
-import jp.co.genuine.hm.api.domain.user.GroupName;
 import jp.co.genuine.hm.api.domain.user.User;
 import jp.co.genuine.hm.api.domain.user.UserId;
 
 @Mapper
 public interface UserMapper {
 
-	UserId nextUserId();
+	public UserId nextUserId();
 
-	void insertUser(@Param("user") User user);
+	public void insertUser(@Param("user") User user);
 
-	void insertAccount(@Param("user") User user);
+	public void insertAccount(@Param("user") User user);
 
-	void updateUser(@Param("user") User user);
+	public void updateUser(@Param("user") User user);
 
-	void updateAccount(@Param("user") User user);
+	public void updateAccount(@Param("user") User user);
 
-	List<User> findAllUser(@Param("sorts") UserSorts sorts, @Param("queries") UserQueries queries);
+	public List<User> findAllUser(@Param("sorts") UserSorts sorts, @Param("queries") UserQueries queries);
 
-	List<User> findManagerList(@Param("groupId") GroupId groupId);
+	public List<User> findManagerList(@Param("groupId") GroupId groupId);
 
-	List<User> findMemberList(@Param("groupId") GroupId groupId);
+	public List<User> findMemberList(@Param("groupId") GroupId groupId);
 
-	GroupName findGroupName(@Param("groupId") GroupId groupId);
+	public List<User> findUsersByGroupId(@Param("groupId") GroupId groupId);
 
-	void insertGroup(@Param("groupId") GroupId groupId, @Param("groupName") GroupName groupName);
+	public User findByEmail(@Param("email") String email);
 
-	void updateGroup(@Param("groupId") GroupId groupId, @Param("groupName") GroupName groupName);
+	public void deleteUser(@Param("userId") UserId userId);
 
-	List<User> findUsersByGroupId(@Param("groupId") GroupId groupId);
+	public User findBy(@Param("userId") UserId userId);
 
-	GroupId nextGroupId();
-
-	User findByEmail(@Param("email") String email);
-
-	void insertManager(@Param("userId") UserId userId, @Param("groupId") GroupId groupId);
-
-	void insertMember(@Param("userId") UserId userId, @Param("groupId") GroupId groupId);
-
-	void deleteManager(@Param("userId") UserId userId, @Param("groupId") GroupId groupId);
-
-	void deleteMember(@Param("userId") UserId userId, @Param("groupId") GroupId groupId);
-
-	void deleteGroup(@Param("groupId") GroupId groupId);
-
-	void deleteUser(@Param("userId") UserId userId);
-
-	User findBy(@Param("userId") UserId userId);
-
-	User findByAccountId(@Param("accountId") AccountId accountId);
-
-	Group findGroupById(@Param("groupId") GroupId groupId);
-
-	List<Group> findGroups();
+	public User findByAccountId(@Param("accountId") AccountId accountId);
 }

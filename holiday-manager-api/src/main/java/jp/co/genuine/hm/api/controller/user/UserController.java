@@ -19,33 +19,24 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.annotations.ApiOperation;
-import jp.co.genuine.hm.api.domain.request.user.DeleteGroupManagerRequest;
-import jp.co.genuine.hm.api.domain.request.user.DeleteGroupMemberRequest;
-import jp.co.genuine.hm.api.domain.request.user.PostGroupManagerRequest;
-import jp.co.genuine.hm.api.domain.request.user.PostGroupMemberRequest;
-import jp.co.genuine.hm.api.domain.request.user.PostGroupRequest;
 import jp.co.genuine.hm.api.domain.request.user.PostUserRequest;
-import jp.co.genuine.hm.api.domain.request.user.PutGroupRequest;
 import jp.co.genuine.hm.api.domain.request.user.PutUserRequest;
 import jp.co.genuine.hm.api.domain.request.user.parameter.UserQueries;
 import jp.co.genuine.hm.api.domain.request.user.parameter.UserSort;
 import jp.co.genuine.hm.api.domain.request.user.parameter.UserSorts;
 import jp.co.genuine.hm.api.domain.user.AccountId;
-import jp.co.genuine.hm.api.domain.user.Group;
-import jp.co.genuine.hm.api.domain.user.GroupId;
-import jp.co.genuine.hm.api.domain.user.GroupList;
 import jp.co.genuine.hm.api.domain.user.User;
 import jp.co.genuine.hm.api.domain.user.UserId;
 import jp.co.genuine.hm.api.domain.user.UserList;
 import jp.co.genuine.hm.api.domain.user.UserStatus;
 import jp.co.genuine.hm.api.domain.validation.ContainsUserSortType;
-import jp.co.genuine.hm.api.service.user.UserServiceImpl;
+import jp.co.genuine.hm.api.service.user.UserService;
 
 @RestController
 @Validated
 public class UserController {
 	@Autowired
-	UserServiceImpl userService;
+	UserService userService;
 
 	@RequestMapping(path = "/user", method = RequestMethod.GET)
 	@ApiOperation("全ユーザー取得")
@@ -92,72 +83,6 @@ public class UserController {
 			userStatusMap.put(userStatus.name(), userStatus.getLabel());
 		}
 		return new ResponseEntity<Map<String, String>>(userStatusMap, HttpStatus.OK);
-	}
-
-	@RequestMapping(path = "/group", method = RequestMethod.GET)
-	@ResponseStatus(HttpStatus.OK)
-	@ApiOperation("グループ一覧")
-	public ResponseEntity<GroupList> getGroups() {
-		GroupList groupList = userService.getGroups();
-		return new ResponseEntity<GroupList>(groupList, HttpStatus.OK);
-	}
-
-	@RequestMapping(path = "/group/{group_id}", method = RequestMethod.GET)
-	@ResponseStatus(HttpStatus.OK)
-	@ApiOperation("グループ詳細")
-	public ResponseEntity<Group> getGroup(@PathVariable("group_id") @Valid GroupId groupId) {
-		Group group = userService.getGroup(groupId);
-		return new ResponseEntity<Group>(group, HttpStatus.OK);
-	}
-
-	@RequestMapping(path = "/group", method = RequestMethod.POST)
-	@ResponseStatus(HttpStatus.OK)
-	@ApiOperation("グループ登録")
-	public void postGroup(@RequestBody @Valid PostGroupRequest request) {
-		userService.postGroup(request);
-	}
-
-	@RequestMapping(path = "/group/{group_id}", method = RequestMethod.PUT)
-	@ResponseStatus(HttpStatus.OK)
-	@ApiOperation("グループ更新")
-	public void putGroup(@PathVariable("group_id") @Valid GroupId groupId,
-			@RequestBody @Valid PutGroupRequest request) {
-		userService.putGroup(groupId, request);
-	}
-
-	@RequestMapping(path = "/group/{group_id}", method = RequestMethod.DELETE)
-	@ResponseStatus(HttpStatus.OK)
-	@ApiOperation("グループ削除")
-	public void deleteGroup(@PathVariable("group_id") @Valid GroupId groupId) {
-		userService.deleteGroup(groupId);
-	}
-
-	@RequestMapping(path = "/group/manager", method = RequestMethod.POST)
-	@ResponseStatus(HttpStatus.OK)
-	@ApiOperation("マネージャーのグループ登録")
-	public void postGroupManager(@RequestBody @Valid PostGroupManagerRequest request) {
-		userService.postGroupManager(request);
-	}
-
-	@RequestMapping(path = "/group/manager", method = RequestMethod.DELETE)
-	@ResponseStatus(HttpStatus.OK)
-	@ApiOperation("マネージャーのグループ削除")
-	public void deleteGroupManager(@RequestBody @Valid DeleteGroupManagerRequest request) {
-		userService.deleteGroupManager(request);
-	}
-
-	@RequestMapping(path = "/group/member", method = RequestMethod.POST)
-	@ResponseStatus(HttpStatus.OK)
-	@ApiOperation("メンバーのグループ登録")
-	public void postGroupMember(@RequestBody @Valid PostGroupMemberRequest request) {
-		userService.postGroupMember(request);
-	}
-
-	@RequestMapping(path = "/group/member", method = RequestMethod.DELETE)
-	@ResponseStatus(HttpStatus.OK)
-	@ApiOperation("メンバーのグループ削除")
-	public void postGroupMember(@RequestBody @Valid DeleteGroupMemberRequest request) {
-		userService.deleteGroupMember(request);
 	}
 
 	@RequestMapping(path = "/exist/accountId/{account_id}", method = RequestMethod.GET)

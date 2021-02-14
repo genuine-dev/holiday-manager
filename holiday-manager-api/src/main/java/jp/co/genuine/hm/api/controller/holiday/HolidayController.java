@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import holiday.manager.domain.model.holiday.application.HolidayApplication;
+import io.swagger.annotations.ApiOperation;
 import jp.co.genuine.hm.api.domain.request.holiday.DeleteHolidayCancelRequest;
 import jp.co.genuine.hm.api.domain.request.holiday.DeleteHolidayRejectRequest;
 import jp.co.genuine.hm.api.domain.request.holiday.PostHolidayApplyRequest;
@@ -23,24 +24,28 @@ public class HolidayController {
 	HolidayService holidayService;
 
 	@RequestMapping(path = "holiday/apply", method = RequestMethod.POST)
+	@ApiOperation("有給申請")
 	public ResponseEntity<HolidayApplication> postHolidayApply(@RequestBody PostHolidayApplyRequest request) throws ParseException {
 		HolidayApplication application = holidayService.postHolidayApply(request);
 		return new ResponseEntity<HolidayApplication>(application, HttpStatus.OK);
 	}
 
 	@RequestMapping(path = "holiday/approve", method = RequestMethod.PUT)
+	@ApiOperation("有給承認")
 	public ResponseEntity<HolidayApplication> putHolidayApprove(@RequestBody PutHolidayApproveRequest request) {
 		HolidayApplication application = holidayService.putHolidayApprove(request);
 		return new ResponseEntity<HolidayApplication>(application, HttpStatus.OK);
 	}
 
 	@RequestMapping(path = "holiday/reject", method = RequestMethod.DELETE)
+	@ApiOperation("有給却下")
 	public ResponseEntity<HolidayApplication> deleteHolidayReject(@RequestBody DeleteHolidayRejectRequest request) {
 		HolidayApplication application = holidayService.deleteHolidayReject(request);
 		return new ResponseEntity<HolidayApplication>(application, HttpStatus.OK);
 	}
 
 	@RequestMapping(path = "holiday/cancel", method = RequestMethod.DELETE)
+	@ApiOperation("有給キャンセル")
 	public ResponseEntity<HolidayApplication> deleteHolidayCancel(@RequestBody DeleteHolidayCancelRequest request) {
 		HolidayApplication application = holidayService.deleteHolidayCancel(request);
 		return new ResponseEntity<HolidayApplication>(application, HttpStatus.OK);

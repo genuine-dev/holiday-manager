@@ -9,10 +9,7 @@ import org.springframework.stereotype.Repository;
 import jp.co.genuine.hm.api.domain.request.user.parameter.UserQueries;
 import jp.co.genuine.hm.api.domain.request.user.parameter.UserSorts;
 import jp.co.genuine.hm.api.domain.user.AccountId;
-import jp.co.genuine.hm.api.domain.user.Group;
 import jp.co.genuine.hm.api.domain.user.GroupId;
-import jp.co.genuine.hm.api.domain.user.GroupList;
-import jp.co.genuine.hm.api.domain.user.GroupName;
 import jp.co.genuine.hm.api.domain.user.User;
 import jp.co.genuine.hm.api.domain.user.UserId;
 import jp.co.genuine.hm.api.domain.user.UserList;
@@ -55,62 +52,14 @@ public class UserDatasource implements UserRepository {
 	}
 
 	@Override
-	public Group findGroup(GroupId groupId) {
-		List<User> managerList = userMapper.findManagerList(groupId);
-		List<User> memberList = userMapper.findMemberList(groupId);
-		GroupName groupName = userMapper.findGroupName(groupId);
-		return new Group(groupId, groupName, new UserList(managerList), new UserList(memberList));
-	}
-
-	@Override
-	public void insertGroup(GroupId groupId, GroupName groupName) {
-		userMapper.insertGroup(groupId, groupName);
-	}
-
-	@Override
-	public void updateGroup(GroupId groupId, GroupName groupName) {
-		userMapper.updateGroup(groupId, groupName);
-	}
-
-	@Override
 	public UserList findUsersByGroupId(GroupId groupId) {
 		List<User> userList = userMapper.findUsersByGroupId(groupId);
 		return new UserList(userList);
 	}
 
 	@Override
-	public GroupId nextGroupId() {
-		return userMapper.nextGroupId();
-	}
-
-	@Override
 	public Optional<User> findByEmail(String email) {
 		return Optional.ofNullable(userMapper.findByEmail(email));
-	}
-
-	@Override
-	public void insertManager(UserId userId, GroupId groupId) {
-		userMapper.insertManager(userId, groupId);
-	}
-
-	@Override
-	public void insertMember(UserId userId, GroupId groupId) {
-		userMapper.insertMember(userId, groupId);
-	}
-
-	@Override
-	public void deleteManager(UserId userId, GroupId groupId) {
-		userMapper.deleteManager(userId, groupId);
-	}
-
-	@Override
-	public void deleteMember(UserId userId, GroupId groupId) {
-		userMapper.deleteMember(userId, groupId);
-	}
-
-	@Override
-	public void deleteGroup(GroupId groupId) {
-		userMapper.deleteGroup(groupId);
 	}
 
 	@Override
@@ -127,16 +76,5 @@ public class UserDatasource implements UserRepository {
 	public Boolean existAccountId(AccountId accountId) {
 		Optional<User> user = Optional.ofNullable(userMapper.findByAccountId(accountId));
 		return user.isPresent();
-	}
-
-	@Override
-	public Group getGroup(GroupId groupId) {
-		return userMapper.findGroupById(groupId);
-	}
-
-	@Override
-	public GroupList getGroup() {
-		List<Group> groups = userMapper.findGroups();
-		return new GroupList(groups);
 	}
 }
