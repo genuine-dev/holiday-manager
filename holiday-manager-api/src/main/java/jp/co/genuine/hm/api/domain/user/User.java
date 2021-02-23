@@ -12,7 +12,6 @@ public class User {
 	private UserId userId;
 	@Valid
 	private MailAddress mailAddress;
-	@Valid
 	private Password password;
 	@Valid
 	private UserName userName;

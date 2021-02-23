@@ -17,6 +17,7 @@ import holiday.manager.domain.model.user.UserId;
 import jp.co.genuine.hm.api.domain.request.holiday.DeleteHolidayCancelRequest;
 import jp.co.genuine.hm.api.domain.request.holiday.DeleteHolidayRejectRequest;
 import jp.co.genuine.hm.api.domain.request.holiday.PostHolidayApplyRequest;
+import jp.co.genuine.hm.api.domain.request.holiday.PostHolidayGrantRequest;
 import jp.co.genuine.hm.api.domain.request.holiday.PutHolidayApproveRequest;
 
 @Component
@@ -48,6 +49,15 @@ public class HolidayFactory {
 		HolidayApplicationId applicationId = new HolidayApplicationId(request.getHolidayApplicationId());;
 		User user = approverByUserId(new UserId(Integer.parseInt(request.getApplicantId())));;
 		return new HolidayCancelDTO(applicationId, user);
+	}
+
+	public HolidayGrantDTO create(PostHolidayGrantRequest request) throws ParseException {
+		UserId userId = new UserId(Integer.parseInt(request.getUserId()));
+		KindOfHoliday kindOfHoliday = KindOfHoliday.valueOf(request.getKindOfHoliday());
+		double days = Double.parseDouble(request.getDays());
+		Date grantedDate = new SimpleDateFormat("yyyy-MM-dd").parse(request.getGrantedDate());
+		Date expirationDate = new SimpleDateFormat("yyyy-MM-dd").parse(request.getExpirationDate());
+		return new HolidayGrantDTO(userId, kindOfHoliday, days, grantedDate, expirationDate);
 	}
 
 	public User applicantByUserId(UserId userId) {

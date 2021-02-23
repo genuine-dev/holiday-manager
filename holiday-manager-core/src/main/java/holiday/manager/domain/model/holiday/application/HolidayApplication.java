@@ -42,6 +42,18 @@ public class HolidayApplication extends AggregateRoot {
 		apply(new HolidayApplicationApplied(id, kindOfHoliday, holidayType, date, applicant));
 	}
 
+	public HolidayApplication(HolidayApplicationId id,
+			KindOfHoliday kindOfHoliday, HolidayType holidayType, Date date, HolidayApplicationStatus status,
+			UserId applicantId, UserId approverId) {
+		this.id = id;
+		this.kindOfHoliday = kindOfHoliday;
+		this.holidayType = holidayType;
+		this.date = date;
+		this.status = status;
+		this.applicantId = applicantId;
+		this.approverId = approverId;
+	}
+
 	public HolidayApplication approve(User approver) {
 		boolean hasAuthority = approver.getManagedMembers().stream()
 				.filter(user -> user.getId().equals(applicantId))

@@ -10,7 +10,7 @@ import io.swagger.annotations.ApiModelProperty;
 @ApiModel(description = "ユーザー登録リクエスト")
 public class PostUserRequest {
 	@NotBlank
-	@ApiModelProperty(example = "20201107_1")
+	@ApiModelProperty(example = "20201107_1", required = true)
 	private String accountId;
 	@NotBlank
 	@ApiModelProperty(example="pass", required = true)
