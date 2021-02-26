@@ -11,4 +11,6 @@ public interface HolidayApplicationQueryRepository extends CrudRepository<Holida
 	List<HolidayApplicationEntity> findByAplicantId(Integer aplicantId);
 
 	List<HolidayApplicationEntity> findByAplicantIdAndStatus(Integer aplicantId, String status);
+
+	List<HolidayApplicationEntity> findByStatus(String status);
 }

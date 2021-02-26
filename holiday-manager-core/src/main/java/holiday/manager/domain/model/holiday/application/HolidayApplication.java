@@ -10,6 +10,8 @@ import holiday.manager.domain.model.holiday.KindOfHoliday;
 import holiday.manager.domain.model.holiday.application.event.HolidayApplicationApplied;
 import holiday.manager.domain.model.holiday.application.event.HolidayApplicationApproved;
 import holiday.manager.domain.model.holiday.application.event.HolidayApplicationCanceled;
+import holiday.manager.domain.model.holiday.application.event.HolidayApplicationProcessFailed;
+import holiday.manager.domain.model.holiday.application.event.HolidayApplicationProcessed;
 import holiday.manager.domain.model.holiday.application.event.HolidayApplicationRejected;
 import holiday.manager.domain.model.user.User;
 import holiday.manager.domain.model.user.UserId;
@@ -65,6 +67,9 @@ public class HolidayApplication extends AggregateRoot {
 					"authentication failed.(approve): holidayApplicationId: " + id + ", approverId: "
 							+ approver.getId());
 		}
+		if (status == HolidayApplicationStatus.CANCELED) {
+			throw new IllegalStateException();
+		}
 		apply(new HolidayApplicationApproved(id, approver.getId()));
 
 		return this;
@@ -98,6 +103,26 @@ public class HolidayApplication extends AggregateRoot {
 		return this;
 	}
 
+	public HolidayApplication process() {
+		if (status != HolidayApplicationStatus.APPROVED) {
+			throw new IllegalStateException();
+		}
+
+		apply(new HolidayApplicationProcessed(id));
+
+		return this;
+	}
+
+	public HolidayApplication processFail() {
+		if (status != HolidayApplicationStatus.APPROVED) {
+			throw new IllegalStateException();
+		}
+
+		apply(new HolidayApplicationProcessFailed(id));
+
+		return this;
+	}
+
 	protected void on(HolidayApplicationApplied event) {
 		id = event.getId();
 		kindOfHoliday = event.getKindOfHoliday();
@@ -119,6 +144,14 @@ public class HolidayApplication extends AggregateRoot {
 
 	protected void on(HolidayApplicationCanceled event) {
 		status = HolidayApplicationStatus.CANCELED;
+	}
+
+	protected void on(HolidayApplicationProcessed event) {
+		status = HolidayApplicationStatus.PROCESSED;
+	}
+
+	protected void on(HolidayApplicationProcessFailed event) {
+		status = HolidayApplicationStatus.PROCESS_FAILED;
 	}
 
 	public HolidayApplicationId getId() {

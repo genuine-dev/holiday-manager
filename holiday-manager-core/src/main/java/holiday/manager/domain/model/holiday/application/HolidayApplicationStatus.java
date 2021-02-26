@@ -8,5 +8,9 @@ public enum HolidayApplicationStatus {
 	/** 却下 */
 	REJECTED,
 	/** 取り消し */
-	CANCELED
+	CANCELED,
+	/** 処理済み */
+	PROCESSED,
+	/** 処理失敗 */
+	PROCESS_FAILED
 }

@@ -59,6 +59,26 @@ public class HolidayApplicationService {
 
 	}
 
+	public HolidayApplication process(HolidayApplicationId id) {
+		HolidayApplication application = repository.findById(id);
+		application.process();
+
+		repository.save(application);
+
+		return application;
+
+	}
+
+	public HolidayApplication processFail(HolidayApplicationId id) {
+		HolidayApplication application = repository.findById(id);
+		application.processFail();
+
+		repository.save(application);
+
+		return application;
+
+	}
+
 	public List<HolidayApplication> findByAplicantId(UserId applicantId) {
 
 		List<HolidayApplicationEntity> holidayApplicationEntities = queryRepository.findByAplicantId(applicantId.getValue());
