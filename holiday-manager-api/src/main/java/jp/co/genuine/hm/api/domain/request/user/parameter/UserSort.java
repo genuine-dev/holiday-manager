@@ -1,6 +1,6 @@
 package jp.co.genuine.hm.api.domain.request.user.parameter;
 
-import jp.co.genuine.hm.api.domain.user.UserSortType;
+import jp.co.genuine.hm.api.domain.user.request.param.UserSortType;
 
 public class UserSort {
 	private String value;

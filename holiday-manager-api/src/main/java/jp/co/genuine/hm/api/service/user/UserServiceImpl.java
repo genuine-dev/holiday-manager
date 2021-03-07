@@ -9,13 +9,13 @@ import jp.co.genuine.hm.api.domain.request.user.PostUserRequest;
 import jp.co.genuine.hm.api.domain.request.user.PutUserRequest;
 import jp.co.genuine.hm.api.domain.request.user.parameter.UserQueries;
 import jp.co.genuine.hm.api.domain.request.user.parameter.UserSorts;
-import jp.co.genuine.hm.api.domain.user.AccountId;
-import jp.co.genuine.hm.api.domain.user.GroupId;
 import jp.co.genuine.hm.api.domain.user.User;
 import jp.co.genuine.hm.api.domain.user.UserFactory;
 import jp.co.genuine.hm.api.domain.user.UserId;
 import jp.co.genuine.hm.api.domain.user.UserList;
 import jp.co.genuine.hm.api.domain.user.UserRepository;
+import jp.co.genuine.hm.api.domain.user.account.AccountId;
+import jp.co.genuine.hm.api.domain.user.group.GroupId;
 import jp.co.genuine.hm.api.service.validation.ValidateService;
 
 @Service
@@ -41,6 +41,7 @@ public class UserServiceImpl implements UserService {
 		validateService.validate(user);
 		userRepository.insertUser(user);
 		userRepository.insertAccount(user);
+		userRepository.insertRule(user);
 	}
 
 	@Override

@@ -1,4 +1,4 @@
-package jp.co.genuine.hm.api.service.user;
+package jp.co.genuine.hm.api.service.user.group;
 
 import jp.co.genuine.hm.api.domain.request.user.DeleteGroupManagerRequest;
 import jp.co.genuine.hm.api.domain.request.user.DeleteGroupMemberRequest;
@@ -6,9 +6,9 @@ import jp.co.genuine.hm.api.domain.request.user.PostGroupManagerRequest;
 import jp.co.genuine.hm.api.domain.request.user.PostGroupMemberRequest;
 import jp.co.genuine.hm.api.domain.request.user.PostGroupRequest;
 import jp.co.genuine.hm.api.domain.request.user.PutGroupRequest;
-import jp.co.genuine.hm.api.domain.user.Group;
-import jp.co.genuine.hm.api.domain.user.GroupId;
-import jp.co.genuine.hm.api.domain.user.GroupList;
+import jp.co.genuine.hm.api.domain.user.group.Group;
+import jp.co.genuine.hm.api.domain.user.group.GroupId;
+import jp.co.genuine.hm.api.domain.user.group.GroupList;
 
 public interface GroupService {
 	public Group findGroup(GroupId groupId);

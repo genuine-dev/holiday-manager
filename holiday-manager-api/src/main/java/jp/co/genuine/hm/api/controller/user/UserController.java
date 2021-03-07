@@ -24,11 +24,11 @@ import jp.co.genuine.hm.api.domain.request.user.PutUserRequest;
 import jp.co.genuine.hm.api.domain.request.user.parameter.UserQueries;
 import jp.co.genuine.hm.api.domain.request.user.parameter.UserSort;
 import jp.co.genuine.hm.api.domain.request.user.parameter.UserSorts;
-import jp.co.genuine.hm.api.domain.user.AccountId;
 import jp.co.genuine.hm.api.domain.user.User;
 import jp.co.genuine.hm.api.domain.user.UserId;
 import jp.co.genuine.hm.api.domain.user.UserList;
 import jp.co.genuine.hm.api.domain.user.UserStatus;
+import jp.co.genuine.hm.api.domain.user.account.AccountId;
 import jp.co.genuine.hm.api.domain.validation.ContainsUserSortType;
 import jp.co.genuine.hm.api.service.user.UserService;
 

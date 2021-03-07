@@ -1,19 +1,19 @@
-package jp.co.genuine.hm.api.domain.holiday;
+package jp.co.genuine.hm.api.domain.holiday.dto;
 
 import holiday.manager.domain.model.holiday.application.HolidayApplicationId;
 import holiday.manager.domain.model.user.User;
 
-public class HolidayCancelDTO {
+public class HolidayApproveDTO {
 	private HolidayApplicationId applicationId;
-	private User applicant;
-	public HolidayCancelDTO() {
+	private User approver;
+	public HolidayApproveDTO() {
 		super();
 		// TODO 自動生成されたコンストラクター・スタブ
 	}
-	public HolidayCancelDTO(HolidayApplicationId applicationId, User applicant) {
+	public HolidayApproveDTO(HolidayApplicationId applicationId, User approver) {
 		super();
 		this.applicationId = applicationId;
-		this.applicant = applicant;
+		this.approver = approver;
 	}
 	public HolidayApplicationId getApplicationId() {
 		return applicationId;
@@ -21,10 +21,10 @@ public class HolidayCancelDTO {
 	public void setApplicationId(HolidayApplicationId applicationId) {
 		this.applicationId = applicationId;
 	}
-	public User getApplicant() {
-		return applicant;
+	public User getApprover() {
+		return approver;
 	}
-	public void setApplicant(User applicant) {
-		this.applicant = applicant;
+	public void setApprover(User approver) {
+		this.approver = approver;
 	}
 }

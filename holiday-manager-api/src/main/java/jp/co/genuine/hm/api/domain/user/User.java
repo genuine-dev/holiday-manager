@@ -5,6 +5,10 @@ import javax.validation.Valid;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
+import jp.co.genuine.hm.api.domain.user.account.AccountId;
+import jp.co.genuine.hm.api.domain.user.account.Password;
+import jp.co.genuine.hm.api.domain.user.rule.RuleId;
+
 @JsonInclude(Include.NON_EMPTY)
 public class User {
 	@Valid
@@ -20,26 +24,14 @@ public class User {
 	private HireDate hireDate;
 	private LeftoverHoliday leftoverHoliday;
 	private boolean admin;
+	private RuleId ruleId;
 
 	public User() {
 		userStatus = UserStatus.ACTIVE;
 	}
 
 	public User(AccountId accountId, UserId userId, MailAddress mailAddress, Password password, UserName userName,
-			UserStatus userStatus, HireDate hireDate, LeftoverHoliday leftoverHoliday, boolean admin) {
-		this.accountId = accountId;
-		this.userId = userId;
-		this.mailAddress = mailAddress;
-		this.password = password;
-		this.userName = userName;
-		this.userStatus = userStatus;
-		this.hireDate = hireDate;
-		this.leftoverHoliday = leftoverHoliday;
-		this.admin = admin;
-	}
-
-	public User(AccountId accountId, UserId userId, MailAddress mailAddress, Password password, UserName userName,
-			UserStatus userStatus, HireDate hireDate, LeftoverHoliday leftoverHoliday) {
+			UserStatus userStatus, HireDate hireDate, LeftoverHoliday leftoverHoliday, RuleId ruleId) {
 		this.accountId = accountId;
 		this.userId = userId;
 		this.mailAddress = mailAddress;
@@ -49,6 +41,7 @@ public class User {
 		this.hireDate = hireDate;
 		this.leftoverHoliday = leftoverHoliday;
 		this.admin = false;
+		this.ruleId = ruleId;
 	}
 
 	public User(UserId userId, MailAddress mailAddress, Password password, UserName userName,
@@ -132,5 +125,9 @@ public class User {
 
 	public void setAdmin(boolean admin) {
 		this.admin = admin;
+	}
+
+	public RuleId getRuleId() {
+		return ruleId;
 	}
 }

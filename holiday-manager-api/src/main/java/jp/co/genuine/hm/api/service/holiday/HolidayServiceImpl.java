@@ -15,17 +15,19 @@ import holiday.manager.domain.model.holiday.application.HolidayApplication;
 import holiday.manager.domain.model.holiday.application.HolidayApplicationStatus;
 import holiday.manager.domain.model.holiday.holiday.HolidayList;
 import holiday.manager.domain.model.user.UserId;
-import jp.co.genuine.hm.api.domain.holiday.HolidayApplyDTO;
-import jp.co.genuine.hm.api.domain.holiday.HolidayApproveDTO;
-import jp.co.genuine.hm.api.domain.holiday.HolidayCancelDTO;
 import jp.co.genuine.hm.api.domain.holiday.HolidayFactory;
-import jp.co.genuine.hm.api.domain.holiday.HolidayGrantDTO;
-import jp.co.genuine.hm.api.domain.holiday.HolidayRejectDTO;
+import jp.co.genuine.hm.api.domain.holiday.dto.HolidayApplyDTO;
+import jp.co.genuine.hm.api.domain.holiday.dto.HolidayApproveDTO;
+import jp.co.genuine.hm.api.domain.holiday.dto.HolidayCancelDTO;
+import jp.co.genuine.hm.api.domain.holiday.dto.HolidayGrantDTO;
+import jp.co.genuine.hm.api.domain.holiday.dto.HolidayRejectDTO;
 import jp.co.genuine.hm.api.domain.request.holiday.DeleteHolidayCancelRequest;
 import jp.co.genuine.hm.api.domain.request.holiday.DeleteHolidayRejectRequest;
 import jp.co.genuine.hm.api.domain.request.holiday.PostHolidayApplyRequest;
 import jp.co.genuine.hm.api.domain.request.holiday.PostHolidayGrantRequest;
 import jp.co.genuine.hm.api.domain.request.holiday.PutHolidayApproveRequest;
+import jp.co.genuine.hm.api.domain.user.UserRepository;
+import jp.co.genuine.hm.api.domain.user.alert.AlertForTakingPaidLeave;
 
 @Service
 public class HolidayServiceImpl implements HolidayService {
@@ -35,6 +37,8 @@ public class HolidayServiceImpl implements HolidayService {
 	private HolidayFactory holidayFactory;
 	@Autowired
 	private HolidayListService holidayListService;
+	@Autowired
+	private UserRepository userRepository;
 
 	@Override
 	public HolidayApplication postHolidayApply(PostHolidayApplyRequest request) throws ParseException {
@@ -95,6 +99,13 @@ public class HolidayServiceImpl implements HolidayService {
 		HolidayGrantDTO holidayGrantDTO = holidayFactory.create(request);
 		return holidayListService.grantHoliday(holidayGrantDTO.getUserId(), holidayGrantDTO.getKindOfHoliday(),
 				holidayGrantDTO.getDays(), holidayGrantDTO.getGrantedDate(), holidayGrantDTO.getExpirationDate());
+	}
+
+	@Override
+	public AlertForTakingPaidLeave getHolidayTakeAlert(String userId) {
+		jp.co.genuine.hm.api.domain.user.UserId owner = new jp.co.genuine.hm.api.domain.user.UserId(userId);
+
+		return userRepository.findAlertForTakingPaidLeave(owner);
 	}
 
 }

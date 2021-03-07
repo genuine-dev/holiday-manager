@@ -1,14 +1,14 @@
-package jp.co.genuine.hm.api.dataaccess.user;
+package jp.co.genuine.hm.api.dataaccess.user.group;
 
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
-import jp.co.genuine.hm.api.domain.user.Group;
-import jp.co.genuine.hm.api.domain.user.GroupId;
-import jp.co.genuine.hm.api.domain.user.GroupName;
 import jp.co.genuine.hm.api.domain.user.UserId;
+import jp.co.genuine.hm.api.domain.user.group.Group;
+import jp.co.genuine.hm.api.domain.user.group.GroupId;
+import jp.co.genuine.hm.api.domain.user.group.GroupName;
 
 @Mapper
 public interface GroupMapper {

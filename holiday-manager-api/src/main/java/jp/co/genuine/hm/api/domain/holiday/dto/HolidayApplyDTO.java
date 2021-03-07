@@ -1,4 +1,4 @@
-package jp.co.genuine.hm.api.domain.holiday;
+package jp.co.genuine.hm.api.domain.holiday.dto;
 
 import java.util.Date;
 

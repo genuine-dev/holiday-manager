@@ -1,4 +1,4 @@
-package jp.co.genuine.hm.api.controller.user;
+package jp.co.genuine.hm.api.controller.user.group;
 
 import javax.validation.Valid;
 
@@ -20,10 +20,10 @@ import jp.co.genuine.hm.api.domain.request.user.PostGroupManagerRequest;
 import jp.co.genuine.hm.api.domain.request.user.PostGroupMemberRequest;
 import jp.co.genuine.hm.api.domain.request.user.PostGroupRequest;
 import jp.co.genuine.hm.api.domain.request.user.PutGroupRequest;
-import jp.co.genuine.hm.api.domain.user.Group;
-import jp.co.genuine.hm.api.domain.user.GroupId;
-import jp.co.genuine.hm.api.domain.user.GroupList;
-import jp.co.genuine.hm.api.service.user.GroupService;
+import jp.co.genuine.hm.api.domain.user.group.Group;
+import jp.co.genuine.hm.api.domain.user.group.GroupId;
+import jp.co.genuine.hm.api.domain.user.group.GroupList;
+import jp.co.genuine.hm.api.service.user.group.GroupService;
 
 @RestController
 @Validated

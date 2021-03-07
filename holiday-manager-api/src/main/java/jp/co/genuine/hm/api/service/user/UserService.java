@@ -4,11 +4,11 @@ import jp.co.genuine.hm.api.domain.request.user.PostUserRequest;
 import jp.co.genuine.hm.api.domain.request.user.PutUserRequest;
 import jp.co.genuine.hm.api.domain.request.user.parameter.UserQueries;
 import jp.co.genuine.hm.api.domain.request.user.parameter.UserSorts;
-import jp.co.genuine.hm.api.domain.user.AccountId;
-import jp.co.genuine.hm.api.domain.user.GroupId;
 import jp.co.genuine.hm.api.domain.user.User;
 import jp.co.genuine.hm.api.domain.user.UserId;
 import jp.co.genuine.hm.api.domain.user.UserList;
+import jp.co.genuine.hm.api.domain.user.account.AccountId;
+import jp.co.genuine.hm.api.domain.user.group.GroupId;
 
 public interface UserService {
 	public UserList getUser(UserSorts sorts, UserQueries queries);

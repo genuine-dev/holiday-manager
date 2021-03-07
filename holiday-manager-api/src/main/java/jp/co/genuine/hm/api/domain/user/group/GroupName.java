@@ -1,4 +1,4 @@
-package jp.co.genuine.hm.api.domain.user;
+package jp.co.genuine.hm.api.domain.user.group;
 
 public class GroupName {
 	private String value;

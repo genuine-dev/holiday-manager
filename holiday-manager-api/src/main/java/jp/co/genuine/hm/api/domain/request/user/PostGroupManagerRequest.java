@@ -3,8 +3,8 @@ package jp.co.genuine.hm.api.domain.request.user;
 import javax.validation.constraints.NotBlank;
 
 import io.swagger.annotations.ApiModelProperty;
-import jp.co.genuine.hm.api.domain.user.GroupId;
 import jp.co.genuine.hm.api.domain.user.UserId;
+import jp.co.genuine.hm.api.domain.user.group.GroupId;
 
 public class PostGroupManagerRequest {
 	@NotBlank

@@ -1,7 +1,9 @@
-package jp.co.genuine.hm.api.domain.user;
+package jp.co.genuine.hm.api.domain.user.group;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+
+import jp.co.genuine.hm.api.domain.user.UserList;
 
 @JsonInclude(Include.NON_EMPTY)
 public class Group {

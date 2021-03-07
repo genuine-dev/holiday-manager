@@ -8,12 +8,13 @@ import org.springframework.stereotype.Repository;
 
 import jp.co.genuine.hm.api.domain.request.user.parameter.UserQueries;
 import jp.co.genuine.hm.api.domain.request.user.parameter.UserSorts;
-import jp.co.genuine.hm.api.domain.user.AccountId;
-import jp.co.genuine.hm.api.domain.user.GroupId;
 import jp.co.genuine.hm.api.domain.user.User;
 import jp.co.genuine.hm.api.domain.user.UserId;
 import jp.co.genuine.hm.api.domain.user.UserList;
 import jp.co.genuine.hm.api.domain.user.UserRepository;
+import jp.co.genuine.hm.api.domain.user.account.AccountId;
+import jp.co.genuine.hm.api.domain.user.alert.AlertForTakingPaidLeave;
+import jp.co.genuine.hm.api.domain.user.group.GroupId;
 
 @Repository
 public class UserDatasource implements UserRepository {
@@ -76,5 +77,15 @@ public class UserDatasource implements UserRepository {
 	public Boolean existAccountId(AccountId accountId) {
 		Optional<User> user = Optional.ofNullable(userMapper.findByAccountId(accountId));
 		return user.isPresent();
+	}
+
+	@Override
+	public void insertRule(User user) {
+		userMapper.insertRule(user);
+	}
+
+	@Override
+	public AlertForTakingPaidLeave findAlertForTakingPaidLeave(UserId userId) {
+		return userMapper.findAlertForTakingPaidLeave(userId);
 	}
 }

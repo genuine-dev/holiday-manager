@@ -6,7 +6,7 @@ import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
 import jp.co.genuine.hm.api.domain.request.user.parameter.UserSort;
-import jp.co.genuine.hm.api.domain.user.UserSortType;
+import jp.co.genuine.hm.api.domain.user.request.param.UserSortType;
 
 public class ContainsUserSortTypeValidator implements ConstraintValidator<ContainsUserSortType, List<UserSort>> {
 	@Override

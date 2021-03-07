@@ -17,6 +17,11 @@
 		<id     property="value" column="user_id" />
 	</resultMap>
 
+	<resultMap id="alertForTakingPaidLeaveMap" type="jp.co.genuine.hm.api.domain.user.alert.AlertForTakingPaidLeave">
+		<id     property="days" column="days" />
+		<result property="deadline" column="deadline"/>
+	</resultMap>
+
 	<select id="nextUserId" resultMap="userIdMap">
 		SELECT
 			nextval('user.user_id_seq') AS user_id
@@ -352,4 +357,28 @@
 		AND
 			"user".deleted = false
 	</select>
+
+	<insert id="insertRule">
+		INSERT INTO "user".user_rule
+			(
+				user_id,
+				rule_id
+			)
+		VALUES
+			(
+				#{user.userId.value},
+				#{user.ruleId.value}
+			)
+	</insert>
+
+	<select id="findAlertForTakingPaidLeave" resultMap="alertForTakingPaidLeaveMap">
+		SELECT
+			days         AS days
+			,deadline    AS deadline
+		FROM
+			"user".alert_for_taking_paid_leave
+		WHERE
+			user_id = #{userId.value}
+	</select>
+
 </mapper>

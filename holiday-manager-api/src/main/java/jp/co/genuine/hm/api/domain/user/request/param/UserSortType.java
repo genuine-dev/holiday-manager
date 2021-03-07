@@ -1,4 +1,4 @@
-package jp.co.genuine.hm.api.domain.user;
+package jp.co.genuine.hm.api.domain.user.request.param;
 
 public enum UserSortType {
 	user_name("user_name");

@@ -7,10 +7,11 @@ import org.apache.ibatis.annotations.Param;
 
 import jp.co.genuine.hm.api.domain.request.user.parameter.UserQueries;
 import jp.co.genuine.hm.api.domain.request.user.parameter.UserSorts;
-import jp.co.genuine.hm.api.domain.user.AccountId;
-import jp.co.genuine.hm.api.domain.user.GroupId;
 import jp.co.genuine.hm.api.domain.user.User;
 import jp.co.genuine.hm.api.domain.user.UserId;
+import jp.co.genuine.hm.api.domain.user.account.AccountId;
+import jp.co.genuine.hm.api.domain.user.alert.AlertForTakingPaidLeave;
+import jp.co.genuine.hm.api.domain.user.group.GroupId;
 
 @Mapper
 public interface UserMapper {
@@ -40,4 +41,8 @@ public interface UserMapper {
 	public User findBy(@Param("userId") UserId userId);
 
 	public User findByAccountId(@Param("accountId") AccountId accountId);
+
+	public void insertRule(@Param("user") User user);
+
+	public AlertForTakingPaidLeave findAlertForTakingPaidLeave(@Param("userId") UserId userId);
 }

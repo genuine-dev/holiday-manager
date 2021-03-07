@@ -1,18 +1,19 @@
-package jp.co.genuine.hm.api.dataaccess.user;
+package jp.co.genuine.hm.api.dataaccess.user.group;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import jp.co.genuine.hm.api.domain.user.Group;
-import jp.co.genuine.hm.api.domain.user.GroupId;
-import jp.co.genuine.hm.api.domain.user.GroupList;
-import jp.co.genuine.hm.api.domain.user.GroupName;
-import jp.co.genuine.hm.api.domain.user.GroupRepository;
+import jp.co.genuine.hm.api.dataaccess.user.UserMapper;
 import jp.co.genuine.hm.api.domain.user.User;
 import jp.co.genuine.hm.api.domain.user.UserId;
 import jp.co.genuine.hm.api.domain.user.UserList;
+import jp.co.genuine.hm.api.domain.user.group.Group;
+import jp.co.genuine.hm.api.domain.user.group.GroupId;
+import jp.co.genuine.hm.api.domain.user.group.GroupList;
+import jp.co.genuine.hm.api.domain.user.group.GroupName;
+import jp.co.genuine.hm.api.domain.user.group.GroupRepository;
 
 @Repository
 public class GroupDatasource implements GroupRepository {

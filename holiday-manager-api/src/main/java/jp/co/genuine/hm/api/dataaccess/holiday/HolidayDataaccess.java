@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import holiday.manager.domain.model.user.UserId;
-import jp.co.genuine.hm.api.domain.holiday.HolidayRepository;
+import jp.co.genuine.hm.api.domain.holiday.dto.HolidayRepository;
 
 @Repository
 public class HolidayDataaccess implements HolidayRepository {

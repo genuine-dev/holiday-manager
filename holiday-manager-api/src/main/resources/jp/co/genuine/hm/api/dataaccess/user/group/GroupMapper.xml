@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="jp.co.genuine.hm.api.dataaccess.user.GroupMapper">
+<mapper namespace="jp.co.genuine.hm.api.dataaccess.user.group.GroupMapper">
 
-	<resultMap id="groupMap" type="jp.co.genuine.hm.api.domain.user.Group">
+	<resultMap id="groupMap" type="jp.co.genuine.hm.api.domain.user.group.Group">
 		<id     property="groupId.value" column="group_id" />
 		<result property="groupName.value" column="group_name"/>
 		<collection property="managerList.userList" ofType="jp.co.genuine.hm.api.domain.user.User">
@@ -15,16 +15,16 @@
 		</collection>
 	</resultMap>
 
-	<resultMap id="groupExcludeUserMap" type="jp.co.genuine.hm.api.domain.user.Group">
+	<resultMap id="groupExcludeUserMap" type="jp.co.genuine.hm.api.domain.user.group.Group">
 		<id     property="groupId.value" column="group_id" />
 		<result property="groupName.value" column="group_name"/>
 	</resultMap>
 
-	<resultMap id="groupNameMap" type="jp.co.genuine.hm.api.domain.user.GroupName">
+	<resultMap id="groupNameMap" type="jp.co.genuine.hm.api.domain.user.group.GroupName">
 		<id     property="value" column="name" />
 	</resultMap>
 
-	<resultMap id="gropuIdMap" type="jp.co.genuine.hm.api.domain.user.GroupId">
+	<resultMap id="gropuIdMap" type="jp.co.genuine.hm.api.domain.user.group.GroupId">
 		<id     property="value" column="group_id" />
 	</resultMap>
 

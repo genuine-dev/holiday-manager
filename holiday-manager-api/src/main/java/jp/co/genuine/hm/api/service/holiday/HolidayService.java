@@ -11,6 +11,7 @@ import jp.co.genuine.hm.api.domain.request.holiday.DeleteHolidayRejectRequest;
 import jp.co.genuine.hm.api.domain.request.holiday.PostHolidayApplyRequest;
 import jp.co.genuine.hm.api.domain.request.holiday.PostHolidayGrantRequest;
 import jp.co.genuine.hm.api.domain.request.holiday.PutHolidayApproveRequest;
+import jp.co.genuine.hm.api.domain.user.alert.AlertForTakingPaidLeave;
 
 public interface HolidayService {
 
@@ -29,4 +30,6 @@ public interface HolidayService {
 	public List<HolidayApplication> getHolidayApplication(String userId, String valueOf);
 
 	public Double getHolidayDays(String userId, String kind);
+
+	public AlertForTakingPaidLeave getHolidayTakeAlert(String userId);
 }

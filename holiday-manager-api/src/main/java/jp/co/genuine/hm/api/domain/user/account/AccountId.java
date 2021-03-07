@@ -1,4 +1,4 @@
-package jp.co.genuine.hm.api.domain.user;
+package jp.co.genuine.hm.api.domain.user.account;
 
 import org.hibernate.validator.constraints.Length;
 

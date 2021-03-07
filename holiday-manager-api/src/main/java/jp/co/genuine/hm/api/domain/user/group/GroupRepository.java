@@ -1,4 +1,6 @@
-package jp.co.genuine.hm.api.domain.user;
+package jp.co.genuine.hm.api.domain.user.group;
+
+import jp.co.genuine.hm.api.domain.user.UserId;
 
 public interface GroupRepository {
 

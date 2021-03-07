@@ -6,6 +6,9 @@ import org.springframework.stereotype.Component;
 
 import jp.co.genuine.hm.api.domain.request.user.PostUserRequest;
 import jp.co.genuine.hm.api.domain.request.user.PutUserRequest;
+import jp.co.genuine.hm.api.domain.user.account.AccountId;
+import jp.co.genuine.hm.api.domain.user.account.Password;
+import jp.co.genuine.hm.api.domain.user.rule.RuleId;
 
 @Component
 public class UserFactory {
@@ -23,11 +26,14 @@ public class UserFactory {
 		UserStatus userStatus = UserStatus.valueOf(request.getStatus());
 		HireDate hireDate = new HireDate(request.getHireDate());;
 		LeftoverHoliday leftoverHoliday = new LeftoverHoliday(request.getLeftoverHoliday());
-		return new User(accountId, userId, mailAddress, password, userName, userStatus, hireDate, leftoverHoliday);
+		RuleId ruleId = new RuleId();
+
+		return new User(accountId, userId, mailAddress, password, userName, userStatus, hireDate, leftoverHoliday, ruleId);
 	}
 
 	private Password encodedPassword(String value) {
 		String encodedPassword = passwordEncoder.encode(value);
+
 		return new Password(encodedPassword);
 	}
 
@@ -38,13 +44,14 @@ public class UserFactory {
 		UserStatus userStatus = UserStatus.valueOf(request.getStatus());
 		HireDate hireDate = new HireDate(request.getHireDate());;
 		LeftoverHoliday leftoverHoliday = new LeftoverHoliday(request.getLeftoverHoliday());
+
 		return new User(userId, mailAddress, password, userName, userStatus, hireDate, leftoverHoliday);
 	}
 
 	private Password password(String password) {
-		if (password == null || password.isEmpty()) {
+		if (password == null || password.isEmpty())
 			return new Password();
-		}
+
 		return encodedPassword(password);
 	}
 

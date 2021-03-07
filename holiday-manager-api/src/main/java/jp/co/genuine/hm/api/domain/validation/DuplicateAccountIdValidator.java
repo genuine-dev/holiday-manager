@@ -5,7 +5,7 @@ import javax.validation.ConstraintValidatorContext;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import jp.co.genuine.hm.api.domain.user.AccountId;
+import jp.co.genuine.hm.api.domain.user.account.AccountId;
 import jp.co.genuine.hm.api.service.user.UserService;
 
 public class DuplicateAccountIdValidator implements ConstraintValidator<DuplicateAccountId, AccountId> {

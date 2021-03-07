@@ -4,6 +4,9 @@ import java.util.Optional;
 
 import jp.co.genuine.hm.api.domain.request.user.parameter.UserQueries;
 import jp.co.genuine.hm.api.domain.request.user.parameter.UserSorts;
+import jp.co.genuine.hm.api.domain.user.account.AccountId;
+import jp.co.genuine.hm.api.domain.user.alert.AlertForTakingPaidLeave;
+import jp.co.genuine.hm.api.domain.user.group.GroupId;
 
 public interface UserRepository {
 	UserId nextUserId();
@@ -27,4 +30,8 @@ public interface UserRepository {
 	User findBy(UserId userId);
 
 	Boolean existAccountId(AccountId accountId);
+
+	void insertRule(User user);
+
+	AlertForTakingPaidLeave findAlertForTakingPaidLeave(UserId owner);
 }

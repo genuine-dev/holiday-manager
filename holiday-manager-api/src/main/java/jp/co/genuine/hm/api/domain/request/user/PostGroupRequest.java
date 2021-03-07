@@ -5,7 +5,7 @@ import javax.validation.constraints.NotBlank;
 import org.hibernate.validator.constraints.Length;
 
 import io.swagger.annotations.ApiModelProperty;
-import jp.co.genuine.hm.api.domain.user.GroupName;
+import jp.co.genuine.hm.api.domain.user.group.GroupName;
 
 public class PostGroupRequest {
 	@NotBlank
