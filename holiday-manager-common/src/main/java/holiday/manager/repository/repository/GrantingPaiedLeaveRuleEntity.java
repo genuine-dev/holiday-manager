@@ -1,4 +1,4 @@
-package holiday.manager.batch.repository;
+package holiday.manager.repository.repository;
 
 import java.util.ArrayList;
 import java.util.Date;
