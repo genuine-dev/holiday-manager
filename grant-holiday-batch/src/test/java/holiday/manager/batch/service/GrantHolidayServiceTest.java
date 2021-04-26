@@ -18,14 +18,17 @@ import org.springframework.transaction.annotation.Transactional;
 
 import holiday.manager.TestApplication;
 import holiday.manager.application.service.holiday.holiday.HolidayListService;
-import holiday.manager.batch.repository.GrantingPaiedLeaveRuleDetailEntity;
-import holiday.manager.batch.repository.GrantingPaiedLeaveRuleEntity;
-import holiday.manager.batch.repository.GrantingPaiedLeaveRuleRepository;
-import holiday.manager.batch.repository.UserEntity;
-import holiday.manager.batch.repository.UserRepository;
 import holiday.manager.domain.model.holiday.KindOfHoliday;
 import holiday.manager.domain.model.holiday.holiday.HolidayList;
 import holiday.manager.domain.model.user.UserId;
+import holiday.manager.repository.repository.GrantingPaiedLeaveRuleDetailEntity;
+import holiday.manager.repository.repository.GrantingPaiedLeaveRuleEntity;
+import holiday.manager.repository.repository.GrantingPaiedLeaveRuleRepository;
+import holiday.manager.repository.repository.PaidLeaveGrantHistoryEntiry;
+import holiday.manager.repository.repository.PaidLeaveGrantHistoryEntiry.ID;
+import holiday.manager.repository.repository.PaidLeaveGrantHistoryRepository;
+import holiday.manager.repository.repository.UserEntity;
+import holiday.manager.repository.repository.UserRepository;
 
 @SpringBootTest(classes = TestApplication.class)
 @RunWith(SpringRunner.class)
@@ -38,6 +41,9 @@ public class GrantHolidayServiceTest {
 	private UserRepository userRepository;
 
 	@Autowired
+	private PaidLeaveGrantHistoryRepository paidLeaveGrantHistoryRepository;
+
+	@Autowired
 	private GrantHolidayService grantHolidayService;
 
 	@Autowired
@@ -48,51 +54,66 @@ public class GrantHolidayServiceTest {
 	public void setup() {
 		GrantingPaiedLeaveRuleEntity rule = new GrantingPaiedLeaveRuleEntity();
 		rule.setName("testRule");
-		rule.setCreatedAt(new Date());
-		rule.setUpdateedAt(new Date());
+		rule.setCreatedAt(new Date(0));
+		rule.setUpdateedAt(new Date(0));
 
 		rule = grantingPaiedLeaveRuleRepository.save(rule);
 
 		GrantingPaiedLeaveRuleDetailEntity detail1 = new GrantingPaiedLeaveRuleDetailEntity();
+		detail1.setId(1);
 		detail1.setRule(rule);
 		detail1.setGrantDays(3);
 		detail1.setElapsedYear(0);
 		detail1.setElapsedMonth(0);
 		detail1.setElapsedDays(0);
-		detail1.setCreatedAt(new Date());
-		detail1.setUpdatedAt(new Date());
+		detail1.setCreatedAt(new Date(0));
+		detail1.setUpdatedAt(new Date(0));
 
 		GrantingPaiedLeaveRuleDetailEntity detail2 = new GrantingPaiedLeaveRuleDetailEntity();
+		detail2.setId(2);
 		detail2.setRule(rule);
 		detail2.setGrantDays(7);
 		detail2.setElapsedYear(0);
 		detail2.setElapsedMonth(6);
 		detail2.setElapsedDays(0);
-		detail2.setCreatedAt(new Date());
-		detail2.setUpdatedAt(new Date());
+		detail2.setCreatedAt(new Date(0));
+		detail2.setUpdatedAt(new Date(0));
 
 		GrantingPaiedLeaveRuleDetailEntity detail3 = new GrantingPaiedLeaveRuleDetailEntity();
+		detail3.setId(3);
 		detail3.setRule(rule);
 		detail3.setGrantDays(11);
 		detail3.setElapsedYear(1);
 		detail3.setElapsedMonth(6);
 		detail3.setElapsedDays(0);
-		detail3.setCreatedAt(new Date());
-		detail3.setUpdatedAt(new Date());
+		detail3.setCreatedAt(new Date(0));
+		detail3.setUpdatedAt(new Date(0));
 
 		GrantingPaiedLeaveRuleDetailEntity detail4 = new GrantingPaiedLeaveRuleDetailEntity();
+		detail4.setId(4);
 		detail4.setRule(rule);
 		detail4.setGrantDays(12);
 		detail4.setElapsedYear(2);
 		detail4.setElapsedMonth(6);
 		detail4.setElapsedDays(0);
-		detail4.setCreatedAt(new Date());
-		detail4.setUpdatedAt(new Date());
+		detail4.setCreatedAt(new Date(0));
+		detail4.setUpdatedAt(new Date(0));
+
+		GrantingPaiedLeaveRuleDetailEntity detail5 = new GrantingPaiedLeaveRuleDetailEntity();
+		detail5.setId(5);
+		detail5.setRule(rule);
+		detail5.setGrantDays(100);
+		detail5.setElapsedYear(0);
+		detail5.setElapsedMonth(0);
+		detail5.setElapsedDays(0);
+		detail5.setCreatedAt(new Date());
+		detail5.setUpdatedAt(new Date());
 
 
-		rule.setRules(Arrays.asList(detail1, detail2, detail3, detail4));
+		rule.setRules(Arrays.asList(detail1, detail2, detail3, detail4, detail5));
 
 		rule = grantingPaiedLeaveRuleRepository.save(rule);
+
 
 		//入社半年
 		UserEntity user1 = new UserEntity();
@@ -154,6 +175,17 @@ public class GrantHolidayServiceTest {
 		userRepository.save(user4);
 		holidayListService.createHolidayList(new UserId(400));
 
+
+		PaidLeaveGrantHistoryEntiry history1 = new PaidLeaveGrantHistoryEntiry(new ID(100, 1), new Date());
+		PaidLeaveGrantHistoryEntiry history2 = new PaidLeaveGrantHistoryEntiry(new ID(300, 1), new Date());
+		PaidLeaveGrantHistoryEntiry history3 = new PaidLeaveGrantHistoryEntiry(new ID(300, 2), new Date());
+		PaidLeaveGrantHistoryEntiry history4 = new PaidLeaveGrantHistoryEntiry(new ID(300, 3), new Date());
+
+		paidLeaveGrantHistoryRepository.save(history1);
+		paidLeaveGrantHistoryRepository.save(history2);
+		paidLeaveGrantHistoryRepository.save(history3);
+		paidLeaveGrantHistoryRepository.save(history4);
+
 	}
 
 	@Test
@@ -164,12 +196,16 @@ public class GrantHolidayServiceTest {
 		assertThat(holidayList1.getDays(KindOfHoliday.PAYED_LEAVE, new Date())).isEqualTo(7.0);
 
 		HolidayList holidayList2 = holidayListService.findHolidayList(new UserId(200));
-		assertThat(holidayList2.getDays(KindOfHoliday.PAYED_LEAVE, new Date())).isEqualTo(0.0);
+		assertThat(holidayList2.getDays(KindOfHoliday.PAYED_LEAVE, new Date())).isEqualTo(10.0);
 
 		HolidayList holidayList3 = holidayListService.findHolidayList(new UserId(300));
 		assertThat(holidayList3.getDays(KindOfHoliday.PAYED_LEAVE, new Date())).isEqualTo(12.0);
 
 		HolidayList holidayList4 = holidayListService.findHolidayList(new UserId(400));
 		assertThat(holidayList4.getDays(KindOfHoliday.PAYED_LEAVE, new Date())).isEqualTo(0.0);
+
+		assertThat(paidLeaveGrantHistoryRepository.findByIdUserId(200)).isNotEmpty();
+		assertThat(paidLeaveGrantHistoryRepository.findByIdUserId(400)).isEmpty();
 	}
 }
+

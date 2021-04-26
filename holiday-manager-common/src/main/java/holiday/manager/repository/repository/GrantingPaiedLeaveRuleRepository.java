@@ -1,4 +1,4 @@
-package holiday.manager.batch.repository;
+package holiday.manager.repository.repository;
 
 import org.springframework.data.repository.CrudRepository;
 

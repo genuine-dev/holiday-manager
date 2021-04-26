@@ -141,7 +141,9 @@
 		<module>holiday-manager-web</module>
 		<module>holiday-manager-core</module>
 		<module>holiday-manager-api</module>
+		<module>holiday-manager-common</module>
 		<module>grant-holiday-batch</module>
 		<module>process-application-batch</module>
+		<module>alert-batch</module>
 	</modules>
 </project>
