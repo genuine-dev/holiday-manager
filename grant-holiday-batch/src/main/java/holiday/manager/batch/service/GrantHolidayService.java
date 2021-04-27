@@ -32,12 +32,6 @@ public class GrantHolidayService {
 	@Autowired
 	private HolidayListService holidayListService;
 
-	public String test() {
-
-		userRepository.findAll();
-		return "test";
-	}
-
 	@Transactional
 	public void grant() {
 		StreamSupport.stream(userRepository.findAll().spliterator(), false)

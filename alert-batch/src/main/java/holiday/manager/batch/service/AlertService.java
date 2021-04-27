@@ -13,7 +13,9 @@ import org.springframework.stereotype.Service;
 import holiday.manager.application.service.holiday.holiday.HolidayListService;
 import holiday.manager.batch.repository.AlertForTakingPaidLeaveEntity;
 import holiday.manager.batch.repository.AlertForTakingPaidLeaveRepository;
+import holiday.manager.domain.model.holiday.KindOfHoliday;
 import holiday.manager.domain.model.holiday.holiday.HolidayList;
+import holiday.manager.domain.model.holiday.holiday.event.HolidayGranted;
 import holiday.manager.domain.model.user.UserId;
 import holiday.manager.repository.repository.UserRepository;
 
@@ -36,17 +38,17 @@ public class AlertService {
 					if (holidayList == null || holidayList.grantHistory().isEmpty()) {
 						return;
 					}
-
+					Optional<HolidayGranted> latestGranted =  holidayList.grantHistory().stream()
+						.filter(event -> event.getKind() == KindOfHoliday.PAYED_LEAVE)
+						.reduce((fist, second) -> second);
+					if(!latestGranted.isPresent()) {
+						return;
+					}
 					LocalDate today = ZonedDateTime.now().toLocalDate();
-					LocalDate criteriaDate = holidayList.grantHistory().get(0).getGrantedDate().toInstant()
+					LocalDate criteriaDate = latestGranted.get().getGrantedDate().toInstant()
 							.atZone(ZoneId.systemDefault()).toLocalDate();
-					LocalDate fromDate = (criteriaDate.withYear(today.getYear()).isAfter(today))
-							? criteriaDate.withYear(today.getYear() - 1)
-							: criteriaDate.withYear(today.getYear());
-					LocalDate deadLineDate = (criteriaDate.withYear(today.getYear()).isAfter(today))
-							? criteriaDate.withYear(today.getYear()).minusDays(1)
-							: criteriaDate.withYear(today.getYear() + 1).minusDays(1);
-					Date from = Date.from(fromDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+					LocalDate deadLineDate = criteriaDate.withYear(today.getYear() + 1).minusDays(1);
+					Date from = Date.from(criteriaDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
 					Date deadLine = Date.from(deadLineDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
 
 					int tookDays = (int) holidayList.takeHistory().stream()
@@ -54,7 +56,7 @@ public class AlertService {
 							.count();
 
 					if (tookDays >= 5) {
-						alertForTakingPaidLeaveRepository.findById(user.getId());
+						 alertForTakingPaidLeaveRepository.deleteById(user.getId());
 						return;
 					}
 					Optional<AlertForTakingPaidLeaveEntity> entity = alertForTakingPaidLeaveRepository.findById(user.getId());
