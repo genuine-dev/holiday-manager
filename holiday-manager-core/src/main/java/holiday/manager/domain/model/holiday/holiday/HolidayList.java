@@ -24,9 +24,12 @@ public class HolidayList extends AggregateRoot {
 	private List<Holiday> holidays;
 	private List<Absence> absences;
 	private UserId owner;
+	private List<DomainEvent> histories;
 
 	public HolidayList(List<DomainEvent> eventStream, int streamVersion) {
 		super(eventStream, streamVersion);
+		histories = new ArrayList<>();
+		histories.addAll(eventStream);
 	}
 
 	public HolidayList(UserId owner) {
@@ -43,7 +46,9 @@ public class HolidayList extends AggregateRoot {
 	 * @return
 	 */
 	public HolidayList grant(KindOfHoliday kind, double days, Date grantedDate, Date expirationDate) {
-		apply(new HolidayGranted(id, kind, days, grantedDate, expirationDate, owner));
+		HolidayGranted event = new HolidayGranted(id, kind, days, grantedDate, expirationDate, owner);
+		apply(event);
+		histories.add(event);
 		return this;
 	}
 
@@ -59,7 +64,9 @@ public class HolidayList extends AggregateRoot {
 		if (kind != KindOfHoliday.ABSENCE && getDays(kind, date) < days) {
 			throw new IllegalStateException("There are not enough holidays.");
 		}
-		apply(new HolidayTook(id, kind, date, days, applicationId, owner));
+		HolidayTook event = new HolidayTook(id, kind, date, days, applicationId, owner);
+		apply(event);
+		histories.add(event);
 		return this;
 	}
 
@@ -133,7 +140,7 @@ public class HolidayList extends AggregateRoot {
 	 * @return
 	 */
 	public List<HolidayGranted> grantHistory() {
-		return mutatingEvents().stream()
+		return histories.stream()
 				.filter(event -> event instanceof HolidayGranted)
 				.map(event -> (HolidayGranted) event)
 				.collect(Collectors.toList());
@@ -144,7 +151,7 @@ public class HolidayList extends AggregateRoot {
 	 * @return
 	 */
 	public List<HolidayTook> takeHistory() {
-		return mutatingEvents().stream()
+		return histories.stream()
 				.filter(event -> event instanceof HolidayTook)
 				.map(event -> (HolidayTook) event)
 				.collect(Collectors.toList());
