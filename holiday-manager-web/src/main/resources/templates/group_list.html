@@ -1,0 +1,30 @@
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head th:replace="common/head :: head_fragment(title = 'グループ一覧')">
+</head>
+<script th:src="@{/js/group_delete.js}"></script>
+<body>
+	<div th:replace="common/header :: header_fragment(title = 'グループ一覧')"></div>
+
+	<div class="container">
+	<div class="header text-secondary">
+		<h1>グループ一覧</h1>
+	</div>
+		<table class="table table-bordered table-striped">
+			<tbody>
+				<tr th:each="group : ${groupList}" th:object="${group}">
+					<td th:text="*{groupName.value}" style="width:70%"></td>
+					<td>
+						<a th:href="@{/group/details/{id}(id=*{groupId.value})}"><i class="far fa-edit" style="width:15%"></i></a>
+					</td>
+					<td>
+						<a th:href="@{/group/delete/{id}(id=*{groupId.value})}" onclick="return confirm('削除してもよろしいですか？')"><i class="far fa-trash-alt" style="width:15%"></i></a>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+
+	<div th:replace="common/footer :: footer_fragment"></div>
+</body>
+</html>

@@ -1,8 +1,6 @@
 package jp.co.genuine.hm.service.user;
 
 import java.io.IOException;
-import java.util.LinkedHashMap;
-import java.util.Map;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpStatus;
@@ -16,30 +14,29 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import jp.co.genuine.hm.model.user.PutUserRequest;
-import jp.co.genuine.hm.model.user.User;
-import jp.co.genuine.hm.model.user.UserId;
-import jp.co.genuine.hm.model.user.UserList;
-import jp.co.genuine.hm.model.user.UserViewModel;
+import jp.co.genuine.hm.model.group.Group;
+import jp.co.genuine.hm.model.group.GroupId;
+import jp.co.genuine.hm.model.group.GroupList;
+import jp.co.genuine.hm.model.group.PostGroupRequest;
+import jp.co.genuine.hm.model.group.PutGroupRequest;
 
 @Service
-public class UserServiceImpl implements UserService {
+public class GroupServiceImpl implements GroupService {
 	CloseableHttpClient client = HttpClients.createDefault();
 	ObjectMapper mapper = new ObjectMapper();
 	String contentType = "content-type";
 	String headerValue = "application/json; charset=UTF-8";
-	static String API_ROOT = "http://localhost:8082/user/";
+	static String API_ROOT = "http://localhost:8082/group/";
 
 
 	@Override
-	public UserList getUserList() throws IOException {
+	public GroupList getGroupList() throws IOException {
 		String url = API_ROOT;
-		UserList result = new UserList();
+		GroupList result = new GroupList();
 
 		HttpGet request = new HttpGet(url);
 		request.addHeader(contentType, headerValue);
@@ -47,7 +44,7 @@ public class UserServiceImpl implements UserService {
 				if(response.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
 				HttpEntity entity = response.getEntity();
 				String jsonString = EntityUtils.toString(entity);
-				result = mapper.readValue(jsonString, UserList.class);
+				result = mapper.readValue(jsonString, GroupList.class);
 
 				return result;
 			} else {
@@ -58,10 +55,11 @@ public class UserServiceImpl implements UserService {
 		}
 	}
 
+
 	@Override
-	public User getUser(UserId userId) throws IOException {
-		String url = API_ROOT + userId.getValue();
-		User result = new User();
+	public Group getGroup(GroupId groupId) throws IOException {
+		String url = API_ROOT + groupId.getValue();
+		Group result = new Group();
 
 		HttpGet request = new HttpGet(url);
 		request.addHeader(contentType, headerValue);
@@ -69,7 +67,7 @@ public class UserServiceImpl implements UserService {
 				if(response.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
 				HttpEntity entity = response.getEntity();
 				String jsonString = EntityUtils.toString(entity);
-				result = mapper.readValue(jsonString, User.class);
+				result = mapper.readValue(jsonString, Group.class);
 
 				return result;
 			} else {
@@ -80,8 +78,26 @@ public class UserServiceImpl implements UserService {
 		}
 	}
 
+
 	@Override
-	public CloseableHttpResponse postUser(UserViewModel parameter) throws IOException {
+	public CloseableHttpResponse deleteGroup(GroupId groupId) throws IOException {
+		String url = API_ROOT + groupId.getValue();
+		try {
+			HttpDelete request = new HttpDelete(url);
+			request.addHeader(contentType, headerValue);
+			try (CloseableHttpResponse response = client.execute(request)) {
+				return response;
+			} catch (IOException e){
+				throw e;
+			}
+		} catch (JsonProcessingException e) {
+			throw e;
+		}
+	}
+
+
+	@Override
+	public CloseableHttpResponse postGroup(PostGroupRequest parameter) throws IOException {
 		String url = API_ROOT;
 		String json;
 		try {
@@ -100,18 +116,13 @@ public class UserServiceImpl implements UserService {
 		}
 	}
 
+
 	@Override
-	public CloseableHttpResponse putUser(UserId userId, UserViewModel parameter) throws IOException {
-		String url = API_ROOT + userId.getValue();
+	public CloseableHttpResponse putGroup(PutGroupRequest parameter, GroupId groupId) throws IOException {
+		String url = API_ROOT + groupId.getValue();
 		String json;
 		try {
-			// TODO:引数の項目で更新できるようにする
-			if(StringUtils.isEmpty(parameter.getPassword())) {
-				User user = getUser(userId);
-				parameter.setPassword("Test333");
-			}
-			PutUserRequest param = new PutUserRequest(parameter.getMailAddress(), parameter.getUserName(), parameter.getStatus(), parameter.getLeftoverHoliday(), parameter.getHireDate(), parameter.getPassword());
-			json = mapper.writeValueAsString(param);
+			json = mapper.writeValueAsString(parameter);
 			StringEntity entity = new StringEntity(json, "UTF-8");
 			HttpPut request = new HttpPut(url);
 			request.addHeader(contentType, headerValue);
@@ -122,44 +133,6 @@ public class UserServiceImpl implements UserService {
 				throw e;
 			}
 		} catch (JsonProcessingException e) {
-			throw e;
-		}
-	}
-
-	@Override
-	public CloseableHttpResponse deleteUser(UserId userId) throws IOException {
-		String url = API_ROOT + userId.getValue();
-		try {
-			HttpDelete request = new HttpDelete(url);
-			request.addHeader(contentType, headerValue);
-			try (CloseableHttpResponse response = client.execute(request)) {
-				return response;
-			} catch (IOException e){
-				throw e;
-			}
-		} catch (JsonProcessingException e) {
-			throw e;
-		}
-	}
-
-	@Override
-	public Map<String, String> getUserStatus() throws IOException {
-		String url = API_ROOT + "status";
-		Map<String, String>result = new LinkedHashMap<String, String>();
-
-		HttpGet request = new HttpGet(url);
-		request.addHeader(contentType, headerValue);
-		try (CloseableHttpResponse response = client.execute(request);) {
-				if(response.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
-				HttpEntity entity = response.getEntity();
-				String jsonString = EntityUtils.toString(entity);
-				result = mapper.readValue(jsonString, Map.class);
-
-				return result;
-			} else {
-				return result;
-			}
-		} catch (IOException e) {
 			throw e;
 		}
 	}

@@ -1,16 +1,16 @@
 package jp.co.genuine.hm.model.user;
 
-import javax.validation.constraints.Email;
+import org.hibernate.validator.constraints.Length;
 
-public class MailAddress {
-	@Email
-	private String value;
+public class AccountId {
+	@Length(max = 20)
+	String value;
 
-	public MailAddress(String value) {
+	public AccountId(String value) {
 		this.value = value;
 	}
 
-	public MailAddress() {
+	public AccountId() {
 	}
 
 	public String getValue() {

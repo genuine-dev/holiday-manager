@@ -51,13 +51,21 @@
 				<span class="glyphicon form-control-feedback" aria-hidden="true"></span>
 				<div class="help-block with-errors"></div>
 			</div>
+			<div class="form-group has-feedback">
+				<label for="inputEmail" class="control-label text-secondary">
+					<span class="label label-danger">必須項目</span>　有給残日数
+				</label>
+				<input th:field="*{leftoverHoliday}" type="number" step="0.1" class="form-control" id="inputEmail" placeholder="有給残日数" data-error="有給残日数が正しく入力されておりません" data-required-error="有給残日数の入力は必須です" required>
+				<span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+				<div class="help-block with-errors"></div>
+			</div>
 			<div class="form-group">
 				<label for="inputPassword" class="control-label text-secondary">
 					　パスワード
 				</label>
 				<div class="row">
 					<div class="form-group has-feedback col-sm-6">
-						<input type="password" maxlength="20" class="form-control" id="inputPassword" placeholder="パスワードを入力">
+						<input type="password" maxlength="20" class="form-control" id="inputPassword" placeholder="更新する場合はパスワードを入力">
 						<div class="help-block">6文字以上20文字以内で設定してください。</div>
 					</div>
 					<div class="form-group has-feedback col-sm-6">

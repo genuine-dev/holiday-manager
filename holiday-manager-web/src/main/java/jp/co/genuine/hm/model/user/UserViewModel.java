@@ -24,6 +24,9 @@ public class UserViewModel {
 	@NotBlank
 	@Length(max = 20)
 	private String status;
+	@NotBlank
+	@Length(max = 20)
+	private String leftoverHoliday;
 	public String getAccountId() {
 		return accountId;
 	}
@@ -59,5 +62,11 @@ public class UserViewModel {
 	}
 	public void setStatus(String status) {
 		this.status = status;
+	}
+	public String getLeftoverHoliday() {
+		return leftoverHoliday;
+	}
+	public void setLeftoverHoliday(String leftoverHoliday) {
+		this.leftoverHoliday = leftoverHoliday;
 	}
 }

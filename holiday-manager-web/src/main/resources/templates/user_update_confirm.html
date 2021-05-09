@@ -38,6 +38,11 @@
 					<input th:field="*{mailAddress}" type="hidden" />
 				</div>
 				<div class="form-group">
+					<label for="inputName" class="control-label text-secondary"> 有給残日数 </label>
+					<input th:value="*{leftoverHoliday}" type="text" class="form-control" id="leftoverHoliday" disabled />
+					<input th:field="*{leftoverHoliday}" type="hidden" />
+				</div>
+				<div class="form-group">
 					<label for="inputName" class="control-label text-secondary"> パスワード </label>
 					<input value="********" type="text" class="form-control" id="inputId" disabled />
 					<input th:field="*{password}" type="hidden" />

@@ -1,0 +1,27 @@
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head th:replace="common/head :: head_fragment(title = 'グループ詳細')">
+</head>
+<body>
+	<div th:replace="common/header :: header_fragment(title = 'グループ詳細')"></div>
+
+	<div class="container">
+	<div class="header text-secondary">
+		<h1 th:text="${group.groupName.value}">グループ詳細</h1>
+		<button th:href="@{/group/update/{id}(id=*{group.groupId.value})}" th:text="編集"></button>
+	</div>
+	<p class="text-secondary" th:if="${#lists.isEmpty(groupMemberList)}">メンバーが登録されていません</p>
+		<table class="table table-bordered table-striped">
+			<tbody>
+				<tr th:each="member : ${groupMemberList}" th:object="${member}">
+					<td th:text="*{userName}" style="width:70%"></td>
+					<td th:if="*{isManager}" th:text="承認者"></td>
+					<td th:if="*{!isManager}" th:text=""></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+
+	<div th:replace="common/footer :: footer_fragment"></div>
+</body>
+</html>

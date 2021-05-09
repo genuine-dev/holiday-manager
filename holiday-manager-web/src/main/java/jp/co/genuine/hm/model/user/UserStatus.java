@@ -1,11 +1,17 @@
 package jp.co.genuine.hm.model.user;
 
-public class UserStatus {
-	String status;
-	public String getStatus() {
-		return status;
+public enum UserStatus {
+	ACTIVE("在籍中"),
+	LEAVE("休職中"),
+	RETIRED("退職");
+
+	private String label;
+
+	public String getLabel() {
+		return label;
 	}
-	public void setStatus(String status) {
-		this.status = status;
+
+	private UserStatus(String label) {
+		this.label = label;
 	}
 }

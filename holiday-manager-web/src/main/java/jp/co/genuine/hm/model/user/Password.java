@@ -2,6 +2,7 @@ package jp.co.genuine.hm.model.user;
 
 public class Password {
 	private String value;
+	private boolean empty;
 
 	public Password() {
 	}
@@ -16,5 +17,13 @@ public class Password {
 
 	public void setValue(String value) {
 		this.value = value;
+	}
+
+	public boolean isEmpty() {
+		return empty;
+	}
+
+	public void setEmpty(boolean empty) {
+		this.empty = empty;
 	}
 }

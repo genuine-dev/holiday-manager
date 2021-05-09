@@ -1,30 +1,43 @@
 package jp.co.genuine.hm.model.user;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 
 public class HireDate {
 	public static final SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 
-	private Date value;
+	private String value;
+	private String valueOfDate;
+	private boolean validDateFormat;
+
+	public String getValueOfDate() {
+		return valueOfDate;
+	}
+
+	public void setValueOfDate(String valueOfDate) {
+		this.valueOfDate = valueOfDate;
+	}
+
+	public boolean isValidDateFormat() {
+		return validDateFormat;
+	}
+
+	public void setValidDateFormat(boolean validDateFormat) {
+		this.validDateFormat = validDateFormat;
+	}
 
 	public HireDate() {
 	}
 
-	public HireDate(Date value) {
+	public HireDate(String value) {
 		this.value = value;
 	}
 
-	public HireDate(String hireDate) throws ParseException {
-		value = format.parse(hireDate);
-	}
-
-	public Date getValue() {
+	public String getValue() {
 		return value;
 	}
 
-	public void setValue(Date value) {
+	public void setValue(String value) {
 		this.value = value;
 	}
+
 }

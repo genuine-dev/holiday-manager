@@ -60,6 +60,14 @@
 				<span class="glyphicon form-control-feedback" aria-hidden="true"></span>
 				<div class="help-block with-errors"></div>
 			</div>
+			<div class="form-group has-feedback">
+				<label for="inputEmail" class="control-label text-secondary">
+					<span class="label label-danger">必須項目</span>　有給残日数
+				</label>
+				<input th:field="*{leftoverHoliday}" type="number" step="0.1" class="form-control" id="inputEmail" placeholder="有給残日数" data-error="有給残日数が正しく入力されておりません" data-required-error="有給残日数の入力は必須です" required>
+				<span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+				<div class="help-block with-errors"></div>
+			</div>
 			<div class="form-group">
 				<label for="inputPassword" class="control-label text-secondary">
 					<span class="label label-danger">必須項目</span>　パスワード

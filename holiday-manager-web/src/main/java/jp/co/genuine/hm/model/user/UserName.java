@@ -1,6 +1,9 @@
 package jp.co.genuine.hm.model.user;
 
+import org.hibernate.validator.constraints.Length;
+
 public class UserName {
+	@Length(max = 20)
 	private String value;
 
 	public UserName() {

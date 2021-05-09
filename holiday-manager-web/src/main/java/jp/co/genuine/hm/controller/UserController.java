@@ -1,7 +1,6 @@
 package jp.co.genuine.hm.controller;
 
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -81,16 +80,15 @@ public class UserController {
 			throw new AccessDeniedException("loginID and targetID dont match.");
 		}
 
-		UserId userIdParam = new UserId();
-		userIdParam.setValue(userId);
-		User result = service.getUser(userIdParam);
+		UserId userIdModel = new UserId();
+		userIdModel.setValue(userId);
+		User result = service.getUser(userIdModel);
 		userViewModel.setUserName(result.getUserName().getValue());
 		userViewModel.setMailAddress(result.getMailAddress().getValue());
 		userViewModel.setStatus(result.getUserStatus().toString());
 		userViewModel.setPassword(result.getPassword().getValue());
 
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		userViewModel.setHireDate(sdf.format(result.getHireDate().getValue()));
+		userViewModel.setHireDate(result.getHireDate().getValue());
 
 		Map<String, String> statusList = new LinkedHashMap<String, String>();
 		statusList.put("ACTIVE", "在籍中");
