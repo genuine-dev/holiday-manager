@@ -1,5 +1,7 @@
 package jp.co.genuine.hm.api.service.user;
 
+import java.util.Map;
+
 import jp.co.genuine.hm.api.domain.request.user.PostUserRequest;
 import jp.co.genuine.hm.api.domain.request.user.PutUserRequest;
 import jp.co.genuine.hm.api.domain.request.user.parameter.UserQueries;
@@ -18,4 +20,5 @@ public interface UserService {
 	public Boolean existAccountId(AccountId accountId);
 	public void deleteUser(UserId userId);
 	public User findUser(UserId userId);
+	public Map<String, String> getUserStatus();
 }

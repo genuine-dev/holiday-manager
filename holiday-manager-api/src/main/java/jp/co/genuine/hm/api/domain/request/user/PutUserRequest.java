@@ -24,7 +24,7 @@ public class PutUserRequest {
 	@NotBlank
 	@ApiModelProperty(example = "2020-11-07", required = true)
 	private String hireDate;
-	@ApiModelProperty(example="pass", required = true)
+	@ApiModelProperty(example="pass", required = false)
 	@Length(min = 6,max = 20)
 	private String password;
 	public PutUserRequest() {

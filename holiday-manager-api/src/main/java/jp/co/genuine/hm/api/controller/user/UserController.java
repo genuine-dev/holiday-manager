@@ -1,6 +1,5 @@
 package jp.co.genuine.hm.api.controller.user;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -27,7 +26,6 @@ import jp.co.genuine.hm.api.domain.request.user.parameter.UserSorts;
 import jp.co.genuine.hm.api.domain.user.User;
 import jp.co.genuine.hm.api.domain.user.UserId;
 import jp.co.genuine.hm.api.domain.user.UserList;
-import jp.co.genuine.hm.api.domain.user.UserStatus;
 import jp.co.genuine.hm.api.domain.user.account.AccountId;
 import jp.co.genuine.hm.api.domain.validation.ContainsUserSortType;
 import jp.co.genuine.hm.api.service.user.UserService;
@@ -79,10 +77,7 @@ public class UserController {
 	@ApiOperation("ユーザーステータスのキーとバリュー一覧取得")
 	@RequestMapping(path = "/user/status", method = RequestMethod.GET)
 	public ResponseEntity<Map<String, String>> getUserStatus() {
-		Map<String, String> userStatusMap = new HashMap<>();
-		for (UserStatus userStatus : UserStatus.values()) {
-			userStatusMap.put(userStatus.name(), userStatus.getLabel());
-		}
+		Map<String, String> userStatusMap = userService.getUserStatus();
 		return new ResponseEntity<Map<String, String>>(userStatusMap, HttpStatus.OK);
 	}
 

@@ -9,29 +9,29 @@ import jp.co.genuine.hm.api.domain.user.alert.AlertForTakingPaidLeave;
 import jp.co.genuine.hm.api.domain.user.group.GroupId;
 
 public interface UserRepository {
-	UserId nextUserId();
+	public UserId nextUserId();
 
-	void insertUser(User user);
+	public void insertUser(User user);
 
-	void insertAccount(User user);
+	public void insertAccount(User user);
 
-	void updateUser(User user);
+	public void updateUser(User user);
 
-	void updateAccount(User user);
+	public void updateAccount(User user);
 
-	UserList findAll(UserSorts sorts, UserQueries queries);
+	public UserList findAll(UserSorts sorts, UserQueries queries);
 
-	UserList findUsersByGroupId(GroupId groupId);
+	public UserList findUsersByGroupId(GroupId groupId);
 
-	Optional<User> findByEmail(String email);
+	public Optional<User> findByEmail(String email);
 
-	void deleteUser(UserId userId);
+	public void deleteUser(UserId userId);
 
-	User findBy(UserId userId);
+	public User findBy(UserId userId);
 
-	Boolean existAccountId(AccountId accountId);
+	public Boolean existAccountId(AccountId accountId);
 
-	void insertRule(User user);
+	public void insertRule(User user);
 
-	AlertForTakingPaidLeave findAlertForTakingPaidLeave(UserId owner);
+	public AlertForTakingPaidLeave findAlertForTakingPaidLeave(UserId owner);
 }

@@ -1,5 +1,8 @@
 package jp.co.genuine.hm.api.service.user;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +17,7 @@ import jp.co.genuine.hm.api.domain.user.UserFactory;
 import jp.co.genuine.hm.api.domain.user.UserId;
 import jp.co.genuine.hm.api.domain.user.UserList;
 import jp.co.genuine.hm.api.domain.user.UserRepository;
+import jp.co.genuine.hm.api.domain.user.UserStatus;
 import jp.co.genuine.hm.api.domain.user.account.AccountId;
 import jp.co.genuine.hm.api.domain.user.group.GroupId;
 import jp.co.genuine.hm.api.service.validation.ValidateService;
@@ -53,7 +57,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	private void updateAccount(User user) {
-		if(user.getPassword().isEmpty()) {
+		if(user.isEmptyPassword()) {
 			return;
 		}
 		userRepository.updateAccount(user);
@@ -77,5 +81,14 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public Boolean existAccountId(AccountId accountId) {
 		return userRepository.existAccountId(accountId);
+	}
+
+	@Override
+	public Map<String, String> getUserStatus() {
+		Map<String, String> userStatusMap = new HashMap<>();
+		for (UserStatus userStatus : UserStatus.values()) {
+			userStatusMap.put(userStatus.name(), userStatus.getLabel());
+		}
+		return userStatusMap;
 	}
 }
