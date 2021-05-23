@@ -16,7 +16,6 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -105,11 +104,6 @@ public class UserServiceImpl implements UserService {
 		String url = API_ROOT + userId.getValue();
 		String json;
 		try {
-			// TODO:引数の項目で更新できるようにする
-			if(StringUtils.isEmpty(parameter.getPassword())) {
-				User user = getUser(userId);
-				parameter.setPassword("Test333");
-			}
 			PutUserRequest param = new PutUserRequest(parameter.getMailAddress(), parameter.getUserName(), parameter.getStatus(), parameter.getLeftoverHoliday(), parameter.getHireDate(), parameter.getPassword());
 			json = mapper.writeValueAsString(param);
 			StringEntity entity = new StringEntity(json, "UTF-8");
