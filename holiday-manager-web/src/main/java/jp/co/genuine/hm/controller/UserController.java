@@ -89,6 +89,7 @@ public class UserController {
 		userViewModel.setPassword(result.getPassword().getValue());
 
 		userViewModel.setHireDate(result.getHireDate().getValue());
+		userViewModel.setLeftoverHoliday(result.getLeftoverHoliday().getValue().toString());
 
 		Map<String, String> statusList = new LinkedHashMap<String, String>();
 		statusList.put("ACTIVE", "在籍中");

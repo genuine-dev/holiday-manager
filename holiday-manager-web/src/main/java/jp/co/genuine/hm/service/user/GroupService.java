@@ -16,4 +16,8 @@ public interface GroupService {
 	public CloseableHttpResponse postGroup(PostGroupRequest parameter)throws IOException;
 	public CloseableHttpResponse putGroup(PutGroupRequest parameter, GroupId groupId)throws IOException;
 	public CloseableHttpResponse deleteGroup(GroupId groupId)throws IOException;
+	public CloseableHttpResponse postGroupManager(GroupId groupId)throws IOException;
+	public CloseableHttpResponse deleteGroupManager(GroupId groupId)throws IOException;
+	public CloseableHttpResponse postGroupMember(GroupId groupId)throws IOException;
+	public CloseableHttpResponse deleteGroupMember(GroupId groupId)throws IOException;
 }

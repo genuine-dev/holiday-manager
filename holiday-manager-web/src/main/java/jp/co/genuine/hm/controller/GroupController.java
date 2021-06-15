@@ -133,7 +133,7 @@ public class GroupController {
 			model.addAttribute("isError", false);
 		}
 
-		return "group_register_complete";
+		return "group_update_complete";
 	}
 
 	@RequestMapping(value="/group/register", method=RequestMethod.GET)
@@ -158,11 +158,20 @@ public class GroupController {
 	}
 
 	@RequestMapping(value="/group/delete/{groupId}", method=RequestMethod.GET)
-	public String groupDelete(@PathVariable("groupId") Integer groupId, Model model) {
+	public String groupDelete(@PathVariable("groupId") Integer groupId, Model model) throws Exception {
 		checkAdmin();
 
-		return "group_delete_complete"
-;	}
+		GroupId groupIdParam = new GroupId();
+		groupIdParam.setValue(groupId);
+		CloseableHttpResponse response = groupService.deleteGroup(groupIdParam);
+		if(response.getStatusLine().getStatusCode() != HttpStatus.SC_OK) {
+			model.addAttribute("isError", true);
+		} else {
+			model.addAttribute("isError", false);
+		}
+
+		return "group_delete_complete";
+	}
 
 	public void checkAdmin() {
 		LoginUser user = (LoginUser)SecurityContextHolder.getContext().getAuthentication().getPrincipal();

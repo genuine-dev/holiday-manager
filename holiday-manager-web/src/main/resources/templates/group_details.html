@@ -8,7 +8,7 @@
 	<div class="container">
 	<div class="header text-secondary">
 		<h1 th:text="${group.groupName.value}">グループ詳細</h1>
-		<button th:href="@{/group/update/{id}(id=*{group.groupId.value})}" th:text="編集"></button>
+		<a th:href="@{/group/update/{id}(id=*{group.groupId.value})}" th:text="編集" class="btn btn-secondary"></a>
 	</div>
 	<p class="text-secondary" th:if="${#lists.isEmpty(groupMemberList)}">メンバーが登録されていません</p>
 		<table class="table table-bordered table-striped">

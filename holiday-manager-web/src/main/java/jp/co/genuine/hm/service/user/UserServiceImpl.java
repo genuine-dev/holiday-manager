@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import jp.co.genuine.hm.model.user.PutUserRequest;
 import jp.co.genuine.hm.model.user.User;
@@ -106,6 +107,11 @@ public class UserServiceImpl implements UserService {
 		try {
 			PutUserRequest param = new PutUserRequest(parameter.getMailAddress(), parameter.getUserName(), parameter.getStatus(), parameter.getLeftoverHoliday(), parameter.getHireDate(), parameter.getPassword());
 			json = mapper.writeValueAsString(param);
+			ObjectNode node = (ObjectNode)mapper.readTree(json);
+			if(node.get("password").asText().isEmpty()) {
+				node.remove("password");
+			}
+			json = mapper.writeValueAsString(node);
 			StringEntity entity = new StringEntity(json, "UTF-8");
 			HttpPut request = new HttpPut(url);
 			request.addHeader(contentType, headerValue);

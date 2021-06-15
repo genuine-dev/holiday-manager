@@ -137,4 +137,34 @@ public class GroupServiceImpl implements GroupService {
 		}
 	}
 
+
+	@Override
+	public CloseableHttpResponse postGroupManager(GroupId groupId) throws IOException {
+		// TODO 自動生成されたメソッド・スタブ
+		return null;
+	}
+
+
+	@Override
+	public CloseableHttpResponse deleteGroupManager(GroupId groupId) throws IOException {
+		// TODO 自動生成されたメソッド・スタブ
+		return null;
+	}
+
+
+	@Override
+	public CloseableHttpResponse postGroupMember(GroupId groupId) throws IOException {
+		// TODO 自動生成されたメソッド・スタブ
+		return null;
+	}
+
+
+	@Override
+	public CloseableHttpResponse deleteGroupMember(GroupId groupId) throws IOException {
+		// TODO 自動生成されたメソッド・スタブ
+		return null;
+	}
+
+
+
 }

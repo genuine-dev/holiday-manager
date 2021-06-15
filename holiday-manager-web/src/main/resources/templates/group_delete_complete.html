@@ -1,0 +1,15 @@
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head th:replace="common/head :: head_fragment(title = 'グループ削除')">
+</head>
+<body>
+	<div th:replace="common/header :: header_fragment(title = 'グループ削除')"></div>
+	<div class="container">
+		<div class="header">
+			<h1 class="text-secondary" th:if="${!isError}">グループ削除完了</h1>
+			<h1 class="text-danger" th:if="${isError}">グループ削除失敗　APIサーバー通信に失敗しました</h1>
+		</div>
+	</div>
+	<div th:replace="common/footer :: footer_fragment"></div>
+</body>
+</html>

@@ -18,7 +18,7 @@ public class PutGroupRequest {
 		this.groupName = groupName;
 	}
 
-	public GroupName getGroupName() {
-		return new GroupName(groupName);
+	public String getGroupName() {
+		return groupName;
 	}
 }
