@@ -15,8 +15,8 @@
 			<tbody>
 				<tr th:each="member : ${groupMemberList}" th:object="${member}">
 					<td th:text="*{userName}" style="width:70%"></td>
-					<td th:if="*{isManager}" th:text="承認者"></td>
-					<td th:if="*{!isManager}" th:text=""></td>
+					<td th:if="*{manager}" th:text="承認者"></td>
+					<td th:if="*{member}"></td>
 				</tr>
 			</tbody>
 		</table>
