@@ -1,9 +1,16 @@
 package jp.co.genuine.hm.model.group;
 
 public class GroupMember {
+	private Integer userId;
 	private String userName;
 	private boolean isManager;
 	private boolean isMember;
+	public void setUserId(Integer userId) {
+		this.userId = userId;
+	}
+	public Integer getUserId() {
+		return userId;
+	}
 	public String getUserName() {
 		return userName;
 	}
