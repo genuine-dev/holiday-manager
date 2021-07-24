@@ -134,6 +134,13 @@ public class GroupController {
 			model.addAttribute("isError", false);
 		}
 
+		response = groupService.postGroupMembers(groupIdParam, viewGroupMemberList);
+		if(response.getStatusLine().getStatusCode() != HttpStatus.SC_OK) {
+			model.addAttribute("isError", true);
+		} else {
+			model.addAttribute("isError", false);
+		}
+
 		return "group_update_complete";
 	}
 
