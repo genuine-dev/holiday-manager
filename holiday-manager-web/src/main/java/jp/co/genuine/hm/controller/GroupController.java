@@ -93,6 +93,7 @@ public class GroupController {
 		List<GroupMember> groupMemberList = new ArrayList<GroupMember>();
 		allUserList.forEach(user ->{
 			GroupMember groupMember = new GroupMember();
+			groupMember.setUserId(user.getUserId().getValue());
 			groupMember.setUserName(user.getUserName().getValue());
 			boolean managerFlg = false;
 			for(User manager : managerList) {
