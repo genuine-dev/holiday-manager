@@ -26,4 +26,8 @@ public interface GroupRepository {
 
 	void insertMember(UserId userId, GroupId groupId);
 
+	void deleteMembers(GroupId groupId);
+
+	void deleteManagers(GroupId groupId);
+
 }
