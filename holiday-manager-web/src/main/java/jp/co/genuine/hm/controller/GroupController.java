@@ -61,16 +61,16 @@ public class GroupController {
 		List<User> memberList = result.getMemberList().getUserList();
 		List<GroupMember> groupMemberList = new ArrayList<GroupMember>();
 		managerList.forEach(manager -> {
-			GroupMember member = new GroupMember();
-			member.setUserName(manager.getUserName().getValue());
-			member.setManager(true);
-			groupMemberList.add(member);
+			GroupMember groupMember = new GroupMember();
+			groupMember.setUserName(manager.getUserName().getValue());
+			groupMember.setManager(true);
+			groupMemberList.add(groupMember);
 		});
-		memberList.forEach(manager -> {
-			GroupMember member = new GroupMember();
-			member.setUserName(manager.getUserName().getValue());
-			member.setManager(true);
-			groupMemberList.add(member);
+		memberList.forEach(member -> {
+			GroupMember gtoupMember = new GroupMember();
+			gtoupMember.setUserName(member.getUserName().getValue());
+			gtoupMember.setMember(true);
+			groupMemberList.add(gtoupMember);
 		});
 
 		model.addAttribute("groupMemberList", groupMemberList);
