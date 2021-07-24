@@ -184,5 +184,12 @@ public class GroupServiceImpl implements GroupService {
 	}
 
 
+	@Override
+	public CloseableHttpResponse postGroupManager(GroupId groupId) throws IOException {
+		// TODO 自動生成されたメソッド・スタブ
+		return null;
+	}
+
+
 
 }
