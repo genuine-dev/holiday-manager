@@ -7,6 +7,7 @@ import org.apache.http.client.methods.CloseableHttpResponse;
 import jp.co.genuine.hm.model.group.Group;
 import jp.co.genuine.hm.model.group.GroupId;
 import jp.co.genuine.hm.model.group.GroupList;
+import jp.co.genuine.hm.model.group.GroupMemberList;
 import jp.co.genuine.hm.model.group.PostGroupRequest;
 import jp.co.genuine.hm.model.group.PutGroupRequest;
 
@@ -20,4 +21,5 @@ public interface GroupService {
 	public CloseableHttpResponse deleteGroupManager(GroupId groupId)throws IOException;
 	public CloseableHttpResponse postGroupMember(GroupId groupId)throws IOException;
 	public CloseableHttpResponse deleteGroupMember(GroupId groupId)throws IOException;
+	public CloseableHttpResponse postGroupMembers(GroupId groupId, GroupMemberList groupMemberList)throws IOException;
 }

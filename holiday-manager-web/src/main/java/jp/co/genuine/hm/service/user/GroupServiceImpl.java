@@ -21,6 +21,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import jp.co.genuine.hm.model.group.Group;
 import jp.co.genuine.hm.model.group.GroupId;
 import jp.co.genuine.hm.model.group.GroupList;
+import jp.co.genuine.hm.model.group.GroupMemberList;
+import jp.co.genuine.hm.model.group.PostGroupMembersRequest;
 import jp.co.genuine.hm.model.group.PostGroupRequest;
 import jp.co.genuine.hm.model.group.PutGroupRequest;
 
@@ -139,9 +141,25 @@ public class GroupServiceImpl implements GroupService {
 
 
 	@Override
-	public CloseableHttpResponse postGroupManager(GroupId groupId) throws IOException {
-		// TODO 自動生成されたメソッド・スタブ
-		return null;
+	public CloseableHttpResponse postGroupMembers(GroupId groupId, GroupMemberList groupMemberList) throws IOException {
+		String url = API_ROOT + "members";
+		String json;
+
+		PostGroupMembersRequest parameter = new PostGroupMembersRequest(groupId.getValue(), groupMemberList.getGroupMemberList());
+		try {
+			json = mapper.writeValueAsString(parameter);
+			StringEntity entity = new StringEntity(json, "UTF-8");
+			HttpPost request = new HttpPost(url);
+			request.addHeader(contentType, headerValue);
+			request.setEntity(entity);
+			try (CloseableHttpResponse response = client.execute(request)) {
+				return response;
+			} catch (IOException e){
+				throw e;
+			}
+		} catch (JsonProcessingException e) {
+			throw e;
+		}
 	}
 
 

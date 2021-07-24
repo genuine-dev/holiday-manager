@@ -61,16 +61,16 @@ public class GroupController {
 		List<User> memberList = result.getMemberList().getUserList();
 		List<GroupMember> groupMemberList = new ArrayList<GroupMember>();
 		managerList.forEach(manager -> {
-			GroupMember member = new GroupMember();
-			member.setUserName(manager.getUserName().getValue());
-			member.setManager(true);
-			groupMemberList.add(member);
+			GroupMember groupMember = new GroupMember();
+			groupMember.setUserName(manager.getUserName().getValue());
+			groupMember.setManager(true);
+			groupMemberList.add(groupMember);
 		});
-		memberList.forEach(manager -> {
-			GroupMember member = new GroupMember();
-			member.setUserName(manager.getUserName().getValue());
-			member.setManager(true);
-			groupMemberList.add(member);
+		memberList.forEach(member -> {
+			GroupMember gtoupMember = new GroupMember();
+			gtoupMember.setUserName(member.getUserName().getValue());
+			gtoupMember.setMember(true);
+			groupMemberList.add(gtoupMember);
 		});
 
 		model.addAttribute("groupMemberList", groupMemberList);
@@ -93,16 +93,17 @@ public class GroupController {
 		List<GroupMember> groupMemberList = new ArrayList<GroupMember>();
 		allUserList.forEach(user ->{
 			GroupMember groupMember = new GroupMember();
+			groupMember.setUserId(user.getUserId().getValue());
 			groupMember.setUserName(user.getUserName().getValue());
 			boolean managerFlg = false;
 			for(User manager : managerList) {
-				if(manager.getUserName().getValue().equals(user.getUserName().getValue())) {
+				if(manager.getUserId().getValue().equals(user.getUserId().getValue())) {
 					managerFlg = true;
 				}
 			}
 			boolean memberFlg = false;
 			for(User member : memberList) {
-				if(member.getUserName().getValue().equals(user.getUserName().getValue())) {
+				if(member.getUserId().getValue().equals(user.getUserId().getValue())) {
 					memberFlg = true;
 				}
 			}
@@ -127,6 +128,13 @@ public class GroupController {
 		GroupId groupIdParam = new GroupId();
 		groupIdParam.setValue(groupId);
 		CloseableHttpResponse response = groupService.putGroup(groupNameRequest, groupIdParam);
+		if(response.getStatusLine().getStatusCode() != HttpStatus.SC_OK) {
+			model.addAttribute("isError", true);
+		} else {
+			model.addAttribute("isError", false);
+		}
+
+		response = groupService.postGroupMembers(groupIdParam, viewGroupMemberList);
 		if(response.getStatusLine().getStatusCode() != HttpStatus.SC_OK) {
 			model.addAttribute("isError", true);
 		} else {

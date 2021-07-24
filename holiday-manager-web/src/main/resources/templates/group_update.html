@@ -33,13 +33,15 @@
 							<th scope="col">承認者</th>
 						</tr>
 					</thead>
-					<tr th:each="groupMember : ${viewGroupMemberList.groupMemberList}">
+					<tr th:each="groupMember, groupMemberStatus : ${viewGroupMemberList.groupMemberList}">
 						<td th:text="${groupMember.userName}" style="width:70%"></td>
 						<td>
-							<input type="checkbox" th:checked="${groupMember.member}" />
+							<input type="checkbox" th:field="${viewGroupMemberList.groupMemberList[__${groupMemberStatus.index}__].member}" th:checked="${groupMember.member}" />
 						</td>
 						<td>
-							<input type="checkbox" th:checked="${groupMember.manager}" />
+							<input type="checkbox" th:field="${viewGroupMemberList.groupMemberList[__${groupMemberStatus.index}__].manager}" th:checked="${groupMember.manager}" />
+							<input type="hidden" th:field="${viewGroupMemberList.groupMemberList[__${groupMemberStatus.index}__].userName}" th:value="${groupMember.userName}" />
+							<input type="hidden" th:field="${viewGroupMemberList.groupMemberList[__${groupMemberStatus.index}__].userId}" th:value="${groupMember.userId}" />
 						</td>
 					</tr>
 				</tbody>
