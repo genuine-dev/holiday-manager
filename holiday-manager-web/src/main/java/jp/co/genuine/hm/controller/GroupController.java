@@ -97,13 +97,13 @@ public class GroupController {
 			groupMember.setUserName(user.getUserName().getValue());
 			boolean managerFlg = false;
 			for(User manager : managerList) {
-				if(manager.getUserName().getValue().equals(user.getUserName().getValue())) {
+				if(manager.getUserId().getValue().equals(user.getUserId().getValue())) {
 					managerFlg = true;
 				}
 			}
 			boolean memberFlg = false;
 			for(User member : memberList) {
-				if(member.getUserName().getValue().equals(user.getUserName().getValue())) {
+				if(member.getUserId().getValue().equals(user.getUserId().getValue())) {
 					memberFlg = true;
 				}
 			}
