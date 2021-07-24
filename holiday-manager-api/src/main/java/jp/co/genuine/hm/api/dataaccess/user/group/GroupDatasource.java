@@ -81,4 +81,14 @@ public class GroupDatasource implements GroupRepository {
 		groupMapper.insertMember(userId, groupId);
 	}
 
+	@Override
+	public void deleteMembers(GroupId groupId) {
+		groupMapper.deleteMembers(groupId);
+	}
+
+	@Override
+	public void deleteManagers(GroupId groupId) {
+		groupMapper.deleteManagers(groupId);
+	}
+
 }

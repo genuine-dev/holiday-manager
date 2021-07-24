@@ -18,6 +18,7 @@ import jp.co.genuine.hm.api.domain.request.user.DeleteGroupManagerRequest;
 import jp.co.genuine.hm.api.domain.request.user.DeleteGroupMemberRequest;
 import jp.co.genuine.hm.api.domain.request.user.PostGroupManagerRequest;
 import jp.co.genuine.hm.api.domain.request.user.PostGroupMemberRequest;
+import jp.co.genuine.hm.api.domain.request.user.PostGroupMembersRequest;
 import jp.co.genuine.hm.api.domain.request.user.PostGroupRequest;
 import jp.co.genuine.hm.api.domain.request.user.PutGroupRequest;
 import jp.co.genuine.hm.api.domain.user.group.Group;
@@ -67,6 +68,13 @@ public class GroupController {
 	@ApiOperation("グループ削除")
 	public void deleteGroup(@PathVariable("group_id") @Valid GroupId groupId) {
 		groupService.deleteGroup(groupId);
+	}
+
+	@RequestMapping(path = "/group/members", method = RequestMethod.POST)
+	@ResponseStatus(HttpStatus.OK)
+	@ApiOperation("グループへのメンバー登録")
+	public void postGroupMembers(@RequestBody @Valid PostGroupMembersRequest request) {
+		groupService.postGroupMembers(request);
 	}
 
 	@RequestMapping(path = "/group/manager", method = RequestMethod.POST)

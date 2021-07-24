@@ -180,4 +180,16 @@
 			"group".deleted = false
 	</select>
 
+	<delete id="deleteManagers">
+		DELETE FROM "user".manager
+		WHERE
+			group_id = #{groupId.value}
+	</delete>
+
+	<delete id="deleteMembers">
+		DELETE FROM "user".member
+		WHERE
+			group_id = #{groupId.value}
+	</delete>
+
 </mapper>

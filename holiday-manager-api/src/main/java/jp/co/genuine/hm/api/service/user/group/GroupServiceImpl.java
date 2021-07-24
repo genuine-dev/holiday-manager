@@ -7,11 +7,14 @@ import jp.co.genuine.hm.api.domain.request.user.DeleteGroupManagerRequest;
 import jp.co.genuine.hm.api.domain.request.user.DeleteGroupMemberRequest;
 import jp.co.genuine.hm.api.domain.request.user.PostGroupManagerRequest;
 import jp.co.genuine.hm.api.domain.request.user.PostGroupMemberRequest;
+import jp.co.genuine.hm.api.domain.request.user.PostGroupMembersRequest;
 import jp.co.genuine.hm.api.domain.request.user.PostGroupRequest;
 import jp.co.genuine.hm.api.domain.request.user.PutGroupRequest;
+import jp.co.genuine.hm.api.domain.user.UserId;
 import jp.co.genuine.hm.api.domain.user.group.Group;
 import jp.co.genuine.hm.api.domain.user.group.GroupId;
 import jp.co.genuine.hm.api.domain.user.group.GroupList;
+import jp.co.genuine.hm.api.domain.user.group.GroupMember;
 import jp.co.genuine.hm.api.domain.user.group.GroupRepository;
 
 @Service
@@ -33,6 +36,19 @@ public class GroupServiceImpl implements GroupService {
 	@Override
 	public void putGroup(GroupId groupId, PutGroupRequest request) {
 		groupRepository.updateGroup(groupId, request.getGroupName());
+	}
+
+	@Override
+	public void postGroupMembers(PostGroupMembersRequest request) {
+		groupRepository.deleteMembers(request.getGroupId());
+		groupRepository.deleteManagers(request.getGroupId());
+		for(GroupMember groupMember : request.getGroupMemberList())
+		{
+			if(groupMember.isManager())
+				groupRepository.insertManager(new UserId(groupMember.getUserId()), request.getGroupId());
+			if(groupMember.isMember())
+				groupRepository.insertMember(new UserId(groupMember.getUserId()), request.getGroupId());
+		}
 	}
 
 	@Override

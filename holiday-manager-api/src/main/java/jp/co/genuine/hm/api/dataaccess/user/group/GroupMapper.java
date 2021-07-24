@@ -35,4 +35,8 @@ public interface GroupMapper {
 
 	public GroupId nextGroupId();
 
+	public void deleteMembers(@Param("groupId") GroupId groupId);
+
+	public void deleteManagers(@Param("groupId") GroupId groupId);
+
 }
