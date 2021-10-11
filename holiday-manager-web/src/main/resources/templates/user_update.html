@@ -26,7 +26,7 @@
 			<div class="col-sm-10">
 				<select th:field="*{status}" id="singleSelect" name="selectedItem">
 					<option th:each="item : ${statusList}" th:value="${item.key}"
-						th:text="${item.value}"></option>
+						th:text="${item.value}" th:selected="${item.key} == *{status}"></option>
 				</select>
 			</div>
 		</div>

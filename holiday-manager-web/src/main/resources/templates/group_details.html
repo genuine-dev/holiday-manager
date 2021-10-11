@@ -6,17 +6,27 @@
 	<div th:replace="common/header :: header_fragment(title = 'グループ詳細')"></div>
 
 	<div class="container">
-	<div class="header text-secondary">
-		<h1 th:text="${group.groupName.value}">グループ詳細</h1>
-		<a th:href="@{/group/update/{id}(id=*{group.groupId.value})}" th:text="編集" class="btn btn-secondary"></a>
-	</div>
-	<p class="text-secondary" th:if="${#lists.isEmpty(groupMemberList)}">メンバーが登録されていません</p>
+		<div class="header text-secondary">
+			<h1 th:text="${group.groupName.value}">グループ詳細</h1>
+		</div>
+		<div class="form-group has-feedback">
+			<a th:href="@{/group/update/{id}(id=*{group.groupId.value})}" th:text="編集" class="btn btn-secondary"></a>
+		</div>
+		<div class="form-group has-feedback">
+			<p class="text-secondary" th:if="${#lists.isEmpty(groupMemberList)}">メンバーが登録されていません</p>
+		</div>
 		<table class="table table-bordered table-striped">
 			<tbody>
+				<thead class="thead-dark">
+					<tr>
+						<th scope="col">ユーザー名</th>
+						<th scope="col">権限</th>
+					</tr>
+				</thead>
 				<tr th:each="member : ${groupMemberList}" th:object="${member}">
 					<td th:text="*{userName}" style="width:70%"></td>
 					<td th:if="*{manager}" th:text="承認者"></td>
-					<td th:if="*{member}"></td>
+					<td th:if="*{member}" th:text="メンバー"></td>
 				</tr>
 			</tbody>
 		</table>
