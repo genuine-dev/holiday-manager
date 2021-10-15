@@ -185,30 +185,6 @@
 		INNER JOIN
 			"user".account
 			ON account.user_id = "user".id
-		LEFT OUTER JOIN
-			(
-				SELECT
-					id AS group_id,
-					user_id AS user_id
-				FROM
-					"user".member
-				INNER JOIN
-					"user".group
-					ON "group".id = member.group_id
-			) AS member
-			ON member.user_id = "user".id
-		LEFT OUTER JOIN
-			(
-				SELECT
-					id AS group_id,
-					user_id AS user_id
-				FROM
-					"user".manager
-				INNER JOIN
-					"user"."group"
-					ON "group".id = manager.group_id
-			) AS manager
-			ON manager.user_id = "user".id
 		WHERE
 			"user".id = #{userId.value}
 		AND
