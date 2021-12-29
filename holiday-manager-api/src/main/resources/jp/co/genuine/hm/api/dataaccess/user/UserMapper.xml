@@ -17,7 +17,7 @@
 		<id     property="value" column="user_id" />
 	</resultMap>
 
-	<resultMap id="alertForTakingPaidLeaveMap" type="jp.co.genuine.hm.api.domain.user.alert.AlertForTakingPaidLeave">
+	<resultMap id="holidayAlertMap" type="jp.co.genuine.hm.api.domain.user.alert.HolidayAlert">
 		<id     property="days" column="days" />
 		<result property="deadline" column="deadline"/>
 	</resultMap>
@@ -323,7 +323,7 @@
 			)
 	</insert>
 
-	<select id="findAlertForTakingPaidLeave" resultMap="alertForTakingPaidLeaveMap">
+	<select id="findHolidayAlert" resultMap="holidayAlertMap">
 		SELECT
 			days         AS days
 			,deadline    AS deadline

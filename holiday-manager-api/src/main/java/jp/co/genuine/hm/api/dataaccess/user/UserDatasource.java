@@ -13,7 +13,7 @@ import jp.co.genuine.hm.api.domain.user.UserId;
 import jp.co.genuine.hm.api.domain.user.UserList;
 import jp.co.genuine.hm.api.domain.user.UserRepository;
 import jp.co.genuine.hm.api.domain.user.account.AccountId;
-import jp.co.genuine.hm.api.domain.user.alert.AlertForTakingPaidLeave;
+import jp.co.genuine.hm.api.domain.user.alert.HolidayAlert;
 import jp.co.genuine.hm.api.domain.user.group.GroupId;
 
 @Repository
@@ -85,7 +85,10 @@ public class UserDatasource implements UserRepository {
 	}
 
 	@Override
-	public AlertForTakingPaidLeave findAlertForTakingPaidLeave(UserId userId) {
-		return userMapper.findAlertForTakingPaidLeave(userId);
+	public HolidayAlert findHolidayAlert(UserId userId) {
+		Optional<HolidayAlert> holidayAlert = Optional.ofNullable(userMapper.findHolidayAlert(userId));
+		if(holidayAlert.isPresent())
+			return holidayAlert.get();
+		return new HolidayAlert();
 	}
 }

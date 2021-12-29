@@ -21,7 +21,7 @@ import jp.co.genuine.hm.api.domain.request.holiday.DeleteHolidayRejectRequest;
 import jp.co.genuine.hm.api.domain.request.holiday.PostHolidayApplyRequest;
 import jp.co.genuine.hm.api.domain.request.holiday.PostHolidayGrantRequest;
 import jp.co.genuine.hm.api.domain.request.holiday.PutHolidayApproveRequest;
-import jp.co.genuine.hm.api.domain.user.alert.AlertForTakingPaidLeave;
+import jp.co.genuine.hm.api.domain.user.alert.HolidayAlert;
 import jp.co.genuine.hm.api.service.holiday.HolidayService;
 
 @RestController
@@ -30,16 +30,16 @@ public class HolidayController {
 	HolidayService holidayService;
 
 	@ApiOperation("有給取得アラート")
-	@RequestMapping(path = "/holiday/take-alert/{user_id}", method = RequestMethod.GET)
-	public ResponseEntity<AlertForTakingPaidLeave> getHolidayTakeAlert(@PathVariable("user_id") String userId) {
-		AlertForTakingPaidLeave alertForTakingPaidLeave = holidayService.getHolidayTakeAlert(userId);
-		return new ResponseEntity<AlertForTakingPaidLeave>(alertForTakingPaidLeave, HttpStatus.OK);
+	@RequestMapping(path = "/holiday/alert/{user_id}", method = RequestMethod.GET)
+	public ResponseEntity<HolidayAlert> getHolidayAlert(@PathVariable("user_id") String userId) {
+		HolidayAlert holidayAlert = holidayService.getHolidayAlert(userId);
+		return new ResponseEntity<HolidayAlert>(holidayAlert, HttpStatus.OK);
 	}
 
 	@ApiOperation("有給残日数取得")
 	@RequestMapping(path = "/holiday/{user_id}/days", method = RequestMethod.GET)
 	public ResponseEntity<Double> getHolidayDays(@PathVariable("user_id") String userId,
-			@RequestParam("kind") String kind) {
+			@RequestParam(name = "kind", defaultValue = "PAYED_LEAVE") String kind) {
 		Double days = holidayService.getHolidayDays(userId, kind);
 		return new ResponseEntity<Double>(days, HttpStatus.OK);
 	}
@@ -47,7 +47,7 @@ public class HolidayController {
 	@ApiOperation("ステータスから有給申請リスト取得(全取得はALLを指定)")
 	@RequestMapping(path = "/holiday/{user_id}/application", method = RequestMethod.GET)
 	public ResponseEntity<List<HolidayApplication>> getHolidayApplication(@PathVariable("user_id") String userId,
-			@RequestParam("status") String status) {
+			@RequestParam(name = "status", defaultValue = "ALL") String status) {
 		List<HolidayApplication> holidayApplications = holidayService.getHolidayApplication(userId, status);
 		return new ResponseEntity<List<HolidayApplication>>(holidayApplications, HttpStatus.OK);
 	}

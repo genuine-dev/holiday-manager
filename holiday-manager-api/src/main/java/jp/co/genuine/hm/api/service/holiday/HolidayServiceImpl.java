@@ -27,7 +27,7 @@ import jp.co.genuine.hm.api.domain.request.holiday.PostHolidayApplyRequest;
 import jp.co.genuine.hm.api.domain.request.holiday.PostHolidayGrantRequest;
 import jp.co.genuine.hm.api.domain.request.holiday.PutHolidayApproveRequest;
 import jp.co.genuine.hm.api.domain.user.UserRepository;
-import jp.co.genuine.hm.api.domain.user.alert.AlertForTakingPaidLeave;
+import jp.co.genuine.hm.api.domain.user.alert.HolidayAlert;
 
 @Service
 public class HolidayServiceImpl implements HolidayService {
@@ -102,10 +102,10 @@ public class HolidayServiceImpl implements HolidayService {
 	}
 
 	@Override
-	public AlertForTakingPaidLeave getHolidayTakeAlert(String userId) {
+	public HolidayAlert getHolidayAlert(String userId) {
 		jp.co.genuine.hm.api.domain.user.UserId owner = new jp.co.genuine.hm.api.domain.user.UserId(userId);
 
-		return userRepository.findAlertForTakingPaidLeave(owner);
+		return userRepository.findHolidayAlert(owner);
 	}
 
 }

@@ -10,7 +10,7 @@ import jp.co.genuine.hm.api.domain.request.user.parameter.UserSorts;
 import jp.co.genuine.hm.api.domain.user.User;
 import jp.co.genuine.hm.api.domain.user.UserId;
 import jp.co.genuine.hm.api.domain.user.account.AccountId;
-import jp.co.genuine.hm.api.domain.user.alert.AlertForTakingPaidLeave;
+import jp.co.genuine.hm.api.domain.user.alert.HolidayAlert;
 import jp.co.genuine.hm.api.domain.user.group.GroupId;
 
 @Mapper
@@ -44,5 +44,5 @@ public interface UserMapper {
 
 	public void insertRule(@Param("user") User user);
 
-	public AlertForTakingPaidLeave findAlertForTakingPaidLeave(@Param("userId") UserId userId);
+	public HolidayAlert findHolidayAlert(@Param("userId") UserId userId);
 }
