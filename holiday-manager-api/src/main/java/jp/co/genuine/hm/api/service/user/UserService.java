@@ -1,5 +1,6 @@
 package jp.co.genuine.hm.api.service.user;
 
+import java.util.List;
 import java.util.Map;
 
 import jp.co.genuine.hm.api.domain.request.user.PostUserRequest;
@@ -21,4 +22,5 @@ public interface UserService {
 	public void deleteUser(UserId userId);
 	public User findUser(UserId userId);
 	public Map<String, String> getUserStatus();
+	public List<Integer> findManagementUserIds(Integer userId);
 }

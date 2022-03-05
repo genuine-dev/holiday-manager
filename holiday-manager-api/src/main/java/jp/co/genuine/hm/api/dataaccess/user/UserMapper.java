@@ -45,4 +45,6 @@ public interface UserMapper {
 	public void insertRule(@Param("user") User user);
 
 	public HolidayAlert findHolidayAlert(@Param("userId") UserId userId);
+
+	public List<Integer> findManagementUserIds(@Param("userId") Integer userId);
 }

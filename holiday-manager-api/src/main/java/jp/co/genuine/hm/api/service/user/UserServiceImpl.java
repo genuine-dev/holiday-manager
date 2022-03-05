@@ -1,6 +1,7 @@
 package jp.co.genuine.hm.api.service.user;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.validation.Valid;
@@ -90,5 +91,10 @@ public class UserServiceImpl implements UserService {
 			userStatusMap.put(userStatus.name(), userStatus.getLabel());
 		}
 		return userStatusMap;
+	}
+
+	@Override
+	public List<Integer> findManagementUserIds(Integer userId) {
+		return userRepository.findManagementUserIds(userId);
 	}
 }

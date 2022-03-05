@@ -128,6 +128,8 @@ public class HolidayList extends AggregateRoot {
 	 * @return
 	 */
 	public double getDays(KindOfHoliday kind, Date date) {
+		if(holidays == null)
+			return 0;
 		return holidays.stream()
 				.filter(holiday -> holiday.getKind() == kind)
 				.filter(holiday -> holiday.getExpirationDate().after(date))

@@ -4,6 +4,8 @@ import java.text.ParseException;
 import java.time.ZonedDateTime;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,6 +30,7 @@ import jp.co.genuine.hm.api.domain.request.holiday.PostHolidayGrantRequest;
 import jp.co.genuine.hm.api.domain.request.holiday.PutHolidayApproveRequest;
 import jp.co.genuine.hm.api.domain.user.UserRepository;
 import jp.co.genuine.hm.api.domain.user.alert.HolidayAlert;
+import jp.co.genuine.hm.api.service.user.UserService;
 
 @Service
 public class HolidayServiceImpl implements HolidayService {
@@ -39,6 +42,8 @@ public class HolidayServiceImpl implements HolidayService {
 	private HolidayListService holidayListService;
 	@Autowired
 	private UserRepository userRepository;
+	@Autowired
+	private UserService userService;
 
 	@Override
 	public HolidayApplication postHolidayApply(PostHolidayApplyRequest request) throws ParseException {
@@ -92,6 +97,18 @@ public class HolidayServiceImpl implements HolidayService {
 		HolidayApplicationStatus holidayApplicationStatus = HolidayApplicationStatus.valueOf(status);
 
 		return holidayApplicationService.findByAplicantIdAndStatus(applicantId, holidayApplicationStatus);
+	}
+
+	@Override
+	public List<HolidayApplication> getApplyingHoliday(String apploverId) {
+
+		List<HolidayApplication> applyingHolidays = holidayApplicationService.findByStatus(HolidayApplicationStatus.APPLYING);
+		List<Integer> managementUserIds = userService.findManagementUserIds(Integer.parseInt(apploverId));
+
+		Stream<HolidayApplication> applyingHolidaysStream = applyingHolidays.stream();
+		Stream<HolidayApplication> managedApplyingHolidaysStream = applyingHolidaysStream.filter(holidayApplication ->  managementUserIds.contains(holidayApplication.getApplicantId().getValue()));
+
+		return managedApplyingHolidaysStream.collect(Collectors.toList());
 	}
 
 	@Override

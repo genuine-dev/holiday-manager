@@ -32,4 +32,6 @@ public interface HolidayService {
 	public Double getHolidayDays(String userId, String kind);
 
 	public HolidayAlert getHolidayAlert(String userId);
+
+	public List<HolidayApplication> getApplyingHoliday(String apploverId);
 }

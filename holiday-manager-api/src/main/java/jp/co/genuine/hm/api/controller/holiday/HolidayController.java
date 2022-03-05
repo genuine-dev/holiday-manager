@@ -52,16 +52,25 @@ public class HolidayController {
 		return new ResponseEntity<List<HolidayApplication>>(holidayApplications, HttpStatus.OK);
 	}
 
+	@ApiOperation("承認待ち有給申請リスト取得")
+	@RequestMapping(path = "/holiday/applying/{applover_id}", method = RequestMethod.GET)
+	public ResponseEntity<List<HolidayApplication>> getApplyingHoliday(@PathVariable("applover_id") String userId) {
+		List<HolidayApplication> applyingHolidays = holidayService.getApplyingHoliday(userId);
+		return new ResponseEntity<List<HolidayApplication>>(applyingHolidays, HttpStatus.OK);
+	}
+
 	@ApiOperation("有給付与")
 	@RequestMapping(path = "/holiday/grant", method = RequestMethod.POST)
-	public ResponseEntity<HolidayList> postHolidayGrant(@RequestBody PostHolidayGrantRequest request) throws ParseException {
+	public ResponseEntity<HolidayList> postHolidayGrant(@RequestBody PostHolidayGrantRequest request)
+			throws ParseException {
 		HolidayList holidayList = holidayService.postHolidayGrant(request);
 		return new ResponseEntity<HolidayList>(holidayList, HttpStatus.OK);
 	}
 
 	@ApiOperation("有給申請")
 	@RequestMapping(path = "/holiday/apply", method = RequestMethod.POST)
-	public ResponseEntity<HolidayApplication> postHolidayApply(@RequestBody PostHolidayApplyRequest request) throws ParseException {
+	public ResponseEntity<HolidayApplication> postHolidayApply(@RequestBody PostHolidayApplyRequest request)
+			throws ParseException {
 		HolidayApplication application = holidayService.postHolidayApply(request);
 		return new ResponseEntity<HolidayApplication>(application, HttpStatus.OK);
 	}

@@ -91,4 +91,9 @@ public class UserDatasource implements UserRepository {
 			return holidayAlert.get();
 		return new HolidayAlert();
 	}
+
+	@Override
+	public List<Integer> findManagementUserIds(Integer userId) {
+		return userMapper.findManagementUserIds(userId);
+	}
 }

@@ -86,6 +86,13 @@ public class HolidayApplicationService {
 		return convert(holidayApplicationEntities);
 	}
 
+	public List<HolidayApplication> findByStatus(HolidayApplicationStatus status) {
+
+		List<HolidayApplicationEntity> holidayApplicationEntities = queryRepository.findByStatus(status.name());
+
+		return convert(holidayApplicationEntities);
+	}
+
 	public List<HolidayApplication> findByAplicantIdAndStatus(UserId applicantId, HolidayApplicationStatus status) {
 
 		List<HolidayApplicationEntity> holidayApplicationEntities = queryRepository.findByAplicantIdAndStatus(applicantId.getValue(), status.name());

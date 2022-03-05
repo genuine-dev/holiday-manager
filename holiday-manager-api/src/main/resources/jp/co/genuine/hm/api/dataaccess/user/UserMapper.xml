@@ -333,4 +333,21 @@
 			user_id = #{userId.value}
 	</select>
 
+	<select id="findManagementUserIds" resultType="java.lang.Integer">
+		SELECT
+			member.user_id AS user_id
+		FROM
+			"user".manager
+		LEFT OUTER JOIN
+			"user"."user"
+			ON "user".id = manager.user_id
+		INNER JOIN
+			"user".member
+			ON member.group_id = manager.group_id
+		WHERE
+			"user".deleted = false
+		AND
+			manager.user_id = #{userId}
+	</select>
+
 </mapper>

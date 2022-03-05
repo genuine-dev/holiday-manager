@@ -1,5 +1,6 @@
 package jp.co.genuine.hm.api.domain.user;
 
+import java.util.List;
 import java.util.Optional;
 
 import jp.co.genuine.hm.api.domain.request.user.parameter.UserQueries;
@@ -34,4 +35,6 @@ public interface UserRepository {
 	public void insertRule(User user);
 
 	public HolidayAlert findHolidayAlert(UserId owner);
+
+	public List<Integer> findManagementUserIds(Integer userId);
 }
