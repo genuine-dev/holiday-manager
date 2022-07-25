@@ -27,19 +27,20 @@ import holiday.manager.service.holiday.HolidayService;
 import io.swagger.annotations.ApiOperation;
 
 @RestController
+@RequestMapping("/holiday")
 public class HolidayController {
 	@Autowired
 	HolidayService holidayService;
 
 	@ApiOperation("有給取得アラート")
-	@GetMapping("/holiday/alert/{user_id}")
+	@GetMapping("/alert/{user_id}")
 	public ResponseEntity<HolidayAlert> getHolidayAlert(@PathVariable("user_id") String userId) {
 		HolidayAlert holidayAlert = holidayService.getHolidayAlert(userId);
 		return new ResponseEntity<HolidayAlert>(holidayAlert, HttpStatus.OK);
 	}
 
 	@ApiOperation("有給残日数取得")
-	@GetMapping("/holiday/{user_id}/days")
+	@GetMapping("/{user_id}/days")
 	public ResponseEntity<Double> getHolidayDays(@PathVariable("user_id") String userId,
 			@RequestParam(name = "kind", defaultValue = "PAYED_LEAVE") String kind) {
 		Double days = holidayService.getHolidayDays(userId, kind);
@@ -47,7 +48,7 @@ public class HolidayController {
 	}
 
 	@ApiOperation("ステータスから有給申請リスト取得(全取得はALLを指定)")
-	@GetMapping("/holiday/{user_id}/application")
+	@GetMapping("/{user_id}/application")
 	public ResponseEntity<List<HolidayApplication>> getHolidayApplication(@PathVariable("user_id") String userId,
 			@RequestParam(name = "status", defaultValue = "ALL") String status) {
 		List<HolidayApplication> holidayApplications = holidayService.getHolidayApplication(userId, status);
@@ -55,14 +56,14 @@ public class HolidayController {
 	}
 
 	@ApiOperation("承認待ち有給申請リスト取得")
-	@GetMapping("/holiday/applying/{applover_id}")
+	@GetMapping("/applying/{applover_id}")
 	public ResponseEntity<List<HolidayApplication>> getApplyingHoliday(@PathVariable("applover_id") String userId) {
 		List<HolidayApplication> applyingHolidays = holidayService.getApplyingHoliday(userId);
 		return new ResponseEntity<List<HolidayApplication>>(applyingHolidays, HttpStatus.OK);
 	}
 
 	@ApiOperation("有給付与")
-	@PostMapping("/holiday/grant")
+	@PostMapping("/grant")
 	public ResponseEntity<HolidayList> postHolidayGrant(@RequestBody PostHolidayGrantRequest request)
 			throws ParseException {
 		HolidayList holidayList = holidayService.postHolidayGrant(request);
@@ -70,7 +71,7 @@ public class HolidayController {
 	}
 
 	@ApiOperation("有給申請")
-	@PostMapping("/holiday/apply")
+	@PostMapping("/apply")
 	public ResponseEntity<HolidayApplication> postHolidayApply(@RequestBody PostHolidayApplyRequest request)
 			throws ParseException {
 		HolidayApplication application = holidayService.postHolidayApply(request);
@@ -78,21 +79,21 @@ public class HolidayController {
 	}
 
 	@ApiOperation("有給承認")
-	@PutMapping("/holiday/approve")
+	@PutMapping("/approve")
 	public ResponseEntity<HolidayApplication> putHolidayApprove(@RequestBody PutHolidayApproveRequest request) {
 		HolidayApplication application = holidayService.putHolidayApprove(request);
 		return new ResponseEntity<HolidayApplication>(application, HttpStatus.OK);
 	}
 
 	@ApiOperation("有給却下")
-	@DeleteMapping("/holiday/reject")
+	@DeleteMapping("/reject")
 	public ResponseEntity<HolidayApplication> deleteHolidayReject(@RequestBody DeleteHolidayRejectRequest request) {
 		HolidayApplication application = holidayService.deleteHolidayReject(request);
 		return new ResponseEntity<HolidayApplication>(application, HttpStatus.OK);
 	}
 
 	@ApiOperation("有給キャンセル")
-	@DeleteMapping("/holiday/cancel")
+	@DeleteMapping("/cancel")
 	public ResponseEntity<HolidayApplication> deleteHolidayCancel(@RequestBody DeleteHolidayCancelRequest request) {
 		HolidayApplication application = holidayService.deleteHolidayCancel(request);
 		return new ResponseEntity<HolidayApplication>(application, HttpStatus.OK);
