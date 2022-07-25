@@ -20,11 +20,11 @@ import holiday.manager.domain.model.holiday.application.HolidayApplicationId;
 import holiday.manager.domain.model.holiday.application.HolidayType;
 import holiday.manager.domain.model.user.User;
 import holiday.manager.domain.model.user.UserId;
-import holiday.manager.domain.request.holiday.DeleteHolidayCancelRequest;
-import holiday.manager.domain.request.holiday.DeleteHolidayRejectRequest;
-import holiday.manager.domain.request.holiday.PostHolidayApplyRequest;
-import holiday.manager.domain.request.holiday.PostHolidayGrantRequest;
-import holiday.manager.domain.request.holiday.PutHolidayApproveRequest;
+import holiday.manager.rest.request.holiday.DeleteHolidayCancelRequest;
+import holiday.manager.rest.request.holiday.DeleteHolidayRejectRequest;
+import holiday.manager.rest.request.holiday.PostHolidayApplyRequest;
+import holiday.manager.rest.request.holiday.PostHolidayGrantRequest;
+import holiday.manager.rest.request.holiday.PutHolidayApproveRequest;
 
 @Component
 public class HolidayFactory {

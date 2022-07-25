@@ -1,4 +1,4 @@
-package holiday.manager.domain.response.holiday;
+package holiday.manager.rest.response.holiday;
 
 import java.util.Date;
 

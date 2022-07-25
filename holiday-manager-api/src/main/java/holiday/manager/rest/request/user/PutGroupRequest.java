@@ -1,4 +1,4 @@
-package holiday.manager.domain.request.user;
+package holiday.manager.rest.request.user;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;

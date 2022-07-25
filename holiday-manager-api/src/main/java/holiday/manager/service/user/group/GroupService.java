@@ -1,12 +1,12 @@
 package holiday.manager.service.user.group;
 
-import holiday.manager.domain.request.user.DeleteGroupManagerRequest;
-import holiday.manager.domain.request.user.DeleteGroupMemberRequest;
-import holiday.manager.domain.request.user.PostGroupManagerRequest;
-import holiday.manager.domain.request.user.PostGroupMemberRequest;
-import holiday.manager.domain.request.user.PostGroupMembersRequest;
-import holiday.manager.domain.request.user.PostGroupRequest;
-import holiday.manager.domain.request.user.PutGroupRequest;
+import holiday.manager.rest.request.user.DeleteGroupManagerRequest;
+import holiday.manager.rest.request.user.DeleteGroupMemberRequest;
+import holiday.manager.rest.request.user.PostGroupManagerRequest;
+import holiday.manager.rest.request.user.PostGroupMemberRequest;
+import holiday.manager.rest.request.user.PostGroupMembersRequest;
+import holiday.manager.rest.request.user.PostGroupRequest;
+import holiday.manager.rest.request.user.PutGroupRequest;
 import holiday.manager.domain.user.group.Group;
 import holiday.manager.domain.user.group.GroupId;
 import holiday.manager.domain.user.group.GroupList;

@@ -19,11 +19,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import holiday.manager.domain.request.user.PostUserRequest;
-import holiday.manager.domain.request.user.PutUserRequest;
-import holiday.manager.domain.request.user.parameter.UserQueries;
-import holiday.manager.domain.request.user.parameter.UserSort;
-import holiday.manager.domain.request.user.parameter.UserSorts;
+import holiday.manager.rest.request.user.PostUserRequest;
+import holiday.manager.rest.request.user.PutUserRequest;
+import holiday.manager.rest.request.user.parameter.UserQueries;
+import holiday.manager.rest.request.user.parameter.UserSort;
+import holiday.manager.rest.request.user.parameter.UserSorts;
 import holiday.manager.domain.user.User;
 import holiday.manager.domain.user.UserId;
 import holiday.manager.domain.user.UserList;

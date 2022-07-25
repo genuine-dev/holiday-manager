@@ -1,4 +1,4 @@
-package holiday.manager.domain.request.user.parameter;
+package holiday.manager.rest.request.user.parameter;
 
 public class UserQueries {
 	private String userNameQuery;

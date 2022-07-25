@@ -5,7 +5,7 @@ import java.util.List;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
-import holiday.manager.domain.request.user.parameter.UserSort;
+import holiday.manager.rest.request.user.parameter.UserSort;
 import holiday.manager.domain.user.request.param.UserSortType;
 
 public class ContainsUserSortTypeValidator implements ConstraintValidator<ContainsUserSortType, List<UserSort>> {
