@@ -1,10 +1,11 @@
-package holiday.manager.exception;
+package holiday.manager.exception.handler;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.validation.ConstraintViolation;
 
+import holiday.manager.exception.ValidationErrorException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
