@@ -5,8 +5,8 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
-import holiday.manager.domain.request.user.parameter.UserQueries;
-import holiday.manager.domain.request.user.parameter.UserSorts;
+import holiday.manager.rest.request.user.parameter.UserQueries;
+import holiday.manager.rest.request.user.parameter.UserSorts;
 import holiday.manager.domain.user.User;
 import holiday.manager.domain.user.UserId;
 import holiday.manager.domain.user.account.AccountId;

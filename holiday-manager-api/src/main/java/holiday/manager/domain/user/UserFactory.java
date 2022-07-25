@@ -4,8 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
-import holiday.manager.domain.request.user.PostUserRequest;
-import holiday.manager.domain.request.user.PutUserRequest;
+import holiday.manager.rest.request.user.PostUserRequest;
+import holiday.manager.rest.request.user.PutUserRequest;
 import holiday.manager.domain.user.account.AccountId;
 import holiday.manager.domain.user.account.Password;
 import holiday.manager.domain.user.rule.RuleId;

@@ -6,8 +6,8 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import holiday.manager.domain.request.user.parameter.UserQueries;
-import holiday.manager.domain.request.user.parameter.UserSorts;
+import holiday.manager.rest.request.user.parameter.UserQueries;
+import holiday.manager.rest.request.user.parameter.UserSorts;
 import holiday.manager.domain.user.User;
 import holiday.manager.domain.user.UserId;
 import holiday.manager.domain.user.UserList;
