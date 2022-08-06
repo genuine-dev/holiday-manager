@@ -15,6 +15,10 @@ public class HolidayApplicationQueryService {
 	@Autowired
 	private HolidayApplicationQueryRepository queryRepository;
 
+	/**
+	 * 休暇申請一覧を取得する
+	 * @return 休暇申請
+	 */
 	public List<HolidayApplicationDto> findAll() {
 
 		return StreamSupport.stream(queryRepository.findAll().spliterator(), false)
