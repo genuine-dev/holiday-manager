@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import holiday.manager.application.query.holiday.application.HolidayApplicationQueryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -36,6 +37,8 @@ import holiday.manager.service.user.UserService;
 public class HolidayServiceImpl implements HolidayService {
 	@Autowired
 	private HolidayApplicationService holidayApplicationService;
+	@Autowired
+	private HolidayApplicationQueryService holidayApplicationQueryService;
 	@Autowired
 	private HolidayFactory holidayFactory;
 	@Autowired
@@ -92,17 +95,17 @@ public class HolidayServiceImpl implements HolidayService {
 		UserId applicantId = new UserId(Integer.parseInt(userId));
 
 		if(status.equals("ALL"))
-			return holidayApplicationService.findByAplicantId(applicantId);
+			return holidayApplicationQueryService.findByAplicantId(applicantId);
 
 		HolidayApplicationStatus holidayApplicationStatus = HolidayApplicationStatus.valueOf(status);
 
-		return holidayApplicationService.findByAplicantIdAndStatus(applicantId, holidayApplicationStatus);
+		return holidayApplicationQueryService.findByAplicantIdAndStatus(applicantId, holidayApplicationStatus);
 	}
 
 	@Override
 	public List<HolidayApplication> getApplyingHoliday(String apploverId) {
 
-		List<HolidayApplication> applyingHolidays = holidayApplicationService.findByStatus(HolidayApplicationStatus.APPLYING);
+		List<HolidayApplication> applyingHolidays = holidayApplicationQueryService.findByStatus(HolidayApplicationStatus.APPLYING);
 		List<Integer> managementUserIds = userService.findManagementUserIds(Integer.parseInt(apploverId));
 
 		Stream<HolidayApplication> applyingHolidaysStream = applyingHolidays.stream();
