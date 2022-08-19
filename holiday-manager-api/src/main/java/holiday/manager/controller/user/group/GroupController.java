@@ -30,8 +30,11 @@ import io.swagger.annotations.ApiOperation;
 @RestController
 @Validated
 public class GroupController {
-	@Autowired
-	GroupService groupService;
+	private final GroupService groupService;
+
+	public GroupController(GroupService groupService) {
+		this.groupService = groupService;
+	}
 
 	@ApiOperation("グループ一覧")
 	@GetMapping("/group")

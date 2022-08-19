@@ -30,8 +30,11 @@ import io.swagger.annotations.ApiOperation;
 @RestController
 @RequestMapping("/holiday")
 public class HolidayController {
-	@Autowired
-	HolidayService holidayService;
+	private final HolidayService holidayService;
+
+	public HolidayController(HolidayService holidayService) {
+		this.holidayService = holidayService;
+	}
 
 	@ApiOperation("有給取得アラート")
 	@GetMapping("/alert/{user_id}")

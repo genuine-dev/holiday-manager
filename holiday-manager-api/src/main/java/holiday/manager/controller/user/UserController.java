@@ -36,8 +36,11 @@ import io.swagger.annotations.ApiOperation;
 @RestController
 public class UserController {
 
-	@Autowired
-	UserService userService;
+	private final UserService userService;
+
+	public UserController(UserService userService) {
+		this.userService = userService;
+	}
 
 	@ApiOperation("全ユーザー取得")
 	@GetMapping("/user")
