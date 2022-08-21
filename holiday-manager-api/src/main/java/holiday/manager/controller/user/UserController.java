@@ -5,7 +5,7 @@ import java.util.Map;
 
 import javax.validation.Valid;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import holiday.manager.service.user.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -29,7 +29,6 @@ import holiday.manager.domain.user.UserId;
 import holiday.manager.domain.user.UserList;
 import holiday.manager.domain.user.account.AccountId;
 import holiday.manager.domain.validation.ContainsUserSortType;
-import holiday.manager.service.user.UserService;
 import io.swagger.annotations.ApiOperation;
 
 @Validated
