@@ -68,11 +68,10 @@ public class HolidayController {
 	}
 
 	@ApiOperation("有給付与")
-	@PostMapping("/grant")
-	public ResponseEntity<HolidayList> postHolidayGrant(@RequestBody PostHolidayGrantRequest request)
+	public ResponseEntity<Void> postHolidayGrant(@RequestBody PostHolidayGrantRequest request)
 			throws ParseException {
-		HolidayList holidayList = holidayService.postHolidayGrant(request);
-		return new ResponseEntity<HolidayList>(holidayList, HttpStatus.OK);
+		holidayService.postHolidayGrant(request);
+		return new ResponseEntity<Void>(HttpStatus.OK);
 	}
 
 	@ApiOperation("有給申請")
