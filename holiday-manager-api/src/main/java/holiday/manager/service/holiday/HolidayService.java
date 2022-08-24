@@ -24,17 +24,16 @@ import holiday.manager.rest.request.holiday.PostHolidayGrantRequest;
 import holiday.manager.rest.request.holiday.PutHolidayApproveRequest;
 import holiday.manager.domain.user.alert.HolidayAlert;
 import holiday.manager.service.user.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class HolidayService {
-	private HolidayApplicationService holidayApplicationService;
-	private HolidayApplicationQueryService holidayApplicationQueryService;
-	private HolidayFactory holidayFactory;
-	private HolidayListService holidayListService;
-	private UserRepository userRepository;
-	private UserService userService;
+	private final HolidayApplicationService holidayApplicationService;
+	private final HolidayApplicationQueryService holidayApplicationQueryService;
+	private final HolidayFactory holidayFactory;
+	private final HolidayListService holidayListService;
+	private final UserRepository userRepository;
+	private final UserService userService;
 
 	public HolidayService(HolidayApplicationService holidayApplicationService, HolidayApplicationQueryService holidayApplicationQueryService, HolidayFactory holidayFactory, HolidayListService holidayListService, UserRepository userRepository, UserService userService) {
 		this.holidayApplicationService = holidayApplicationService;
