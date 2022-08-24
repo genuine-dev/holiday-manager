@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import holiday.manager.application.query.holiday.application.HolidayApplicationQueryService;
+import holiday.manager.application.query.holiday.application.dto.HolidayApplicationDto;
 import holiday.manager.application.service.holiday.application.HolidayApplicationService;
 import holiday.manager.application.service.holiday.holiday.HolidayListService;
 import holiday.manager.domain.holiday.HolidayFactory;
@@ -44,29 +45,33 @@ public class HolidayService {
 		this.userService = userService;
 	}
 
-	public HolidayApplication postHolidayApply(PostHolidayApplyRequest request) throws ParseException {
+	public HolidayApplicationDto postHolidayApply(PostHolidayApplyRequest request) throws ParseException {
 		//TODO:DTOの必要性無いのでは
 		HolidayApplyDTO holidayApplyDTO = holidayFactory.create(request);
-		return holidayApplicationService.apply(holidayApplyDTO.getKindOfHoliday(), holidayApplyDTO.getHolidayType(),
+		HolidayApplication holidayApplication = holidayApplicationService.apply(holidayApplyDTO.getKindOfHoliday(), holidayApplyDTO.getHolidayType(),
 				holidayApplyDTO.getApplyDate(), holidayApplyDTO.getApplicant());
+		return convertToDto(holidayApplication);
 	}
 
-	public HolidayApplication putHolidayApprove(PutHolidayApproveRequest request) {
+	public HolidayApplicationDto putHolidayApprove(PutHolidayApproveRequest request) {
 		//TODO:DTOの必要性無いのでは
 		HolidayApproveDTO holidayApproveDTO = holidayFactory.create(request);
-		return holidayApplicationService.approve(holidayApproveDTO.getApplicationId(), holidayApproveDTO.getApprover());
+		HolidayApplication holidayApplication = holidayApplicationService.approve(holidayApproveDTO.getApplicationId(), holidayApproveDTO.getApprover());
+		return convertToDto(holidayApplication);
 	}
 
-	public HolidayApplication deleteHolidayReject(DeleteHolidayRejectRequest request) {
+	public HolidayApplicationDto deleteHolidayReject(DeleteHolidayRejectRequest request) {
 		//TODO:DTOの必要性無いのでは
 		HolidayRejectDTO holidayRejectDTO = holidayFactory.create(request);
-		return holidayApplicationService.reject(holidayRejectDTO.getApplicationId(), holidayRejectDTO.getApprover());
+		HolidayApplication holidayApplication = holidayApplicationService.reject(holidayRejectDTO.getApplicationId(), holidayRejectDTO.getApprover());
+		return convertToDto(holidayApplication);
 	}
 
-	public HolidayApplication deleteHolidayCancel(DeleteHolidayCancelRequest request) {
+	public HolidayApplicationDto deleteHolidayCancel(DeleteHolidayCancelRequest request) {
 		//TODO:DTOの必要性無いのでは
 		HolidayCancelDTO holidayCancelDTO = holidayFactory.create(request);
-		return holidayApplicationService.cancel(holidayCancelDTO.getApplicationId(), holidayCancelDTO.getApplicant());
+		HolidayApplication holidayApplication =  holidayApplicationService.cancel(holidayCancelDTO.getApplicationId(), holidayCancelDTO.getApplicant());
+		return convertToDto(holidayApplication);
 	}
 
 	public Double getHolidayDays(String userId, String kind) {
@@ -85,7 +90,7 @@ public class HolidayService {
 		return holidayListService.findHolidayList(userId);
 	}
 
-	public List<HolidayApplication> getHolidayApplication(String userId, String status) {
+	public List<HolidayApplicationDto> getHolidayApplication(String userId, String status) {
 		UserId applicantId = new UserId(Integer.parseInt(userId));
 
 		if(status.equals("ALL"))
@@ -96,17 +101,17 @@ public class HolidayService {
 		return holidayApplicationQueryService.findByAplicantIdAndStatus(applicantId, holidayApplicationStatus);
 	}
 
-	public List<HolidayApplication> getApplyingHoliday(String apploverId) {
+	public List<HolidayApplicationDto> getApplyingHoliday(String apploverId) {
 
-		List<HolidayApplication> applyingHolidays = holidayApplicationQueryService.findByStatus(HolidayApplicationStatus.APPLYING);
+		List<HolidayApplicationDto> applyingHolidays = holidayApplicationQueryService.findByStatus(HolidayApplicationStatus.APPLYING);
 		List<Integer> managementUserIds = userService.findManagementUserIds(Integer.parseInt(apploverId));
 		return applyingHolidays.stream().filter(holidayApplication ->  managementUserIds.contains(holidayApplication.getApplicantId().getValue())).collect(Collectors.toList());
 	}
 
-	public HolidayList postHolidayGrant(PostHolidayGrantRequest request) throws ParseException {
+	public void postHolidayGrant(PostHolidayGrantRequest request) throws ParseException {
 		//TODO:DTOの必要性無いのでは
 		HolidayGrantDTO holidayGrantDTO = holidayFactory.create(request);
-		return holidayListService.grantHoliday(holidayGrantDTO.getUserId(), holidayGrantDTO.getKindOfHoliday(),
+		holidayListService.grantHoliday(holidayGrantDTO.getUserId(), holidayGrantDTO.getKindOfHoliday(),
 				holidayGrantDTO.getDays(), holidayGrantDTO.getGrantedDate(), holidayGrantDTO.getExpirationDate());
 	}
 
@@ -114,5 +119,17 @@ public class HolidayService {
 		holiday.manager.domain.user.UserId owner = new holiday.manager.domain.user.UserId(userId);
 
 		return userRepository.findHolidayAlert(owner);
+	}
+
+	private HolidayApplicationDto convertToDto(HolidayApplication holidayApplication) {
+		HolidayApplicationDto dto = new HolidayApplicationDto();
+		dto.setId(holidayApplication.getId().getValue());
+		dto.setKind(holidayApplication.getKindOfHoliday().name());
+		dto.setType(holidayApplication.getHolidayType().name());
+		dto.setStatus(holidayApplication.getStatus().name());
+		dto.setDate(holidayApplication.getDate());
+		dto.setAplicantId(holidayApplication.getApplicantId().getValue());
+		dto.setApproverId(holidayApplication.getApproverId().getValue());
+		return dto;
 	}
 }

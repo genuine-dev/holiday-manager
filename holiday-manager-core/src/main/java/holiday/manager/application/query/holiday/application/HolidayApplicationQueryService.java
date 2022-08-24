@@ -53,11 +53,23 @@ public class HolidayApplicationQueryService {
 	 * @param applicantId 申請者
 	 * @return 休暇申請
 	 */
-	public List<HolidayApplication> findByAplicantId(UserId applicantId) {
+	public List<HolidayApplicationDto> findByAplicantId(UserId applicantId) {
 
-		List<HolidayApplicationEntity> holidayApplicationEntities = queryRepository.findByAplicantId(applicantId.getValue());
-
-		return convert(holidayApplicationEntities);
+		return StreamSupport.stream(queryRepository.findByAplicantId(applicantId.getValue()).spliterator(), false)
+				.map(entity -> {
+					HolidayApplicationDto dto = new HolidayApplicationDto();
+					dto.setId(entity.getId());
+					dto.setKind(entity.getKind());
+					dto.setType(entity.getType());
+					dto.setStatus(entity.getStatus());
+					dto.setDate(entity.getDate());
+					dto.setAplicantId(entity.getAplicantId());
+					dto.setApproverId(entity.getApproverId());
+					dto.setApplyDate(entity.getCreatedAt());
+					dto.setApproveDate(entity.getUpdatedAt());
+					return dto;
+				})
+				.collect(Collectors.toList());
 	}
 
 	/**
@@ -65,11 +77,23 @@ public class HolidayApplicationQueryService {
 	 * @param status 休暇申請ステータス
 	 * @return 休暇申請
 	 */
-	public List<HolidayApplication> findByStatus(HolidayApplicationStatus status) {
+	public List<HolidayApplicationDto> findByStatus(HolidayApplicationStatus status) {
 
-		List<HolidayApplicationEntity> holidayApplicationEntities = queryRepository.findByStatus(status.name());
-
-		return convert(holidayApplicationEntities);
+		return StreamSupport.stream(queryRepository.findByStatus(status.name()).spliterator(), false)
+				.map(entity -> {
+					HolidayApplicationDto dto = new HolidayApplicationDto();
+					dto.setId(entity.getId());
+					dto.setKind(entity.getKind());
+					dto.setType(entity.getType());
+					dto.setStatus(entity.getStatus());
+					dto.setDate(entity.getDate());
+					dto.setAplicantId(entity.getAplicantId());
+					dto.setApproverId(entity.getApproverId());
+					dto.setApplyDate(entity.getCreatedAt());
+					dto.setApproveDate(entity.getUpdatedAt());
+					return dto;
+				})
+				.collect(Collectors.toList());
 	}
 
 	/**
@@ -78,37 +102,22 @@ public class HolidayApplicationQueryService {
 	 * @param status 休暇申請ステータス
 	 * @return 休暇申請
 	 */
-	public List<HolidayApplication> findByAplicantIdAndStatus(UserId applicantId, HolidayApplicationStatus status) {
+	public List<HolidayApplicationDto> findByAplicantIdAndStatus(UserId applicantId, HolidayApplicationStatus status) {
 
-		List<HolidayApplicationEntity> holidayApplicationEntities = queryRepository.findByAplicantIdAndStatus(applicantId.getValue(), status.name());
-
-		return convert(holidayApplicationEntities);
-	}
-
-	private List<HolidayApplication> convert(List<HolidayApplicationEntity> holidayApplicationEntities) {
-
-		List<HolidayApplication> holidayApplications = new ArrayList<HolidayApplication>();
-
-		for (HolidayApplicationEntity entity : holidayApplicationEntities) {
-			addHolidayApplication(holidayApplications, entity);
-		}
-
-		return holidayApplications;
-	}
-
-	private void addHolidayApplication(List<HolidayApplication> holidayApplications, HolidayApplicationEntity entity) {
-
-		HolidayApplicationId holidayApplicationId = new HolidayApplicationId(entity.getId());
-		KindOfHoliday kindOfHoliday = KindOfHoliday.valueOf(entity.getKind());
-		HolidayType holidayType = HolidayType.valueOf(entity.getType());
-		Date date = entity.getDate();
-		HolidayApplicationStatus holidayApplicationStatus = HolidayApplicationStatus.valueOf(entity.getStatus());
-		UserId applicant = new UserId(entity.getAplicantId());
-		UserId approverId = new UserId(entity.getApproverId());
-
-		HolidayApplication holidayApplication = new HolidayApplication(holidayApplicationId, kindOfHoliday, holidayType,
-				date, holidayApplicationStatus, applicant, approverId);
-
-		holidayApplications.add(holidayApplication);
+		return StreamSupport.stream(queryRepository.findByAplicantIdAndStatus(applicantId.getValue(), status.name()).spliterator(), false)
+				.map(entity -> {
+					HolidayApplicationDto dto = new HolidayApplicationDto();
+					dto.setId(entity.getId());
+					dto.setKind(entity.getKind());
+					dto.setType(entity.getType());
+					dto.setStatus(entity.getStatus());
+					dto.setDate(entity.getDate());
+					dto.setAplicantId(entity.getAplicantId());
+					dto.setApproverId(entity.getApproverId());
+					dto.setApplyDate(entity.getCreatedAt());
+					dto.setApproveDate(entity.getUpdatedAt());
+					return dto;
+				})
+				.collect(Collectors.toList());
 	}
 }

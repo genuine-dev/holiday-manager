@@ -3,6 +3,7 @@ package holiday.manager.controller.holiday;
 import java.text.ParseException;
 import java.util.List;
 
+import holiday.manager.application.query.holiday.application.dto.HolidayApplicationDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -53,17 +54,17 @@ public class HolidayController {
 
 	@ApiOperation("ステータスから有給申請リスト取得(全取得はALLを指定)")
 	@GetMapping("/{user_id}/application")
-	public ResponseEntity<List<HolidayApplication>> getHolidayApplication(@PathVariable("user_id") String userId,
+	public ResponseEntity<List<HolidayApplicationDto>> getHolidayApplication(@PathVariable("user_id") String userId,
 			@RequestParam(name = "status", defaultValue = "ALL") String status) {
-		List<HolidayApplication> holidayApplications = holidayService.getHolidayApplication(userId, status);
-		return new ResponseEntity<List<HolidayApplication>>(holidayApplications, HttpStatus.OK);
+		List<HolidayApplicationDto> holidayApplicationDtos = holidayService.getHolidayApplication(userId, status);
+		return new ResponseEntity<List<HolidayApplicationDto>>(holidayApplicationDtos, HttpStatus.OK);
 	}
 
 	@ApiOperation("承認待ち有給申請リスト取得")
 	@GetMapping("/applying/{applover_id}")
-	public ResponseEntity<List<HolidayApplication>> getApplyingHoliday(@PathVariable("applover_id") String userId) {
-		List<HolidayApplication> applyingHolidays = holidayService.getApplyingHoliday(userId);
-		return new ResponseEntity<List<HolidayApplication>>(applyingHolidays, HttpStatus.OK);
+	public ResponseEntity<List<HolidayApplicationDto>> getApplyingHoliday(@PathVariable("applover_id") String userId) {
+		List<HolidayApplicationDto> holidayApplicationDtos = holidayService.getApplyingHoliday(userId);
+		return new ResponseEntity<List<HolidayApplicationDto>>(holidayApplicationDtos, HttpStatus.OK);
 	}
 
 	@ApiOperation("有給付与")
@@ -76,30 +77,30 @@ public class HolidayController {
 
 	@ApiOperation("有給申請")
 	@PostMapping("/apply")
-	public ResponseEntity<HolidayApplication> postHolidayApply(@RequestBody PostHolidayApplyRequest request)
+	public ResponseEntity<HolidayApplicationDto> postHolidayApply(@RequestBody PostHolidayApplyRequest request)
 			throws ParseException {
-		HolidayApplication application = holidayService.postHolidayApply(request);
-		return new ResponseEntity<HolidayApplication>(application, HttpStatus.OK);
+		HolidayApplicationDto holidayApplicationDto = holidayService.postHolidayApply(request);
+		return new ResponseEntity<HolidayApplicationDto>(holidayApplicationDto, HttpStatus.OK);
 	}
 
 	@ApiOperation("有給承認")
 	@PutMapping("/approve")
-	public ResponseEntity<HolidayApplication> putHolidayApprove(@RequestBody PutHolidayApproveRequest request) {
-		HolidayApplication application = holidayService.putHolidayApprove(request);
-		return new ResponseEntity<HolidayApplication>(application, HttpStatus.OK);
+	public ResponseEntity<HolidayApplicationDto> putHolidayApprove(@RequestBody PutHolidayApproveRequest request) {
+		HolidayApplicationDto holidayApplicationDto = holidayService.putHolidayApprove(request);
+		return new ResponseEntity<HolidayApplicationDto>(holidayApplicationDto, HttpStatus.OK);
 	}
 
 	@ApiOperation("有給却下")
 	@DeleteMapping("/reject")
-	public ResponseEntity<HolidayApplication> deleteHolidayReject(@RequestBody DeleteHolidayRejectRequest request) {
-		HolidayApplication application = holidayService.deleteHolidayReject(request);
-		return new ResponseEntity<HolidayApplication>(application, HttpStatus.OK);
+	public ResponseEntity<HolidayApplicationDto> deleteHolidayReject(@RequestBody DeleteHolidayRejectRequest request) {
+		HolidayApplicationDto holidayApplicationDto = holidayService.deleteHolidayReject(request);
+		return new ResponseEntity<HolidayApplicationDto>(holidayApplicationDto, HttpStatus.OK);
 	}
 
 	@ApiOperation("有給キャンセル")
 	@DeleteMapping("/cancel")
-	public ResponseEntity<HolidayApplication> deleteHolidayCancel(@RequestBody DeleteHolidayCancelRequest request) {
-		HolidayApplication application = holidayService.deleteHolidayCancel(request);
-		return new ResponseEntity<HolidayApplication>(application, HttpStatus.OK);
+	public ResponseEntity<HolidayApplicationDto> deleteHolidayCancel(@RequestBody DeleteHolidayCancelRequest request) {
+		HolidayApplicationDto holidayApplicationDto = holidayService.deleteHolidayCancel(request);
+		return new ResponseEntity<HolidayApplicationDto>(holidayApplicationDto, HttpStatus.OK);
 	}
 }
