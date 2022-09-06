@@ -63,6 +63,14 @@ public class HolidayListService {
 		return holidayList;
 	}
 
+	public HolidayList cancelTakeHoliday(UserId owner, String eventId){
+		HolidayList holidayList = repository.findById(new HolidayListId(owner.getValue().toString()));
+		holidayList.cancelTakeHoliday(eventId);
+		repository.save(holidayList);
+		return holidayList;
+
+	}
+
 	/**
 	 *  休暇リスト取得
 	 * @param owner ユーザーID

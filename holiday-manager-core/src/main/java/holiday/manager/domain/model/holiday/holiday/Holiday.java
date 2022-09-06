@@ -12,6 +12,7 @@ import holiday.manager.domain.model.user.UserId;
 public class Holiday {
 	private HolidayId id;
 	private KindOfHoliday kind;
+    private double grantedDays;
 	private double days;
 	private Date grantedDate;
 	private Date expirationDate;
@@ -25,6 +26,7 @@ public class Holiday {
 		super();
 		this.id = id;
 		this.kind = kind;
+        this.grantedDays = days;
 		this.days = days;
 		this.grantedDate = grantedDate;
 		this.expirationDate = expirationDate;
@@ -39,7 +41,9 @@ public class Holiday {
 		return kind;
 	}
 
-	public double getDays() {
+    public double getGrantedDays() { return grantedDays; }
+
+    public double getDays() {
 		return days;
 	}
 

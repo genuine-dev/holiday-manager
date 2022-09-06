@@ -1,6 +1,7 @@
 package holiday.manager.domain.model.holiday.holiday.event;
 
 import java.util.Date;
+import java.util.UUID;
 
 import holiday.manager.domain.model.DomainEvent;
 import holiday.manager.domain.model.holiday.KindOfHoliday;
@@ -12,6 +13,7 @@ public class HolidayGranted implements DomainEvent {
 	private int version = 1;
 	private Date occurredOn;
 	private HolidayListId id;
+	private String eventId;
 	private KindOfHoliday kind;
 	private double days;
 	private Date grantedDate;
@@ -27,6 +29,7 @@ public class HolidayGranted implements DomainEvent {
 		this.version = 1;
 		this.occurredOn = new Date();
 		this.id = id;
+		this.eventId = UUID.randomUUID().toString();
 		this.kind = kind;
 		this.days = days;
 		this.grantedDate = grantedDate;
