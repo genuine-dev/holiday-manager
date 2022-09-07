@@ -1,11 +1,13 @@
 package holiday.manager.application.holiday.holiday;
 
 import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.time.ZonedDateTime;
 import java.util.Date;
 import java.util.List;
 
+import holiday.manager.domain.model.holiday.holiday.event.TakeHolidayCanceled;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -186,5 +188,56 @@ public class HolidayLlistServiceTest {
 		assertThat(result.get(0).getDays()).isEqualTo(10);
 		assertThat(result.get(1).getDays()).isEqualTo(9.5);
 		assertThat(result.get(2).getDays()).isEqualTo(10);
+	}
+
+	@Test
+	public void canceltakeHoliday() {
+		UserId owner = new UserId();
+		Date grantedDate = Date.from(ZonedDateTime.now().toInstant());
+		Date expirationDate1 = Date.from(ZonedDateTime.now().plusYears(1).toInstant());
+		Date expirationDate2 = Date.from(ZonedDateTime.now().plusYears(2).toInstant());
+		Date today = Date.from(ZonedDateTime.now().toInstant());
+		HolidayApplicationId applicationId = new HolidayApplicationId();
+
+		//休暇付与
+		service.createHolidayList(owner);
+		service.grantHoliday(owner, KindOfHoliday.PAYED_LEAVE, 1, grantedDate,
+				expirationDate1);
+		service.grantHoliday(owner, KindOfHoliday.PAYED_LEAVE, 1, grantedDate,
+				expirationDate2);
+
+		//休暇取得
+		HolidayList holidayList = service.takeHoliday(owner, KindOfHoliday.PAYED_LEAVE, 1, today, applicationId);
+		holidayList = service.takeHoliday(owner, KindOfHoliday.PAYED_LEAVE, 0.5, today, applicationId);
+
+		//最初の休暇取得をキャンセル
+		HolidayTook event = holidayList.takeHistory().get(0);
+		assertThat(event.getDays()).isEqualTo(1.0);
+		holidayList = service.cancelTakeHoliday(owner, event.getEventId());
+
+		//有効期限の古いものから消費し直していること
+		List<Holiday> holidays = holidayList.getHolidays();
+		assertThat(holidays.size()).isEqualTo(2);
+		assertThat(holidays.get(0).getDays()).isEqualTo(0.5);
+		assertThat(holidays.get(1).getDays()).isEqualTo(1.0);
+
+		// イベントが登録されていること
+		EventStream eventStream = eventStore.eventStreamSince(new EventStreamId(holidayList.getId().getValue()));
+		assertThat(eventStream.events()).hasSize(6);
+		assertThat(eventStream.events().get(0)).isInstanceOf(HolidayListCreated.class);
+		assertThat(eventStream.events().get(1)).isInstanceOf(HolidayGranted.class);
+		assertThat(eventStream.events().get(2)).isInstanceOf(HolidayGranted.class);
+		assertThat(eventStream.events().get(3)).isInstanceOf(HolidayTook.class);
+		assertThat(eventStream.events().get(4)).isInstanceOf(HolidayTook.class);
+		assertThat(eventStream.events().get(5)).isInstanceOf(TakeHolidayCanceled.class);
+
+
+		// 休暇リストがイベントストリームから再現できること
+		HolidayList saved = repository.findById(holidayList.getId());
+		assertThat(saved.getId()).isEqualTo(holidayList.getId());
+		assertThat(saved.getOwner()).isEqualTo(holidayList.getOwner());
+		assertThat(saved.getHolidays().size()).isEqualTo(2);
+		assertThat(saved.getHolidays().get(0).getDays()).isEqualTo(0.5);
+		assertThat(saved.getHolidays().get(1).getDays()).isEqualTo(1.0);
 	}
 }
