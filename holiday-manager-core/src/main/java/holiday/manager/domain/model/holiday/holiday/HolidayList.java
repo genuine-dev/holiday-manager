@@ -209,4 +209,15 @@ public class HolidayList extends AggregateRoot {
                 .map(event -> (HolidayTook) event)
                 .collect(Collectors.toList());
     }
+
+    /**
+     * 休暇取得取り消し履歴
+     * @return
+     */
+    public List<TakeHolidayCanceled> TakeHolidayCancelHistory(){
+        return histories.stream()
+                .filter(event -> event instanceof TakeHolidayCanceled)
+                .map(event -> (TakeHolidayCanceled) event)
+                .collect(Collectors.toList());
+    }
 }
