@@ -12,10 +12,10 @@ public class DeleteHolidayRejectRequest {
 	private String holidayApplicationId;
 	@NotBlank
 	@ApiModelProperty(example = "3")
-	private String approverId;
+	private Integer approverId;
 	public DeleteHolidayRejectRequest() {
 	}
-	public DeleteHolidayRejectRequest(@NotBlank String holidayApplicationId, @NotBlank String approverId) {
+	public DeleteHolidayRejectRequest(@NotBlank String holidayApplicationId, @NotBlank Integer approverId) {
 		super();
 		this.holidayApplicationId = holidayApplicationId;
 		this.approverId = approverId;
@@ -26,10 +26,10 @@ public class DeleteHolidayRejectRequest {
 	public void setHolidayApplicationId(String holidayApplicationId) {
 		this.holidayApplicationId = holidayApplicationId;
 	}
-	public String getApproverId() {
+	public Integer getApproverId() {
 		return approverId;
 	}
-	public void setApproverId(String approverId) {
+	public void setApproverId(Integer approverId) {
 		this.approverId = approverId;
 	}
 }

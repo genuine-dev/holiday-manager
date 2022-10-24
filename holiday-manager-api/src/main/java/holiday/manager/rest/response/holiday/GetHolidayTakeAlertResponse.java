@@ -1,12 +1,19 @@
 package holiday.manager.rest.response.holiday;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 import java.util.Date;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
-
-@JsonInclude(Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class GetHolidayTakeAlertResponse {
-	private Double days;
-	private Date deadline;
+    private Double days;
+    private Date deadline;
+
+    public Double getDays() {
+        return days;
+    }
+
+    public Date getDeadline() {
+        return deadline;
+    }
 }

@@ -2,55 +2,67 @@ package holiday.manager.rest.request.holiday;
 
 import javax.validation.constraints.NotBlank;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import holiday.manager.domain.model.holiday.KindOfHoliday;
+import holiday.manager.domain.model.holiday.application.HolidayType;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+
+import java.util.Date;
 
 @ApiModel(description = "休暇申請申請リクエスト")
 public class PostHolidayApplyRequest {
 	@NotBlank
 	@ApiModelProperty(example = "1")
-	private String applicantId;
+	private Integer applicantId;
 	@NotBlank
 	@ApiModelProperty(example = "PAYED_LEAVE")
-	private String kindOfHoliday;
+	private KindOfHoliday kindOfHoliday;
 	@NotBlank
 	@ApiModelProperty(example = "FULL_OFF")
-	private String holidayType;
+	private HolidayType holidayType;
 	@NotBlank
 	@ApiModelProperty(example = "2021-02-01")
-	private String date;
+	@JsonFormat(pattern = "yyyy-MM-dd")
+	private Date date;
 	public PostHolidayApplyRequest() {
 	}
-	public PostHolidayApplyRequest( String applicantId,  String kindOfHoliday,
-			 String holidayType,  String date) {
-		super();
+
+	public PostHolidayApplyRequest(Integer applicantId, KindOfHoliday kindOfHoliday, HolidayType holidayType, Date date) {
 		this.applicantId = applicantId;
 		this.kindOfHoliday = kindOfHoliday;
 		this.holidayType = holidayType;
 		this.date = date;
 	}
-	public String getApplicantId() {
+
+	public Integer getApplicantId() {
 		return applicantId;
 	}
-	public void setApplicantId(String applicantId) {
+	public void setApplicantId(Integer applicantId) {
 		this.applicantId = applicantId;
 	}
-	public String getKindOfHoliday() {
+
+	public KindOfHoliday getKindOfHoliday() {
 		return kindOfHoliday;
 	}
-	public void setKindOfHoliday(String kindOfHoliday) {
+
+	public void setKindOfHoliday(KindOfHoliday kindOfHoliday) {
 		this.kindOfHoliday = kindOfHoliday;
 	}
-	public String getHolidayType() {
+
+	public HolidayType getHolidayType() {
 		return holidayType;
 	}
-	public void setHolidayType(String holidayType) {
+
+	public void setHolidayType(HolidayType holidayType) {
 		this.holidayType = holidayType;
 	}
-	public String getDate() {
+
+	public Date getDate() {
 		return date;
 	}
-	public void setDate(String date) {
+
+	public void setDate(Date date) {
 		this.date = date;
 	}
 }
