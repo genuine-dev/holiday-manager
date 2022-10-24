@@ -3,25 +3,24 @@ package holiday.manager.domain.user;
 import java.math.BigDecimal;
 
 public class LeftoverHoliday {
-	BigDecimal value;
+	Double value;
 
 	public LeftoverHoliday() {
 	}
 
 	public LeftoverHoliday(BigDecimal value) {
+		this.value = value.doubleValue();
+	}
+
+	public LeftoverHoliday(Double value) {
 		this.value = value;
 	}
 
-	public LeftoverHoliday(String value) {
-		Double doubleValue = Double.parseDouble(value);
-		this.value = BigDecimal.valueOf(doubleValue);
-	}
-
-	public BigDecimal getValue() {
+	public Double getValue() {
 		return value;
 	}
 
-	public void setValue(BigDecimal value) {
+	public void setValue(Double value) {
 		this.value = value;
 	}
 }

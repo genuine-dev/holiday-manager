@@ -2,352 +2,336 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="holiday.manager.dataaccess.user.UserMapper">
 
-	<resultMap id="userMap" type="holiday.manager.domain.user.User">
-		<id     property="userId.value" column="user_id" />
-		<result property="mailAddress.value" column="mail_address"/>
-		<result property="password.value" column="password"/>
-		<result property="userName.value" column="user_name"/>
-		<result property="userStatus.label" column="user_status"/>
-		<result property="hireDate.value" column="hire_date"/>
-		<result property="leftoverHoliday.value" column="leftover_holiday"/>
-		<result property="admin" column="admin_flg"/>
-	</resultMap>
+    <resultMap id="user" type="holiday.manager.domain.user.User">
+        <id property="userId.value" column="user_id"/>
+        <result property="accountId.value" column="account_id"/>
+        <result property="mailAddress.value" column="mail_address"/>
+        <result property="password.value" column="password"/>
+        <result property="userName.value" column="user_name"/>
+        <result property="userStatus.label" column="user_status"/>
+        <result property="hireDate.value" column="hire_date"/>
+        <result property="leftoverHoliday.value" column="leftover_holiday"/>
+        <result property="admin" column="admin_flg"/>
+    </resultMap>
 
-	<resultMap id="userIdMap" type="holiday.manager.domain.user.UserId">
-		<id     property="value" column="user_id" />
-	</resultMap>
+    <resultMap id="userId" type="holiday.manager.domain.user.UserId">
+        <id property="value" column="user_id"/>
+    </resultMap>
 
-	<resultMap id="holidayAlertMap" type="holiday.manager.domain.user.alert.HolidayAlert">
-		<id     property="days" column="days" />
-		<result property="deadline" column="deadline"/>
-	</resultMap>
+    <resultMap id="userIdCore" type="holiday.manager.domain.model.user.UserId">
+        <id property="value" column="user_id"/>
+    </resultMap>
 
-	<select id="nextUserId" resultMap="userIdMap">
-		SELECT
-			nextval('user.user_id_seq') AS user_id
-	</select>
+    <resultMap id="holidayAlert" type="holiday.manager.domain.user.alert.HolidayAlert">
+        <id property="days" column="days"/>
+        <result property="deadline" column="deadline"/>
+    </resultMap>
 
-	<insert id="insertUser">
-		INSERT INTO "user".user
-			(
-				id,
-				status,
-				email,
-				name,
-				hire_date,
-				leftover_holiday,
-				update_datetime
-			)
-		VALUES
-			(
-				#{user.userId.value},
-				#{user.userStatus},
-				#{user.mailAddress.value},
-				#{user.userName.value},
-				#{user.hireDate.valueOfDate},
-				#{user.leftoverHoliday.value},
-				now()
-			)
-	</insert>
+    <select id="nextUserId" resultMap="userId">
+        SELECT
+            nextval('user.user_id_seq') AS user_id
+    </select>
 
-	<insert id="insertAccount">
-		INSERT INTO "user".account
-			(
-				user_id,
-				account_id,
-				password,
-				admin_flg
-			)
-		VALUES
-			(
-				#{user.userId.value},
-				#{user.accountId.value},
-				#{user.password.value},
-				false
-			)
-	</insert>
+    <insert id="insertUser">
+        INSERT INTO
+            "user".user (
+                id,
+                status,
+                email,
+                name,
+                hire_date,
+                leftover_holiday,
+                update_datetime
+            )
+            VALUES (
+                #{user.userId.value},
+                #{user.userStatus},
+                #{user.mailAddress.value},
+                #{user.userName.value},
+                #{user.hireDate.value},
+                #{user.leftoverHoliday.value},
+                now()
+            )
+    </insert>
 
-	<update id="updateUser">
-		UPDATE
-			"user".user
-		SET
-			status = #{user.userStatus},
-			email = #{user.mailAddress.value},
-			"name" = #{user.userName.value},
-			hire_date = #{user.hireDate.valueOfDate},
-			leftover_holiday = #{user.leftoverHoliday.value},
-			update_datetime = now()
-		WHERE
-			"id" = #{user.userId.value}
-	</update>
+    <insert id="insertAccount">
+        INSERT INTO
+            "user".account (
+                user_id,
+                account_id,
+                password,
+                admin_flg
+            )
+            VALUES (
+                #{user.userId.value},
+                #{user.accountId.value},
+                #{user.password.value},
+                false
+            )
+    </insert>
 
-	<update id="updateAccount">
-		UPDATE
-			"user".account
-		SET
-			password = #{user.password.value},
-			update_datetime = now()
-		WHERE
-			user_id = #{user.userId.value}
-	</update>
+    <update id="updateUser">
+        UPDATE
+            "user".user
+        SET
+            status = #{user.userStatus},
+            email = #{user.mailAddress.value},
+            "name" = #{user.userName.value},
+            hire_date = #{user.hireDate.valueOfDate},
+            leftover_holiday = #{user.leftoverHoliday.value},
+            update_datetime = now()
+        WHERE
+            "id" = #{user.userId.value}
+    </update>
 
-	<select id="findManagerList" resultMap="userMap">
-		SELECT
-			"user".id          AS user_id
-			,"user".email      AS mail_address
-			,account.password  AS password
-			,"user".name       AS user_name
-			,"user".status     AS user_status
-			,"user".hire_date  AS hire_date
-			,account.admin_flg AS admin_flg
-		FROM
-			"user"."user"
-		INNER JOIN
-			"user".account
-			ON account.user_id = "user".id
-		INNER JOIN
-			"user".manager
-			ON manager.user_id = "user".id
-		INNER JOIN
-			"user"."group"
-			ON "group".id = manager.group_id
-		WHERE
-			"group".id = #{groupId.value}
-		AND
-			"user".deleted = false
-	</select>
+    <update id="updateAccount">
+        UPDATE
+            "user".account
+        SET
+            password = #{user.password.value},
+            update_datetime = now()
+        WHERE
+            user_id = #{user.userId.value}
+    </update>
 
-	<select id="findMemberList" resultMap="userMap">
-		SELECT
-			"user".id         AS user_id
-			,"user".email     AS mail_address
-			,account.password AS password
-			,"user".name      AS user_name
-			,"user".status    AS user_status
-			,"user".hire_date AS hire_date
-			,account.admin_flg AS admin_flg
-		FROM
-			"user"."user"
-		INNER JOIN
-			"user".account
-			ON account.user_id = "user".id
-		INNER JOIN
-			"user".member
-			ON member.user_id = "user".id
-		INNER JOIN
-			"user"."group"
-			ON "group".id = member.group_id
-		WHERE
-			"group".id = #{groupId.value}
-		AND
-			"user".deleted = false
-	</select>
+    <select id="listManager" resultMap="user">
+        SELECT
+            "user".id AS user_id
+            ,account.account_id
+            ,"user".email AS mail_address
+            ,account.password AS password
+            ,"user".name AS user_name
+            ,"user".status AS user_status
+            ,"user".hire_date AS hire_date
+            ,account.admin_flg AS admin_flg
+            ,"user".leftover_holiday
+        FROM
+            "user"."user"
+            INNER JOIN "user".account
+                ON account.user_id = "user".id
+            INNER JOIN "user".manager
+                ON manager.user_id = "user".id
+            INNER JOIN "user"."group"
+                ON "group".id = manager.group_id
+        WHERE
+            "group".id = #{groupId.value}
+        AND
+            "user".deleted = false
+    </select>
 
-	<select id="findAllUser" resultMap="userMap">
-		SELECT
-			"user".id         AS user_id
-			,"user".email     AS mail_address
-			,account.password AS password
-			,"user".name      AS user_name
-			,"user".status    AS user_status
-			,"user".hire_date AS hire_date
-			,account.admin_flg AS admin_flg
-			,"user".leftover_holiday AS leftover_holiday
-		FROM
-			"user"."user"
-		INNER JOIN
-			"user".account
-			ON account.user_id = "user".id
-		WHERE
-			"user".deleted = false
-		<if test="queries.isNotEmptyUserNameQuery">
-			AND "user".name like '%${queries.userNameQuery}%'
-		</if>
-		<foreach collection="sorts.sortList" item="sort" open="ORDER BY" close="" separator=",">
-			<if test="sort.userName">
-				"user".name
-			</if>
-		</foreach>
-	</select>
+    <select id="listMember" resultMap="user">
+        SELECT
+            "user".id AS user_id
+            ,account.account_id
+            ,"user".email AS mail_address
+            ,account.password AS password
+            ,"user".name AS user_name
+            ,"user".status AS user_status
+            ,"user".hire_date AS hire_date
+            ,account.admin_flg AS admin_flg
+            ,"user".leftover_holiday
+        FROM
+            "user"."user"
+            INNER JOIN "user".account
+                ON account.user_id = "user".id
+            INNER JOIN "user".member
+                ON member.user_id = "user".id
+            INNER JOIN "user"."group"
+                ON "group".id = member.group_id
+        WHERE
+            "group".id = #{groupId.value}
+        AND
+            "user".deleted = false
+    </select>
 
-	<select id="findBy" resultMap="userMap">
-		SELECT
-			"user".id         AS user_id
-			,"user".email     AS mail_address
-			,account.password AS password
-			,"user".name      AS user_name
-			,"user".status    AS user_status
-			,"user".hire_date AS hire_date
-			,account.admin_flg AS admin_flg
-			,"user".leftover_holiday AS leftover_holiday
-		FROM
-			"user"."user"
-		INNER JOIN
-			"user".account
-			ON account.user_id = "user".id
-		WHERE
-			"user".id = #{userId.value}
-		AND
-			"user".deleted = false
-	</select>
+    <select id="list" resultMap="user">
+        SELECT
+            "user".id AS user_id
+            ,account.account_id
+            ,"user".email AS mail_address
+            ,account.password AS password
+            ,"user".name AS user_name
+            ,"user".status AS user_status
+            ,"user".hire_date AS hire_date
+            ,account.admin_flg AS admin_flg
+            ,"user".leftover_holiday AS leftover_holiday
+        FROM
+            "user"."user"
+            INNER JOIN "user".account
+                ON account.user_id = "user".id
+        WHERE
+            "user".deleted = false
+        <if test="queries.isNotEmptyUserName">
+            AND "user".name like '%${queries.userName}%'
+        </if>
+        <foreach collection="sorts.sortList" item="sort" open="ORDER BY" close="" separator=",">
+            <if test="sort.userName">
+                "user".name
+            </if>
+        </foreach>
+    </select>
 
-	<select id="findUsersByGroupId" resultMap="userMap">
-		SELECT
-			"user".id         AS user_id
-			,"user".email     AS mail_address
-			,account.password AS password
-			,"user".name      AS user_name
-			,"user".status    AS user_status
-			,"user".hire_date AS hire_date
-			,account.admin_flg AS admin_flg
-		FROM
-			"user"."user"
-		INNER JOIN
-			"user".account
-			ON account.user_id = "user".id
-		LEFT OUTER JOIN
-			(
-				SELECT
-					id AS group_id,
-					user_id AS user_id
-				FROM
-					"user".member
-				INNER JOIN
-					"user".group
-					ON "group".id = member.group_id
-			) AS member
-			ON member.user_id = "user".id
-		LEFT OUTER JOIN
-			(
-				SELECT
-					id AS group_id,
-					user_id AS user_id
-				FROM
-					"user".manager
-				INNER JOIN
-					"user"."group"
-					ON "group".id = manager.group_id
-			) AS manager
-			ON manager.user_id = "user".id
-		WHERE
-			member.group_id = #{groupId.value}
-		OR
-			manager.group_id = #{groupId.value}
-		AND
-			"user".deleted = false
-	</select>
+    <select id="findBy" resultMap="user">
+        SELECT
+            "user".id AS user_id
+            ,account.account_id
+            ,"user".email AS mail_address
+            ,account.password AS password
+            ,"user".name AS user_name
+            ,"user".status AS user_status
+            ,"user".hire_date AS hire_date
+            ,account.admin_flg AS admin_flg
+            ,"user".leftover_holiday AS leftover_holiday
+        FROM
+            "user"."user"
+            INNER JOIN "user".account
+                ON account.user_id = "user".id
+        WHERE
+            "user".id = #{userId.value}
+        AND
+            "user".deleted = false
+    </select>
 
-	<select id="findByEmail" resultMap="userMap">
-		SELECT
-			"user".id          AS user_id
-			,"user".email      AS mail_address
-			,account.password  AS password
-			,"user".name       AS user_name
-			,"user".status     AS user_status
-			,"user".hire_date  AS hire_date
-			,account.admin_flg AS admin_flg
-		FROM
-			"user"."user"
-		INNER JOIN
-			"user".account
-			ON account.user_id = "user".id
-		WHERE
-			"user".email = #{email}
-		AND
-			"user".deleted = false
-	</select>
+    <update id="deleteUser">
+        UPDATE
+            "user".user
+        SET
+            deleted = true
+        WHERE
+            id = #{userId.value}
+    </update>
 
-	<update id="deleteUser">
-		UPDATE
-			"user".user
-		SET
-			deleted = true
-		WHERE
-			id = #{userId.value}
-	</update>
+    <select id="findByAccountId" resultMap="user">
+        SELECT
+            "user".id AS user_id
+            ,account.account_id
+            ,"user".email AS mail_address
+            ,account.password AS password
+            ,"user".name AS user_name
+            ,"user".status AS user_status
+            ,"user".hire_date AS hire_date
+            ,account.admin_flg AS admin_flg
+            ,"user".leftover_holiday
+        FROM
+            "user"."user"
+            INNER JOIN "user".account
+                ON account.user_id = "user".id
+            LEFT OUTER JOIN
+                (
+                    SELECT
+                        id AS group_id,
+                        user_id AS user_id
+                    FROM
+                        "user".member
+                        INNER JOIN "user".group
+                            ON "group".id = member.group_id
+                ) AS member
+                ON member.user_id = "user".id
+            LEFT OUTER JOIN
+                (
+                    SELECT
+                        id AS group_id,
+                        user_id AS user_id
+                    FROM
+                        "user".manager
+                        INNER JOIN "user"."group"
+                            ON "group".id = manager.group_id
+                ) AS manager
+                ON manager.user_id = "user".id
+        WHERE
+            account.account_id = #{accountId.value}
+        AND
+            "user".deleted = false
+    </select>
 
-	<select id="findByAccountId" resultMap="userMap">
-		SELECT
-			"user".id         AS user_id
-			,"user".email     AS mail_address
-			,account.password AS password
-			,"user".name      AS user_name
-			,"user".status    AS user_status
-			,"user".hire_date AS hire_date
-			,account.admin_flg AS admin_flg
-		FROM
-			"user"."user"
-		INNER JOIN
-			"user".account
-			ON account.user_id = "user".id
-		LEFT OUTER JOIN
-			(
-				SELECT
-					id AS group_id,
-					user_id AS user_id
-				FROM
-					"user".member
-				INNER JOIN
-					"user".group
-					ON "group".id = member.group_id
-			) AS member
-			ON member.user_id = "user".id
-		LEFT OUTER JOIN
-			(
-				SELECT
-					id AS group_id,
-					user_id AS user_id
-				FROM
-					"user".manager
-				INNER JOIN
-					"user"."group"
-					ON "group".id = manager.group_id
-			) AS manager
-			ON manager.user_id = "user".id
-		WHERE
-			account.account_id = #{accountId.value}
-		AND
-			"user".deleted = false
-	</select>
+    <insert id="insertRule">
+        INSERT INTO
+            "user".user_rule (
+                user_id,
+                rule_id
+            )
+            VALUES (
+                #{user.userId.value},
+                #{user.ruleId.value}
+            )
+    </insert>
 
-	<insert id="insertRule">
-		INSERT INTO "user".user_rule
-			(
-				user_id,
-				rule_id
-			)
-		VALUES
-			(
-				#{user.userId.value},
-				#{user.ruleId.value}
-			)
-	</insert>
+    <select id="findHolidayAlert" resultMap="holidayAlert">
+        SELECT
+            days AS days
+            ,deadline AS deadline
+        FROM
+            "user".alert_for_taking_paid_leave
+        WHERE
+            user_id = #{userId.value}
+    </select>
 
-	<select id="findHolidayAlert" resultMap="holidayAlertMap">
-		SELECT
-			days         AS days
-			,deadline    AS deadline
-		FROM
-			"user".alert_for_taking_paid_leave
-		WHERE
-			user_id = #{userId.value}
-	</select>
+    <select id="findManagedMembers" resultType="java.lang.Integer">
+        SELECT
+            member.user_id AS user_id
+        FROM
+            "user"."user"
+            LEFT OUTER JOIN "user".manager
+                ON manager.user_id = "user".id
+            INNER JOIN "user".member
+                ON member.group_id = manager.group_id
+        WHERE
+            EXISTS (
+                SELECT
+                    1
+                FROM
+                    "user"."user"
+                WHERE
+                    "user".deleted = false
+                AND
+                    "user".id = #{userId}
+            )
+        AND
+            manager.user_id = #{userId}
+    </select>
 
-	<select id="findManagementUserIds" resultType="java.lang.Integer">
-		SELECT
-			member.user_id AS user_id
-		FROM
-			"user".manager
-		LEFT OUTER JOIN
-			"user"."user"
-			ON "user".id = manager.user_id
-		INNER JOIN
-			"user".member
-			ON member.group_id = manager.group_id
-		WHERE
-			"user".deleted = false
-		AND
-			manager.user_id = #{userId}
-	</select>
+    <select id="findApplicantUserIdByUserId" resultMap="userIdCore">
+        SELECT
+            "user".id AS user_id
+        FROM
+            "user"."user" "user"
+            LEFT OUTER JOIN "user".manager manager
+                ON manager.user_id = "user".id
+            INNER JOIN "user".group "group"
+                ON "group".id = member.group_id
+            LEFT OUTER JOIN "user"."user" managed_members
+                ON managed_members.id = manager.user_id
+        WHERE
+            "user".deleted = false
+        AND
+            "group".deleted = false
+        AND
+            managed_members.deleted = false
+        AND
+            "user".id = #{userId.value}
+    </select>
+
+    <select id="findManagedMembersByUserId" resultMap="userIdCore">
+        SELECT
+            managed_members.id AS user_id
+        FROM
+            "user"."user" "user"
+            INNER JOIN "user".manager manager
+                ON manager.user_id = "user".id
+            INNER JOIN "user".group "group"
+                ON "group".id = manager.group_id
+            LEFT OUTER JOIN "user".member member
+                ON member.group_id = "group".id
+            LEFT OUTER JOIN "user"."user" managed_members
+                ON managed_members.id = member.user_id
+        WHERE
+            "user".deleted = false
+        AND
+            "group".deleted = false
+        AND
+            managed_members.deleted = false
+        AND
+            "user".id = #{userId.value}
+    </select>
 
 </mapper>

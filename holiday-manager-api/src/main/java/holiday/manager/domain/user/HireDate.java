@@ -7,39 +7,21 @@ import java.util.Date;
 import javax.validation.constraints.AssertTrue;
 
 public class HireDate {
-	public static final SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-
-	private String value;
+	private Date value;
 
 	public HireDate() {
 	}
 
-	public HireDate(String value) {
+	public HireDate(Date value) {
 		this.value = value;
 	}
 
-	public Date getValueOfDate() throws ParseException {
-		return format.parse(value);
-	}
-
-	public String getValue() {
+	public Date getValue() {
 		return value;
 	}
 
-	public void setValue(String value) {
+	public void setValue(Date value) {
 		this.value = value;
-	}
-
-	@AssertTrue(message = "日付の形式が正しくありません。")
-	public boolean isValidDateFormat() {
-		SimpleDateFormat format = HireDate.format;
-		format.setLenient(false);
-		try {
-			format.parse(value);
-		} catch(ParseException e) {
-			return false;
-		}
-		return true;
 	}
 
 }
