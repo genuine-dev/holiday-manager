@@ -8,4 +8,8 @@ public class RuleId {
 	public RuleId() {
 		value = DEFAULT;
 	}
+
+	public Integer getValue() {
+		return value;
+	}
 }
