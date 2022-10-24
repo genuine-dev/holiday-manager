@@ -1,102 +1,95 @@
 package holiday.manager.controller.user.group;
 
-import javax.validation.Valid;
-
-import org.springframework.beans.factory.annotation.Autowired;
+import holiday.manager.rest.request.user.group.*;
+import holiday.manager.rest.response.user.group.GroupResponse;
+import holiday.manager.service.user.group.GroupService;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import holiday.manager.rest.request.user.DeleteGroupManagerRequest;
-import holiday.manager.rest.request.user.DeleteGroupMemberRequest;
-import holiday.manager.rest.request.user.PostGroupManagerRequest;
-import holiday.manager.rest.request.user.PostGroupMemberRequest;
-import holiday.manager.rest.request.user.PostGroupMembersRequest;
-import holiday.manager.rest.request.user.PostGroupRequest;
-import holiday.manager.rest.request.user.PutGroupRequest;
-import holiday.manager.domain.user.group.Group;
-import holiday.manager.domain.user.group.GroupId;
-import holiday.manager.domain.user.group.GroupList;
-import holiday.manager.service.user.group.GroupService;
-import io.swagger.annotations.ApiOperation;
+import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @Validated
 public class GroupController {
-	private final GroupService groupService;
+    private final GroupService groupService;
 
-	public GroupController(GroupService groupService) {
-		this.groupService = groupService;
-	}
+    public GroupController(GroupService groupService) {
+        this.groupService = groupService;
+    }
 
-	@ApiOperation("グループ一覧")
-	@GetMapping("/group")
-	public ResponseEntity<GroupList> getGroups() {
-		GroupList groupList = groupService.getGroups();
-		return new ResponseEntity<GroupList>(groupList, HttpStatus.OK);
-	}
+    @ApiOperation("グループ一覧")
+    @GetMapping("/group")
+    public ResponseEntity<List<GroupResponse>> getGroups() {
+        List<GroupResponse> groupResponses = groupService.getGroups();
+        return new ResponseEntity<List<GroupResponse>>(groupResponses, HttpStatus.OK);
+    }
 
-	@ApiOperation("グループ詳細")
-	@GetMapping("/group/{group_id}")
-	public ResponseEntity<Group> getGroup(@PathVariable("group_id") @Valid GroupId groupId) {
-		Group group = groupService.getGroup(groupId);
-		return new ResponseEntity<Group>(group, HttpStatus.OK);
-	}
+    @ApiOperation("グループ詳細")
+    @GetMapping("/group/{group_id}")
+    public ResponseEntity<GroupResponse> getGroup(@PathVariable("group_id") Integer groupId) {
+        GroupResponse groupResponse = groupService.getGroup(groupId);
+        return new ResponseEntity<GroupResponse>(groupResponse, HttpStatus.OK);
+    }
 
-	@ApiOperation("グループ登録")
-	@PostMapping("/group")
-	public void postGroup(@RequestBody @Valid PostGroupRequest request) {
-		groupService.postGroup(request);
-	}
+    @ApiOperation("グループ登録")
+    @PostMapping("/group")
+    public ResponseEntity<Void> postGroup(@RequestBody @Valid PostGroupRequest request) {
+        groupService.postGroup(request);
+        return new ResponseEntity<Void>(HttpStatus.OK);
+    }
 
-	@ApiOperation("グループ更新")
-	@PutMapping("/group/{group_id}")
-	public void putGroup(@PathVariable("group_id") @Valid GroupId groupId,
-			@RequestBody @Valid PutGroupRequest request) {
-		groupService.putGroup(groupId, request);
-	}
+    @ApiOperation("グループ更新")
+    @PutMapping("/group/{group_id}")
+    public ResponseEntity<Void> putGroup(@PathVariable("group_id") Integer groupId,
+                                         @RequestBody @Valid PutGroupRequest request) {
+        groupService.putGroup(groupId, request);
+        return new ResponseEntity<Void>(HttpStatus.OK);
+    }
 
-	@ApiOperation("グループ削除")
-	@DeleteMapping("/group/{group_id}")
-	public void deleteGroup(@PathVariable("group_id") @Valid GroupId groupId) {
-		groupService.deleteGroup(groupId);
-	}
+    @ApiOperation("グループ削除")
+    @DeleteMapping("/group/{group_id}")
+    public ResponseEntity<Void> deleteGroup(@PathVariable("group_id") Integer groupId) {
+        groupService.deleteGroup(groupId);
+        return new ResponseEntity<Void>(HttpStatus.OK);
+    }
 
-	@ApiOperation("グループへのメンバー登録")
-	@PostMapping("/group/members")
-	public void postGroupMembers(@RequestBody @Valid PostGroupMembersRequest request) {
-		groupService.postGroupMembers(request);
-	}
+    @ApiOperation("グループにメンバーを登録")
+    @PostMapping("/group/members")
+    public ResponseEntity<Void> postGroupMembers(@RequestBody @Valid PostGroupMembersRequest request) {
+        groupService.postGroupMembers(request);
+        return new ResponseEntity<Void>(HttpStatus.OK);
+    }
 
-	@ApiOperation("マネージャーのグループ登録")
-	@PostMapping("/group/manager")
-	public void postGroupManager(@RequestBody @Valid PostGroupManagerRequest request) {
-		groupService.postGroupManager(request);
-	}
+    @ApiOperation("グループにマネージャを登録")
+    @PostMapping("/group/manager")
+    public ResponseEntity<Void> postGroupManager(@RequestBody @Valid PostGroupManagerRequest request) {
+        groupService.postGroupManager(request);
+        return new ResponseEntity<Void>(HttpStatus.OK);
+    }
 
-	@ApiOperation("マネージャーのグループ削除")
-	@DeleteMapping("/group/manager")
-	public void deleteGroupManager(@RequestBody @Valid DeleteGroupManagerRequest request) {
-		groupService.deleteGroupManager(request);
-	}
+    @ApiOperation("グループからマネージャーを削除")
+    @DeleteMapping("/group/manager")
+    public ResponseEntity<Void> deleteGroupManager(@RequestBody @Valid DeleteGroupManagerRequest request) {
+        groupService.deleteGroupManager(request);
+        return new ResponseEntity<Void>(HttpStatus.OK);
+    }
 
-	@ApiOperation("メンバーのグループ登録")
-	@PostMapping("/group/member")
-	public void postGroupMember(@RequestBody @Valid PostGroupMemberRequest request) {
-		groupService.postGroupMember(request);
-	}
+    @ApiOperation("グループにメンバーを登録")
+    @PostMapping("/group/member")
+    public ResponseEntity<Void> postGroupMember(@RequestBody @Valid PostGroupMemberRequest request) {
+        groupService.postGroupMember(request);
+        return new ResponseEntity<Void>(HttpStatus.OK);
+    }
 
-	@ApiOperation("メンバーのグループ削除")
-	@DeleteMapping("/group/member")
-	public void postGroupMember(@RequestBody @Valid DeleteGroupMemberRequest request) {
-		groupService.deleteGroupMember(request);
-	}
+    @ApiOperation("グループからメンバーを削除")
+    @DeleteMapping("/group/member")
+    public ResponseEntity<Void> postGroupMember(@RequestBody @Valid DeleteGroupMemberRequest request) {
+        groupService.deleteGroupMember(request);
+        return new ResponseEntity<Void>(HttpStatus.OK);
+    }
 
 }
