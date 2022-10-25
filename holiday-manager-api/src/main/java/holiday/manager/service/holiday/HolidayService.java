@@ -1,37 +1,49 @@
 package holiday.manager.service.holiday;
 
-import java.text.ParseException;
-import java.util.List;
-
-import holiday.manager.domain.model.holiday.application.HolidayApplication;
+import holiday.manager.application.service.holiday.holiday.HolidayListService;
+import holiday.manager.domain.model.holiday.KindOfHoliday;
 import holiday.manager.domain.model.holiday.holiday.HolidayList;
 import holiday.manager.domain.model.user.UserId;
-import holiday.manager.rest.request.holiday.DeleteHolidayCancelRequest;
-import holiday.manager.rest.request.holiday.DeleteHolidayRejectRequest;
-import holiday.manager.rest.request.holiday.PostHolidayApplyRequest;
-import holiday.manager.rest.request.holiday.PostHolidayGrantRequest;
-import holiday.manager.rest.request.holiday.PutHolidayApproveRequest;
 import holiday.manager.domain.user.alert.HolidayAlert;
+import holiday.manager.rest.request.holiday.PostHolidayGrantRequest;
+import holiday.manager.service.user.UserService;
+import org.springframework.stereotype.Service;
 
-public interface HolidayService {
+import java.time.ZonedDateTime;
+import java.util.Date;
 
-	public HolidayApplication postHolidayApply(PostHolidayApplyRequest request) throws ParseException;
+@Service
+public class HolidayService {
+	private final HolidayListService holidayListService;
+	private final UserService userService;
 
-	public HolidayApplication putHolidayApprove(PutHolidayApproveRequest request);
+	public HolidayService(HolidayListService holidayListService, UserService userService) {
+		this.holidayListService = holidayListService;
+		this.userService = userService;
+	}
 
-	public HolidayApplication deleteHolidayReject(DeleteHolidayRejectRequest request);
+	public Double getHolidayDays(Integer userId, String kind) {
+		UserId owner = new UserId(userId);
 
-	public HolidayApplication deleteHolidayCancel(DeleteHolidayCancelRequest request);
+		HolidayList holidayList = holidayListService.findHolidayList(owner);
 
-	public HolidayList getHoliday(UserId userId);
+		KindOfHoliday kindOfHoliday = KindOfHoliday.valueOf(kind);
+		Date today = Date.from(ZonedDateTime.now().toInstant());
 
-	public HolidayList postHolidayGrant(PostHolidayGrantRequest request) throws ParseException;
+		return holidayList.getDays(kindOfHoliday, today);
+	}
 
-	public List<HolidayApplication> getHolidayApplication(String userId, String valueOf);
+	public void postHolidayGrant(PostHolidayGrantRequest request) {
+		UserId userId = new UserId( request.getUserId());
+		KindOfHoliday kindOfHoliday = request.getKindOfHoliday();
+		double days = request.getDays();
+		Date grantedDate = request.getGrantedDate();
+		Date expirationDate = request.getExpirationDate();
 
-	public Double getHolidayDays(String userId, String kind);
+		holidayListService.grantHoliday(userId, kindOfHoliday, days, grantedDate, expirationDate);
+	}
 
-	public HolidayAlert getHolidayAlert(String userId);
-
-	public List<HolidayApplication> getApplyingHoliday(String apploverId);
+	public HolidayAlert getHolidayAlert(Integer userId) {
+		return userService.findHolidayAlert(new holiday.manager.domain.user.UserId(userId));
+	}
 }

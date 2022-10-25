@@ -1,40 +1,38 @@
 package holiday.manager.domain.user;
 
-import java.util.List;
-import java.util.Optional;
-
-import holiday.manager.rest.request.user.parameter.UserQueries;
-import holiday.manager.rest.request.user.parameter.UserSorts;
 import holiday.manager.domain.user.account.AccountId;
 import holiday.manager.domain.user.alert.HolidayAlert;
-import holiday.manager.domain.user.group.GroupId;
+import holiday.manager.rest.request.user.parameter.UserQueries;
+import holiday.manager.rest.request.user.parameter.UserSorts;
+
+import java.util.List;
 
 public interface UserRepository {
-	public UserId nextUserId();
+    UserId nextUserId();
 
-	public void insertUser(User user);
+    void insertUser(User user);
 
-	public void insertAccount(User user);
+    void insertAccount(User user);
 
-	public void updateUser(User user);
+    void updateUser(User user);
 
-	public void updateAccount(User user);
+    void updateAccount(User user);
 
-	public UserList findAll(UserSorts sorts, UserQueries queries);
+    UserList list(UserSorts sorts, UserQueries queries);
 
-	public UserList findUsersByGroupId(GroupId groupId);
+    void deleteUser(UserId userId);
 
-	public Optional<User> findByEmail(String email);
+    User findBy(UserId userId);
 
-	public void deleteUser(UserId userId);
+    Boolean existsAccountId(AccountId accountId);
 
-	public User findBy(UserId userId);
+    void insertRule(User user);
 
-	public Boolean existAccountId(AccountId accountId);
+    HolidayAlert findHolidayAlert(UserId owner);
 
-	public void insertRule(User user);
+    List<Integer> findManagementUserIds(Integer userId);
 
-	public HolidayAlert findHolidayAlert(UserId owner);
+    holiday.manager.domain.model.user.UserId findApplicantUserIdByUserId(holiday.manager.domain.model.user.UserId userId);
 
-	public List<Integer> findManagementUserIds(Integer userId);
+    public List<holiday.manager.domain.model.user.UserId> findManagedMembersByUserId(holiday.manager.domain.model.user.UserId userId);
 }

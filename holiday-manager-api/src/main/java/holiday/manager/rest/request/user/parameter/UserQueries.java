@@ -1,28 +1,28 @@
 package holiday.manager.rest.request.user.parameter;
 
 public class UserQueries {
-	private String userNameQuery;
+	private String userName;
 
-	public UserQueries(String userNameQuery) {
-		this.userNameQuery = userNameQuery;
+	public UserQueries(String userName) {
+		this.userName = userName;
 	}
 
-	public boolean isEmptyUserNameQuery() {
-		if(userNameQuery == null || userNameQuery.isEmpty()) {
+	public boolean isEmptyUserName() {
+		if(userName == null || userName.isEmpty()) {
 			return true;
 		}
 		return false;
 	}
 
-	public boolean isNotEmptyUserNameQuery() {
-		return !isEmptyUserNameQuery();
+	public boolean isNotEmptyUserName() {
+		return !isEmptyUserName();
 	}
 
-	public String getUserNameQuery() {
-		return userNameQuery;
+	public String getUserName() {
+		return userName;
 	}
 
-	public void setUserNameQuery(String userNameQuery) {
-		this.userNameQuery = userNameQuery;
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 }

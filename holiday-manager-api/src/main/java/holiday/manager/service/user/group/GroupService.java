@@ -1,26 +1,93 @@
 package holiday.manager.service.user.group;
 
-import holiday.manager.rest.request.user.DeleteGroupManagerRequest;
-import holiday.manager.rest.request.user.DeleteGroupMemberRequest;
-import holiday.manager.rest.request.user.PostGroupManagerRequest;
-import holiday.manager.rest.request.user.PostGroupMemberRequest;
-import holiday.manager.rest.request.user.PostGroupMembersRequest;
-import holiday.manager.rest.request.user.PostGroupRequest;
-import holiday.manager.rest.request.user.PutGroupRequest;
-import holiday.manager.domain.user.group.Group;
-import holiday.manager.domain.user.group.GroupId;
-import holiday.manager.domain.user.group.GroupList;
+import holiday.manager.domain.user.UserId;
+import holiday.manager.domain.user.group.*;
+import holiday.manager.rest.request.user.group.*;
+import holiday.manager.rest.response.user.group.GroupResponse;
+import holiday.manager.rest.response.user.group.GroupResponseConverter;
+import org.springframework.stereotype.Service;
 
-public interface GroupService {
-	public Group findGroup(GroupId groupId);
-	public void postGroup(PostGroupRequest request);
-	public void putGroup(GroupId groupId, PutGroupRequest request);
-	public void deleteGroup(GroupId groupId);
-	public void postGroupManager(PostGroupManagerRequest request);
-	public void postGroupMembers(PostGroupMembersRequest request);
-	public void postGroupMember(PostGroupMemberRequest request);
-	public void deleteGroupManager(DeleteGroupManagerRequest request);
-	public void deleteGroupMember(DeleteGroupMemberRequest request);
-	public Group getGroup(GroupId groupId);
-	public GroupList getGroups();
+import java.util.List;
+
+@Service
+public class GroupService {
+    private final GroupRepository groupRepository;
+    private final GroupResponseConverter groupResponseConverter;
+
+    public GroupService(GroupRepository groupRepository, GroupResponseConverter groupResponseConverter) {
+        this.groupRepository = groupRepository;
+        this.groupResponseConverter = groupResponseConverter;
+    }
+
+    public Group findGroup(GroupId groupId) {
+        return groupRepository.findGroup(groupId);
+    }
+
+    public void postGroup(PostGroupRequest request) {
+        GroupId groupId = groupRepository.nextGroupId();
+        GroupName groupName = new GroupName(request.getGroupName());
+
+        groupRepository.insertGroup(groupId, groupName);
+    }
+
+    public void putGroup(Integer groupId, PutGroupRequest request) {
+        GroupName groupName = new GroupName(request.getGroupName());
+
+        groupRepository.updateGroup(new GroupId(groupId), groupName);
+    }
+
+    public void postGroupMembers(PostGroupMembersRequest request) {
+        GroupId groupId = new GroupId(request.getGroupId());
+
+        groupRepository.deleteMembers(groupId);
+        groupRepository.deleteManagers(groupId);
+        for (GroupMember groupMember : request.getGroupMemberList()) {
+            if (groupMember.isManager())
+                groupRepository.insertManager(new UserId(groupMember.getUserId()), groupId);
+            if (groupMember.isMember())
+                groupRepository.insertMember(new UserId(groupMember.getUserId()), groupId);
+        }
+    }
+
+    public void postGroupManager(PostGroupManagerRequest request) {
+        UserId userId = new UserId(request.getUserId());
+        GroupId groupId = new GroupId(request.getGroupId());
+
+        groupRepository.insertManager(userId, groupId);
+    }
+
+    public void postGroupMember(PostGroupMemberRequest request) {
+        UserId userId = new UserId(request.getUserId());
+        GroupId groupId = new GroupId(request.getGroupId());
+
+        groupRepository.insertMember(userId, groupId);
+    }
+
+    public void deleteGroup(Integer groupId) {
+        groupRepository.deleteGroup(new GroupId(groupId));
+    }
+
+    public void deleteGroupManager(DeleteGroupManagerRequest request) {
+        UserId userId = new UserId(request.getUserId());
+        GroupId groupId = new GroupId(request.getGroupId());
+
+        groupRepository.deleteManager(userId, groupId);
+    }
+
+    public void deleteGroupMember(DeleteGroupMemberRequest request) {
+        UserId userId = new UserId(request.getUserId());
+        GroupId groupId = new GroupId(request.getGroupId());
+
+        groupRepository.deleteMember(userId, groupId);
+    }
+
+    public GroupResponse getGroup(Integer groupId) {
+        Group group = groupRepository.getGroup(new GroupId(groupId));
+        return groupResponseConverter.convert(group);
+    }
+
+    public List<GroupResponse> getGroups() {
+        GroupList groupList = groupRepository.getGroup();
+        return groupResponseConverter.convert(groupList);
+    }
 }

@@ -1,14 +1,13 @@
 package holiday.manager.domain.user;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Component;
-
-import holiday.manager.rest.request.user.PostUserRequest;
-import holiday.manager.rest.request.user.PutUserRequest;
 import holiday.manager.domain.user.account.AccountId;
 import holiday.manager.domain.user.account.Password;
 import holiday.manager.domain.user.rule.RuleId;
+import holiday.manager.rest.request.user.PostUserRequest;
+import holiday.manager.rest.request.user.PutUserRequest;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Component;
 
 @Component
 public class UserFactory {
@@ -23,12 +22,14 @@ public class UserFactory {
 		MailAddress mailAddress = new MailAddress(request.getMailAddress());
 		Password password = encodedPassword(request.getPassword());
 		UserName userName = new UserName(request.getUserName());
-		UserStatus userStatus = UserStatus.valueOf(request.getStatus());
-		HireDate hireDate = new HireDate(request.getHireDate());;
+		UserStatus userStatus = request.getStatus();
+		HireDate hireDate = new HireDate(request.getHireDate());
+		;
 		LeftoverHoliday leftoverHoliday = new LeftoverHoliday(request.getLeftoverHoliday());
+		boolean admin = false;
 		RuleId ruleId = new RuleId();
 
-		return new User(accountId, userId, mailAddress, password, userName, userStatus, hireDate, leftoverHoliday, ruleId);
+		return new User(accountId, userId, mailAddress, password, userName, userStatus, hireDate, leftoverHoliday, admin, ruleId);
 	}
 
 	private Password encodedPassword(String value) {
@@ -38,14 +39,19 @@ public class UserFactory {
 	}
 
 	public User create(UserId userId, PutUserRequest request) {
+		User user = userRepository.findBy(userId);
+
+		AccountId accountId = user.getAccountId();
 		MailAddress mailAddress = new MailAddress(request.getMailAddress());
 		Password password = password(request.getPassword());
 		UserName userName = new UserName(request.getUserName());
-		UserStatus userStatus = UserStatus.valueOf(request.getStatus());
-		HireDate hireDate = new HireDate(request.getHireDate());;
+		UserStatus userStatus = request.getStatus();
+		HireDate hireDate = new HireDate(request.getHireDate());
 		LeftoverHoliday leftoverHoliday = new LeftoverHoliday(request.getLeftoverHoliday());
+		boolean admin = user.isAdmin();
+		RuleId ruleId = user.getRuleId();
 
-		return new User(userId, mailAddress, password, userName, userStatus, hireDate, leftoverHoliday);
+		return new User(accountId, userId, mailAddress, password, userName, userStatus, hireDate, leftoverHoliday, admin, ruleId);
 	}
 
 	private Password password(String password) {
