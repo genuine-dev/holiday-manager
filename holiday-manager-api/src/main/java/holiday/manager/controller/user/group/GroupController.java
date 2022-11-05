@@ -57,7 +57,7 @@ public class GroupController {
         return new ResponseEntity<Void>(HttpStatus.OK);
     }
 
-    @ApiOperation("グループにメンバーを登録")
+    @ApiOperation("グループにマネージャ、メンバーを登録")
     @PostMapping("/group/members")
     public ResponseEntity<Void> postGroupMembers(@RequestBody @Valid PostGroupMembersRequest request) {
         groupService.postGroupMembers(request);
