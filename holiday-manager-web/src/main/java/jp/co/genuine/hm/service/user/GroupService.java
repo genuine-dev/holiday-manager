@@ -1,25 +1,20 @@
 package jp.co.genuine.hm.service.user;
 
+import jp.co.genuine.hm.model.group.*;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.springframework.http.ResponseEntity;
+
 import java.io.IOException;
 
-import org.apache.http.client.methods.CloseableHttpResponse;
-
-import jp.co.genuine.hm.model.group.Group;
-import jp.co.genuine.hm.model.group.GroupId;
-import jp.co.genuine.hm.model.group.GroupList;
-import jp.co.genuine.hm.model.group.GroupMemberList;
-import jp.co.genuine.hm.model.group.PostGroupRequest;
-import jp.co.genuine.hm.model.group.PutGroupRequest;
-
 public interface GroupService {
-	public GroupList getGroupList( )throws IOException;
-	public Group getGroup(GroupId groupId)throws IOException;
-	public CloseableHttpResponse postGroup(PostGroupRequest parameter)throws IOException;
-	public CloseableHttpResponse putGroup(PutGroupRequest parameter, GroupId groupId)throws IOException;
-	public CloseableHttpResponse deleteGroup(GroupId groupId)throws IOException;
+	public GroupList getGroupList( );
+	public Group getGroup(GroupId groupId);
+	public ResponseEntity<Void> postGroup(PostGroupRequest parameter);
+	public ResponseEntity<Void> putGroup(PutGroupRequest parameter, GroupId groupId);
+	public ResponseEntity<Void> deleteGroup(GroupId groupId);
 	public CloseableHttpResponse postGroupManager(GroupId groupId)throws IOException;
 	public CloseableHttpResponse deleteGroupManager(GroupId groupId)throws IOException;
 	public CloseableHttpResponse postGroupMember(GroupId groupId)throws IOException;
 	public CloseableHttpResponse deleteGroupMember(GroupId groupId)throws IOException;
-	public CloseableHttpResponse postGroupMembers(GroupId groupId, GroupMemberList groupMemberList)throws IOException;
+	public ResponseEntity<Void> postGroupMembers(GroupId groupId, GroupMemberList groupMemberList);
 }

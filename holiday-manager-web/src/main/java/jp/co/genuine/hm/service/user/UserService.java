@@ -9,9 +9,9 @@ import org.springframework.http.ResponseEntity;
 import java.io.IOException;
 
 public interface UserService {
-	public UserList getUserList() throws IOException;
+	public UserList getUserList();
 	public User getUser(UserId userId);
 	public ResponseEntity<Void> postUser(UserViewModel parameter);
 	public ResponseEntity<Void> putUser(UserId userId, UserViewModel parameter)throws IOException;
-	public ResponseEntity<Void> deleteUser(UserId userId)throws IOException;
+	public ResponseEntity<Void> deleteUser(UserId userId);
 }
