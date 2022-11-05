@@ -1,0 +1,10 @@
+spring:
+  messages:
+    basename: messages_ja
+    cache-duration: -1
+    encoding: UTF-8
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/manager
+    username: postgres
+    password: postgres
