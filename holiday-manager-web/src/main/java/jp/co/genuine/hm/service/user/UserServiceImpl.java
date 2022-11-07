@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import jp.co.genuine.hm.model.user.*;
+import jp.co.genuine.hm.rest.endpoint.user.UserEndpointFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
@@ -14,40 +15,35 @@ import java.io.IOException;
 @Service
 public class UserServiceImpl implements UserService {
 	ObjectMapper mapper = new ObjectMapper();
-	static String API_ROOT = "http://localhost:8082/user/";
 
 	@Autowired
 	RestTemplate restTemplate;
 
+	@Autowired
+	UserEndpointFactory userEndpointFactory;
+
 	@Override
 	public UserList getUserList() {
-		String url = API_ROOT;
-
-		return restTemplate.getForObject(url, UserList.class);
+		return restTemplate.getForObject(userEndpointFactory.createGetUserListEndpoint(), UserList.class);
 	}
 
 	@Override
 	public User getUser(UserId userId) {
-		String url = API_ROOT + userId.getValue();
-
-		return restTemplate.getForObject(url, User.class);
+		return restTemplate.getForObject(userEndpointFactory.createGetUserEndpoint(userId.getValue()), User.class);
 	}
 
 	@Override
 	public ResponseEntity<Void> postUser(UserViewModel parameter) {
-		String url = API_ROOT;
-
 		HttpHeaders httpHeaders = new HttpHeaders();
 		httpHeaders.setContentType(MediaType.APPLICATION_JSON_UTF8);
 
 		HttpEntity httpEntity = new HttpEntity<>(parameter, httpHeaders);
 
-		return restTemplate.postForEntity(url, httpEntity, Void.class);
+		return restTemplate.postForEntity(userEndpointFactory.createPostUserEndpoint(), httpEntity, Void.class);
 	}
 
 	@Override
 	public ResponseEntity<Void> putUser(UserId userId, UserViewModel parameter) throws IOException {
-		String url = API_ROOT + userId.getValue();
 		String json;
 		try {
 			PutUserRequest param = new PutUserRequest(parameter.getMailAddress(), parameter.getUserName(), parameter.getStatus(), parameter.getLeftoverHoliday(), parameter.getHireDate(), parameter.getPassword());
@@ -63,7 +59,7 @@ public class UserServiceImpl implements UserService {
 
 			HttpEntity httpEntity = new HttpEntity<>(json, httpHeaders);
 
-			return restTemplate.exchange(url, HttpMethod.PUT, httpEntity, Void.class);
+			return restTemplate.exchange(userEndpointFactory.createPutUserEndpoint(userId.getValue()), HttpMethod.PUT, httpEntity, Void.class);
 
 		} catch (JsonProcessingException e) {
 			throw e;
@@ -72,14 +68,12 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public ResponseEntity<Void> deleteUser(UserId userId) {
-		String url = API_ROOT + userId.getValue();
-
 		HttpHeaders httpHeaders = new HttpHeaders();
 		httpHeaders.setContentType(MediaType.APPLICATION_JSON_UTF8);
 
 		HttpEntity httpEntity = new HttpEntity(null, httpHeaders);
 
-		return restTemplate.exchange(url, HttpMethod.DELETE, httpEntity, Void.class);
+		return restTemplate.exchange(userEndpointFactory.createDeleteUserEndpoint(userId.getValue()), HttpMethod.DELETE, httpEntity, Void.class);
 	}
 
 }
