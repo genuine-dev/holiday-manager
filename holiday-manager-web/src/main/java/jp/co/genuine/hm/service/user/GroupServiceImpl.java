@@ -27,7 +27,7 @@ public class GroupServiceImpl implements GroupService {
 
 	@Override
 	public Group getGroup(GroupId groupId) {
-		return restTemplate.getForObject(groupEndpointFactory.createGetGroupEndpoint(roupId.getValue()), Group.class);
+		return restTemplate.getForObject(groupEndpointFactory.createGetGroupEndpoint(groupId.getValue()), Group.class);
 	}
 
 
