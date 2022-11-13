@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<database name="manager" schema="user" type="PostgreSQL - 10.14">
+   <sequences>
+      <sequence increment="1" name="granting_paid_leave_rule_detail_id_seq" startValue="1"/>
+      <sequence increment="1" name="granting_paid_leave_rule_id_seq" startValue="1"/>
+      <sequence increment="1" name="group_id_seq" startValue="1"/>
+      <sequence increment="1" name="user_id_seq" startValue="1"/>
+   </sequences>
+   <tables>
+      <table name="account" numRows="3" remarks="" schema="user" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="user_id" nullable="false" remarks="" size="10" type="int4" typeCode="4">
+            <parent column="id" foreignKey="fk_account_user" implied="false" onDeleteCascade="false" schema="user" table="user"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="account_id" nullable="false" remarks="" size="100" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="password" nullable="false" remarks="" size="100" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="admin_flg" nullable="false" remarks="" size="1" type="bool" typeCode="-7"/>
+         <column autoUpdated="false" defaultValue="now()" digits="6" id="4" name="register_datetime" nullable="true" remarks="" size="29" type="timestamp" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="now()" digits="6" id="5" name="update_datetime" nullable="true" remarks="" size="29" type="timestamp" typeCode="93"/>
+         <primaryKey column="user_id" sequenceNumberInPK="1"/>
+      </table>
+      <table name="alert_for_taking_paid_leave" numRows="1" remarks="" schema="user" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="user_id" nullable="false" remarks="" size="10" type="int4" typeCode="4">
+            <parent column="id" foreignKey="fk_alert_for_taking_paid_leave_user" implied="false" onDeleteCascade="false" schema="user" table="user"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="days" nullable="false" remarks="" size="131089" type="numeric" typeCode="2"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="deadline" nullable="false" remarks="" size="13" type="date" typeCode="91"/>
+         <column autoUpdated="false" defaultValue="now()" digits="6" id="3" name="register_datetime" nullable="true" remarks="" size="29" type="timestamp" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="now()" digits="6" id="4" name="update_datetime" nullable="true" remarks="" size="29" type="timestamp" typeCode="93"/>
+         <primaryKey column="user_id" sequenceNumberInPK="1"/>
+      </table>
+      <table name="granting_paid_leave_rule" numRows="1" remarks="" schema="user" type="TABLE">
+         <column autoUpdated="true" defaultValue="nextval('&quot;user&quot;.granting_paid_leave_rule_id_seq'::regclass)" digits="0" id="0" name="id" nullable="false" remarks="" size="10" type="serial" typeCode="4">
+            <child column="rule_id" foreignKey="fk_granting_paid_leave_rule_detail_rule_id" implied="false" onDeleteCascade="false" schema="user" table="granting_paid_leave_rule_detail"/>
+            <child column="rule_id" foreignKey="fk_user_rule_rule_id" implied="false" onDeleteCascade="false" schema="user" table="user_rule"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="name" nullable="false" remarks="" size="255" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="now()" digits="6" id="2" name="created_at" nullable="false" remarks="" size="29" type="timestamp" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="now()" digits="6" id="3" name="updated_at" nullable="false" remarks="" size="29" type="timestamp" typeCode="93"/>
+         <primaryKey column="id" sequenceNumberInPK="1"/>
+      </table>
+      <table name="granting_paid_leave_rule_detail" numRows="32" remarks="" schema="user" type="TABLE">
+         <column autoUpdated="true" defaultValue="nextval('&quot;user&quot;.granting_paid_leave_rule_detail_id_seq'::regclass)" digits="0" id="0" name="id" nullable="false" remarks="" size="10" type="serial" typeCode="4">
+            <child column="rule_detail_id" foreignKey="fk_apaid_leave_grant_history_rule" implied="false" onDeleteCascade="false" schema="user" table="paid_leave_grant_history"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="rule_id" nullable="false" remarks="" size="10" type="int4" typeCode="4">
+            <parent column="id" foreignKey="fk_granting_paid_leave_rule_detail_rule_id" implied="false" onDeleteCascade="false" schema="user" table="granting_paid_leave_rule"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="elapsed_year" nullable="false" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="elapsed_month" nullable="false" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="4" name="elapsed_days" nullable="false" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="8" id="5" name="grant_days" nullable="false" remarks="" size="8" type="float4" typeCode="7"/>
+         <column autoUpdated="false" defaultValue="now()" digits="6" id="6" name="created_at" nullable="false" remarks="" size="29" type="timestamp" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="now()" digits="6" id="7" name="updated_at" nullable="false" remarks="" size="29" type="timestamp" typeCode="93"/>
+         <primaryKey column="id" sequenceNumberInPK="1"/>
+      </table>
+      <table name="group" numRows="1" remarks="" schema="user" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="id" nullable="false" remarks="" size="10" type="int4" typeCode="4">
+            <child column="group_id" foreignKey="fk_manager_group" implied="false" onDeleteCascade="false" schema="user" table="manager"/>
+            <child column="group_id" foreignKey="fk_member_group" implied="false" onDeleteCascade="false" schema="user" table="member"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="name" nullable="false" remarks="" size="100" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="now()" digits="6" id="2" name="register_datetime" nullable="true" remarks="" size="29" type="timestamp" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="now()" digits="6" id="3" name="update_datetime" nullable="true" remarks="" size="29" type="timestamp" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="false" digits="0" id="4" name="deleted" nullable="true" remarks="" size="1" type="bool" typeCode="-7"/>
+         <primaryKey column="id" sequenceNumberInPK="1"/>
+      </table>
+      <table name="holiday_applicatoin" numRows="0" remarks="" schema="user" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="id" nullable="false" remarks="" size="36" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="applicant_id" nullable="false" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="approver_id" nullable="true" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="6" id="3" name="date" nullable="false" remarks="" size="29" type="timestamp" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="4" name="kind" nullable="false" remarks="" size="20" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="5" name="status" nullable="false" remarks="" size="20" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="6" name="type" nullable="false" remarks="" size="20" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="6" id="7" name="created_at" nullable="false" remarks="" size="29" type="timestamp" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="null" digits="6" id="8" name="updated_at" nullable="false" remarks="" size="29" type="timestamp" typeCode="93"/>
+         <primaryKey column="id" sequenceNumberInPK="1"/>
+      </table>
+      <table name="leave_period" numRows="0" remarks="" schema="user" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="id" nullable="false" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="user_id" nullable="false" remarks="" size="10" type="int4" typeCode="4">
+            <parent column="id" foreignKey="fk_leave_period_user" implied="false" onDeleteCascade="false" schema="user" table="user"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="from" nullable="false" remarks="" size="13" type="date" typeCode="91"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="to" nullable="false" remarks="" size="13" type="date" typeCode="91"/>
+         <column autoUpdated="false" defaultValue="now()" digits="6" id="4" name="register_datetime" nullable="true" remarks="" size="29" type="timestamp" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="now()" digits="6" id="5" name="update_datetime" nullable="true" remarks="" size="29" type="timestamp" typeCode="93"/>
+         <primaryKey column="id" sequenceNumberInPK="1"/>
+      </table>
+      <table name="manager" numRows="0" remarks="" schema="user" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="group_id" nullable="false" remarks="" size="10" type="int4" typeCode="4">
+            <parent column="id" foreignKey="fk_manager_group" implied="false" onDeleteCascade="false" schema="user" table="group"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="user_id" nullable="false" remarks="" size="10" type="int4" typeCode="4">
+            <parent column="id" foreignKey="fk_manager_user" implied="false" onDeleteCascade="false" schema="user" table="user"/>
+         </column>
+         <column autoUpdated="false" defaultValue="now()" digits="6" id="2" name="register_datetime" nullable="true" remarks="" size="29" type="timestamp" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="now()" digits="6" id="3" name="update_datetime" nullable="true" remarks="" size="29" type="timestamp" typeCode="93"/>
+         <primaryKey column="group_id" sequenceNumberInPK="1"/>
+         <primaryKey column="user_id" sequenceNumberInPK="2"/>
+      </table>
+      <table name="member" numRows="0" remarks="" schema="user" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="group_id" nullable="false" remarks="" size="10" type="int4" typeCode="4">
+            <parent column="id" foreignKey="fk_member_group" implied="false" onDeleteCascade="false" schema="user" table="group"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="user_id" nullable="false" remarks="" size="10" type="int4" typeCode="4">
+            <parent column="id" foreignKey="fk_member_user" implied="false" onDeleteCascade="false" schema="user" table="user"/>
+         </column>
+         <column autoUpdated="false" defaultValue="now()" digits="6" id="2" name="register_datetime" nullable="true" remarks="" size="29" type="timestamp" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="now()" digits="6" id="3" name="update_datetime" nullable="true" remarks="" size="29" type="timestamp" typeCode="93"/>
+         <primaryKey column="group_id" sequenceNumberInPK="1"/>
+         <primaryKey column="user_id" sequenceNumberInPK="2"/>
+      </table>
+      <table name="paid_leave_grant_history" numRows="0" remarks="" schema="user" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="user_id" nullable="false" remarks="" size="10" type="int4" typeCode="4">
+            <parent column="id" foreignKey="fk_apaid_leave_grant_history_user" implied="false" onDeleteCascade="false" schema="user" table="user"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="rule_detail_id" nullable="false" remarks="" size="10" type="int4" typeCode="4">
+            <parent column="id" foreignKey="fk_apaid_leave_grant_history_rule" implied="false" onDeleteCascade="false" schema="user" table="granting_paid_leave_rule_detail"/>
+         </column>
+         <column autoUpdated="false" defaultValue="now()" digits="6" id="2" name="created_at" nullable="true" remarks="" size="29" type="timestamp" typeCode="93"/>
+         <primaryKey column="user_id" sequenceNumberInPK="1"/>
+         <primaryKey column="rule_detail_id" sequenceNumberInPK="2"/>
+      </table>
+      <table name="user" numRows="3" remarks="" schema="user" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="id" nullable="false" remarks="" size="10" type="int4" typeCode="4">
+            <child column="user_id" foreignKey="fk_account_user" implied="false" onDeleteCascade="false" schema="user" table="account"/>
+            <child column="user_id" foreignKey="fk_alert_for_taking_paid_leave_user" implied="false" onDeleteCascade="false" schema="user" table="alert_for_taking_paid_leave"/>
+            <child column="user_id" foreignKey="fk_leave_period_user" implied="false" onDeleteCascade="false" schema="user" table="leave_period"/>
+            <child column="user_id" foreignKey="fk_manager_user" implied="false" onDeleteCascade="false" schema="user" table="manager"/>
+            <child column="user_id" foreignKey="fk_member_user" implied="false" onDeleteCascade="false" schema="user" table="member"/>
+            <child column="user_id" foreignKey="fk_apaid_leave_grant_history_user" implied="false" onDeleteCascade="false" schema="user" table="paid_leave_grant_history"/>
+            <child column="user_id" foreignKey="fk_user_rule_user_id" implied="false" onDeleteCascade="false" schema="user" table="user_rule"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="status" nullable="false" remarks="" size="100" type="varchar" typeCode="12">
+            <parent column="status" foreignKey="fk_user_user_status" implied="false" onDeleteCascade="false" schema="user" table="user_status"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="email" nullable="false" remarks="" size="100" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="name" nullable="false" remarks="" size="100" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="4" name="hire_date" nullable="false" remarks="" size="13" type="date" typeCode="91"/>
+         <column autoUpdated="false" defaultValue="now()" digits="6" id="5" name="register_datetime" nullable="true" remarks="" size="29" type="timestamp" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="now()" digits="6" id="6" name="update_datetime" nullable="true" remarks="" size="29" type="timestamp" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="false" digits="0" id="7" name="deleted" nullable="true" remarks="" size="1" type="bool" typeCode="-7"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="8" name="leftover_holiday" nullable="true" remarks="" size="131089" type="numeric" typeCode="2"/>
+         <primaryKey column="id" sequenceNumberInPK="1"/>
+      </table>
+      <table name="user_rule" numRows="2" remarks="" schema="user" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="user_id" nullable="false" remarks="" size="10" type="int4" typeCode="4">
+            <parent column="id" foreignKey="fk_user_rule_user_id" implied="false" onDeleteCascade="false" schema="user" table="user"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="rule_id" nullable="false" remarks="" size="10" type="int4" typeCode="4">
+            <parent column="id" foreignKey="fk_user_rule_rule_id" implied="false" onDeleteCascade="false" schema="user" table="granting_paid_leave_rule"/>
+         </column>
+         <primaryKey column="user_id" sequenceNumberInPK="1"/>
+      </table>
+      <table name="user_status" numRows="3" remarks="" schema="user" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="status" nullable="false" remarks="" size="100" type="varchar" typeCode="12">
+            <child column="status" foreignKey="fk_user_user_status" implied="false" onDeleteCascade="false" schema="user" table="user"/>
+         </column>
+         <primaryKey column="status" sequenceNumberInPK="1"/>
+      </table>
+   </tables>
+</database>
