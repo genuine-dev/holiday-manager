@@ -1,14 +1,12 @@
 package holiday.manager.rest.request.user.group;
 
-import java.util.List;
-
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-
 import io.swagger.annotations.ApiModelProperty;
 
+import javax.validation.constraints.NotNull;
+import java.util.List;
+
 public class PostGroupMembersRequest {
-	@NotBlank
+	@NotNull
 	@ApiModelProperty(example = "2", required = true)
 	private Integer groupId;
 
