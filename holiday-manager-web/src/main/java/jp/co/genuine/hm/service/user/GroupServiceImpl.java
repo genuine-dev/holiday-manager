@@ -2,6 +2,8 @@ package jp.co.genuine.hm.service.user;
 
 import jp.co.genuine.hm.model.group.*;
 import jp.co.genuine.hm.rest.endpoint.group.GroupEndpointFactory;
+import jp.co.genuine.hm.rest.response.user.GroupResponse;
+import jp.co.genuine.hm.rest.response.user.GroupResponseConverter;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
@@ -18,16 +20,21 @@ public class GroupServiceImpl implements GroupService {
 	@Autowired
 	GroupEndpointFactory groupEndpointFactory;
 
+	@Autowired
+	GroupResponseConverter groupResponseConverter;
+
 
 	@Override
 	public GroupList getGroupList() {
-		return restTemplate.getForObject(groupEndpointFactory.createGetGroupListEndpoint(), GroupList.class);
+		GroupResponse[] groupResponses = restTemplate.getForObject(groupEndpointFactory.createGetGroupListEndpoint(), GroupResponse[].class);
+		return groupResponseConverter.convert(groupResponses);
 	}
 
 
 	@Override
 	public Group getGroup(GroupId groupId) {
-		return restTemplate.getForObject(groupEndpointFactory.createGetGroupEndpoint(groupId.getValue()), Group.class);
+		GroupResponse groupResponse = restTemplate.getForObject(groupEndpointFactory.createGetGroupEndpoint(groupId.getValue()), GroupResponse.class);
+		return groupResponseConverter.convert(groupResponse);
 	}
 
 

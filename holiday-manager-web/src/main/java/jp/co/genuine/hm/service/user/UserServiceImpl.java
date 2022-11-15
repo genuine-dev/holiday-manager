@@ -5,6 +5,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import jp.co.genuine.hm.model.user.*;
 import jp.co.genuine.hm.rest.endpoint.user.UserEndpointFactory;
+import jp.co.genuine.hm.rest.response.user.UserResponse;
+import jp.co.genuine.hm.rest.response.user.UserResponseConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
@@ -22,14 +24,20 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	UserEndpointFactory userEndpointFactory;
 
+	@Autowired
+	UserResponseConverter userResponseConverter;
+
 	@Override
 	public UserList getUserList() {
-		return restTemplate.getForObject(userEndpointFactory.createGetUserListEndpoint(), UserList.class);
+		ResponseEntity<UserResponse[]> responseEntity = restTemplate.getForEntity(userEndpointFactory.createGetUserListEndpoint(), UserResponse[].class);
+		UserResponse[] userResponses = responseEntity.getBody();
+		return userResponseConverter.convert(userResponses);
 	}
 
 	@Override
 	public User getUser(UserId userId) {
-		return restTemplate.getForObject(userEndpointFactory.createGetUserEndpoint(userId.getValue()), User.class);
+		UserResponse userResponse = restTemplate.getForObject(userEndpointFactory.createGetUserEndpoint(userId.getValue()), UserResponse.class);
+		return userResponseConverter.convert(userResponse);
 	}
 
 	@Override
