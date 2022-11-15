@@ -7,6 +7,10 @@ public class UserId {
 		this.value = Integer.parseInt(value);
 	}
 
+	public UserId(Integer value) {
+		this.value = value;
+	}
+
 	public UserId() {
 	}
 

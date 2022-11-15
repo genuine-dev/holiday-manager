@@ -6,6 +6,10 @@ public class GroupId {
 	public GroupId() {
 	}
 
+	public GroupId(Integer value) {
+		this.value = value;
+	}
+
 	public GroupId(String groupId) {
 		this.value = Integer.valueOf(groupId);
 	}
