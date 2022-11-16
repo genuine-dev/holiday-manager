@@ -48,21 +48,21 @@ public class UserController {
     @ApiOperation("ユーザー更新")
     @PutMapping("/user/{user_id}")
     @ResponseStatus(HttpStatus.OK)
-    public void putUser(@PathVariable("user_id") @Valid UserId userId, @RequestBody @Valid PutUserRequest request) {
-        userService.putUser(userId, request);
+    public void putUser(@PathVariable("user_id") @Valid Integer userId, @RequestBody @Valid PutUserRequest request) {
+        userService.putUser(new UserId(userId), request);
     }
 
     @ApiOperation("ユーザー削除")
     @DeleteMapping("/user/{user_id}")
     @ResponseStatus(HttpStatus.OK)
-    public void deleteUser(@PathVariable("user_id") @Valid UserId userId) {
-        userService.deleteUser(userId);
+    public void deleteUser(@PathVariable("user_id") @Valid Integer userId) {
+        userService.deleteUser(new UserId(userId));
     }
 
     @ApiOperation("ユーザーIDからユーザーを取得")
     @GetMapping("/user/{user_id}")
-    public ResponseEntity<UserResponse> getUser(@PathVariable("user_id") UserId userId) {
-        UserResponse userResponse = userService.findUser(userId);
+    public ResponseEntity<UserResponse> getUser(@PathVariable("user_id") Integer userId) {
+        UserResponse userResponse = userService.findUser(new UserId(userId));
         return new ResponseEntity<UserResponse>(userResponse, HttpStatus.OK);
     }
 
@@ -75,8 +75,8 @@ public class UserController {
 
     @ApiOperation("DBにアカウントIDが存在するかチェック")
     @GetMapping("/exist/accountId/{account_id}")
-    public ResponseEntity<Boolean> getExistAccountId(@PathVariable("account_id") AccountId accountId) {
-        Boolean existAccountId = userService.existsAccountId(accountId);
+    public ResponseEntity<Boolean> getExistAccountId(@PathVariable("account_id") String accountId) {
+        Boolean existAccountId = userService.existsAccountId(new AccountId(accountId));
         return new ResponseEntity<Boolean>(existAccountId, HttpStatus.OK);
     }
 }
