@@ -1,0 +1,27 @@
+spring:
+  messages:
+    basename: messages_ja
+    cache-duration: -1
+    encoding: UTF-8
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/manager
+    username: postgres
+    password: postgres
+
+holiday-manager-api:
+  base: http://localhost:8082
+  endpoint:
+    user:
+      get-user-list: /user
+      get-user: /user/%s
+      post-user: /user
+      put-user: /user/%s
+      delete-user: /user/%s
+    group:
+      get-group-list: /group
+      get-group: /group/%s
+      post-group: /group
+      put-group: /group/%s
+      delete-group: /group/%s
+      post-group-members: /group/members

@@ -1,12 +1,12 @@
 package jp.co.genuine.hm.controller;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.apache.http.HttpStatus;
-import org.apache.http.client.methods.CloseableHttpResponse;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClients;
+import jp.co.genuine.hm.model.group.*;
+import jp.co.genuine.hm.model.user.LoginUser;
+import jp.co.genuine.hm.model.user.User;
+import jp.co.genuine.hm.service.user.GroupService;
+import jp.co.genuine.hm.service.user.UserService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -16,28 +16,18 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import jp.co.genuine.hm.model.group.Group;
-import jp.co.genuine.hm.model.group.GroupId;
-import jp.co.genuine.hm.model.group.GroupList;
-import jp.co.genuine.hm.model.group.GroupMember;
-import jp.co.genuine.hm.model.group.GroupMemberList;
-import jp.co.genuine.hm.model.group.PostGroupRequest;
-import jp.co.genuine.hm.model.group.PutGroupRequest;
-import jp.co.genuine.hm.model.user.LoginUser;
-import jp.co.genuine.hm.model.user.User;
-import jp.co.genuine.hm.service.user.GroupService;
-import jp.co.genuine.hm.service.user.GroupServiceImpl;
-import jp.co.genuine.hm.service.user.UserService;
-import jp.co.genuine.hm.service.user.UserServiceImpl;
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 public class GroupController {
-	ObjectMapper mapper = new ObjectMapper();
-	CloseableHttpClient client = HttpClients.createDefault();
-	GroupService groupService = new GroupServiceImpl();
-	UserService userService = new UserServiceImpl();
+	public GroupController(GroupService groupService, UserService userService) {
+		this.groupService = groupService;
+		this.userService = userService;
+	}
+
+	private final GroupService groupService;
+	private final UserService userService;
 
 	@RequestMapping(value="/group/list", method=RequestMethod.GET)
 	public String userList(Model model) throws Exception {
@@ -127,15 +117,15 @@ public class GroupController {
 		PutGroupRequest groupNameRequest = new PutGroupRequest(viewGroupMemberList.getGroupName());
 		GroupId groupIdParam = new GroupId();
 		groupIdParam.setValue(groupId);
-		CloseableHttpResponse response = groupService.putGroup(groupNameRequest, groupIdParam);
-		if(response.getStatusLine().getStatusCode() != HttpStatus.SC_OK) {
+		ResponseEntity<Void> response = groupService.putGroup(groupNameRequest, groupIdParam);
+		if(response.getStatusCode() != HttpStatus.OK) {
 			model.addAttribute("isError", true);
 		} else {
 			model.addAttribute("isError", false);
 		}
 
 		response = groupService.postGroupMembers(groupIdParam, viewGroupMemberList);
-		if(response.getStatusLine().getStatusCode() != HttpStatus.SC_OK) {
+		if(response.getStatusCode() != HttpStatus.OK) {
 			model.addAttribute("isError", true);
 		} else {
 			model.addAttribute("isError", false);
@@ -155,8 +145,8 @@ public class GroupController {
 	public String groupRegisterComplete(@ModelAttribute("postGroupRequest") PostGroupRequest postGroupRequest, Model model) throws Exception {
 		checkAdmin();
 
-		CloseableHttpResponse response = groupService.postGroup(postGroupRequest);
-		if(response.getStatusLine().getStatusCode() != HttpStatus.SC_OK) {
+		ResponseEntity<Void> response = groupService.postGroup(postGroupRequest);
+		if(response.getStatusCode() != HttpStatus.OK) {
 			model.addAttribute("isError", true);
 		} else {
 			model.addAttribute("isError", false);
@@ -171,8 +161,8 @@ public class GroupController {
 
 		GroupId groupIdParam = new GroupId();
 		groupIdParam.setValue(groupId);
-		CloseableHttpResponse response = groupService.deleteGroup(groupIdParam);
-		if(response.getStatusLine().getStatusCode() != HttpStatus.SC_OK) {
+		ResponseEntity<Void> response = groupService.deleteGroup(groupIdParam);
+		if(response.getStatusCode() != HttpStatus.OK) {
 			model.addAttribute("isError", true);
 		} else {
 			model.addAttribute("isError", false);

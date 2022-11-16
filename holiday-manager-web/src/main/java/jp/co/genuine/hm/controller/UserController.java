@@ -1,13 +1,9 @@
 package jp.co.genuine.hm.controller;
 
-import java.io.IOException;
-import java.util.LinkedHashMap;
-import java.util.Map;
-
-import org.apache.http.HttpStatus;
-import org.apache.http.client.methods.CloseableHttpResponse;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClients;
+import jp.co.genuine.hm.model.user.*;
+import jp.co.genuine.hm.service.user.UserService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -18,21 +14,17 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import jp.co.genuine.hm.model.user.LoginUser;
-import jp.co.genuine.hm.model.user.User;
-import jp.co.genuine.hm.model.user.UserId;
-import jp.co.genuine.hm.model.user.UserList;
-import jp.co.genuine.hm.model.user.UserViewModel;
-import jp.co.genuine.hm.service.user.UserService;
-import jp.co.genuine.hm.service.user.UserServiceImpl;
+import java.io.IOException;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 @Controller
 public class UserController {
-	ObjectMapper mapper = new ObjectMapper();
-	CloseableHttpClient client = HttpClients.createDefault();
-	UserService service = new UserServiceImpl();
+	public UserController(UserService service) {
+		this.service = service;
+	}
+
+	private final UserService service;
 
 	@RequestMapping(value="/user/list", method=RequestMethod.GET)
 	public String userList(Model model) throws Exception {
@@ -62,9 +54,9 @@ public class UserController {
 	}
 
 	@RequestMapping(value="/user/register/complete", method=RequestMethod.POST)
-	public String userRegisterCompllete(@ModelAttribute("userViewModel") UserViewModel userViewModel, Model model) throws IOException {
-		CloseableHttpResponse response = service.postUser(userViewModel);
-		if(response.getStatusLine().getStatusCode() != HttpStatus.SC_OK) {
+	public String userRegisterComplete(@ModelAttribute("userViewModel") UserViewModel userViewModel, Model model) throws IOException {
+		ResponseEntity<Void> response = service.postUser(userViewModel);
+		if(response.getStatusCode() != HttpStatus.OK) {
 			model.addAttribute("isError", true);
 		} else {
 			model.addAttribute("isError", false);
@@ -129,7 +121,7 @@ public class UserController {
 	}
 
 	@RequestMapping(value="/user/update/{userId}/complete", method=RequestMethod.POST)
-	public String userUpdateCompllete(@PathVariable("userId") Integer userId, @ModelAttribute("userViewModel") UserViewModel userViewModel, Model model) throws IOException {
+	public String userUpdateComplete(@PathVariable("userId") Integer userId, @ModelAttribute("userViewModel") UserViewModel userViewModel, Model model) throws IOException {
 		LoginUser user = (LoginUser)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		int loginId = user.getAccount().getUserId();
 		if(!user.getAccount().isAdminFlg() && loginId != userId) {
@@ -138,8 +130,8 @@ public class UserController {
 
 		UserId userIdModel = new UserId();
 		userIdModel.setValue(userId);
-		CloseableHttpResponse response = service.putUser(userIdModel, userViewModel);
-		if(response.getStatusLine().getStatusCode() != HttpStatus.SC_OK) {
+		ResponseEntity<Void> response = service.putUser(userIdModel, userViewModel);
+		if(response.getStatusCode() != HttpStatus.OK) {
 			model.addAttribute("isError", true);
 		} else {
 			model.addAttribute("isError", false);
@@ -156,8 +148,8 @@ public class UserController {
 
 		UserId userIdModel = new UserId();
 		userIdModel.setValue(userId);
-		CloseableHttpResponse response = service.deleteUser(userIdModel);
-		if(response.getStatusLine().getStatusCode() != HttpStatus.SC_OK) {
+		ResponseEntity<Void> response = service.deleteUser(userIdModel);
+		if(response.getStatusCode() != HttpStatus.OK) {
 			model.addAttribute("isError", true);
 		} else {
 			model.addAttribute("isError", false);

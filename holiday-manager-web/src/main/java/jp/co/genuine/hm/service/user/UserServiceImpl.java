@@ -1,108 +1,57 @@
 package jp.co.genuine.hm.service.user;
 
-import java.io.IOException;
-import java.util.LinkedHashMap;
-import java.util.Map;
-
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpStatus;
-import org.apache.http.client.methods.CloseableHttpResponse;
-import org.apache.http.client.methods.HttpDelete;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.client.methods.HttpPut;
-import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClients;
-import org.apache.http.util.EntityUtils;
-import org.springframework.stereotype.Service;
-
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import jp.co.genuine.hm.model.user.*;
+import jp.co.genuine.hm.rest.endpoint.user.UserEndpointFactory;
+import jp.co.genuine.hm.rest.response.user.UserResponse;
+import jp.co.genuine.hm.rest.response.user.UserResponseConverter;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.*;
+import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
-import jp.co.genuine.hm.model.user.PutUserRequest;
-import jp.co.genuine.hm.model.user.User;
-import jp.co.genuine.hm.model.user.UserId;
-import jp.co.genuine.hm.model.user.UserList;
-import jp.co.genuine.hm.model.user.UserViewModel;
+import java.io.IOException;
 
 @Service
 public class UserServiceImpl implements UserService {
-	CloseableHttpClient client = HttpClients.createDefault();
 	ObjectMapper mapper = new ObjectMapper();
-	String contentType = "content-type";
-	String headerValue = "application/json; charset=UTF-8";
-	static String API_ROOT = "http://localhost:8082/user/";
 
+	@Autowired
+	RestTemplate restTemplate;
+
+	@Autowired
+	UserEndpointFactory userEndpointFactory;
+
+	@Autowired
+	UserResponseConverter userResponseConverter;
 
 	@Override
-	public UserList getUserList() throws IOException {
-		String url = API_ROOT;
-		UserList result = new UserList();
-
-		HttpGet request = new HttpGet(url);
-		request.addHeader(contentType, headerValue);
-		try (CloseableHttpResponse response = client.execute(request);) {
-				if(response.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
-				HttpEntity entity = response.getEntity();
-				String jsonString = EntityUtils.toString(entity);
-				result = mapper.readValue(jsonString, UserList.class);
-
-				return result;
-			} else {
-				return result;
-			}
-		} catch (IOException e) {
-			throw e;
-		}
+	public UserList getUserList() {
+		ResponseEntity<UserResponse[]> responseEntity = restTemplate.getForEntity(userEndpointFactory.createGetUserListEndpoint(), UserResponse[].class);
+		UserResponse[] userResponses = responseEntity.getBody();
+		return userResponseConverter.convert(userResponses);
 	}
 
 	@Override
-	public User getUser(UserId userId) throws IOException {
-		String url = API_ROOT + userId.getValue();
-		User result = new User();
-
-		HttpGet request = new HttpGet(url);
-		request.addHeader(contentType, headerValue);
-		try (CloseableHttpResponse response = client.execute(request);) {
-				if(response.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
-				HttpEntity entity = response.getEntity();
-				String jsonString = EntityUtils.toString(entity);
-				result = mapper.readValue(jsonString, User.class);
-
-				return result;
-			} else {
-				return result;
-			}
-		} catch (IOException e) {
-			throw e;
-		}
+	public User getUser(UserId userId) {
+		UserResponse userResponse = restTemplate.getForObject(userEndpointFactory.createGetUserEndpoint(userId.getValue()), UserResponse.class);
+		return userResponseConverter.convert(userResponse);
 	}
 
 	@Override
-	public CloseableHttpResponse postUser(UserViewModel parameter) throws IOException {
-		String url = API_ROOT;
-		String json;
-		try {
-			json = mapper.writeValueAsString(parameter);
-			StringEntity entity = new StringEntity(json, "UTF-8");
-			HttpPost request = new HttpPost(url);
-			request.addHeader(contentType, headerValue);
-			request.setEntity(entity);
-			try (CloseableHttpResponse response = client.execute(request)) {
-				return response;
-			} catch (IOException e){
-				throw e;
-			}
-		} catch (JsonProcessingException e) {
-			throw e;
-		}
+	public ResponseEntity<Void> postUser(UserViewModel parameter) {
+		HttpHeaders httpHeaders = new HttpHeaders();
+		httpHeaders.setContentType(MediaType.APPLICATION_JSON_UTF8);
+
+		HttpEntity httpEntity = new HttpEntity<>(parameter, httpHeaders);
+
+		return restTemplate.postForEntity(userEndpointFactory.createPostUserEndpoint(), httpEntity, Void.class);
 	}
 
 	@Override
-	public CloseableHttpResponse putUser(UserId userId, UserViewModel parameter) throws IOException {
-		String url = API_ROOT + userId.getValue();
+	public ResponseEntity<Void> putUser(UserId userId, UserViewModel parameter) throws IOException {
 		String json;
 		try {
 			PutUserRequest param = new PutUserRequest(parameter.getMailAddress(), parameter.getUserName(), parameter.getStatus(), parameter.getLeftoverHoliday(), parameter.getHireDate(), parameter.getPassword());
@@ -112,56 +61,27 @@ public class UserServiceImpl implements UserService {
 				node.remove("password");
 			}
 			json = mapper.writeValueAsString(node);
-			StringEntity entity = new StringEntity(json, "UTF-8");
-			HttpPut request = new HttpPut(url);
-			request.addHeader(contentType, headerValue);
-			request.setEntity(entity);
-			try (CloseableHttpResponse response = client.execute(request)) {
-				return response;
-			} catch (IOException e){
-				throw e;
-			}
+
+			HttpHeaders httpHeaders = new HttpHeaders();
+			httpHeaders.setContentType(MediaType.APPLICATION_JSON_UTF8);
+
+			HttpEntity httpEntity = new HttpEntity<>(json, httpHeaders);
+
+			return restTemplate.exchange(userEndpointFactory.createPutUserEndpoint(userId.getValue()), HttpMethod.PUT, httpEntity, Void.class);
+
 		} catch (JsonProcessingException e) {
 			throw e;
 		}
 	}
 
 	@Override
-	public CloseableHttpResponse deleteUser(UserId userId) throws IOException {
-		String url = API_ROOT + userId.getValue();
-		try {
-			HttpDelete request = new HttpDelete(url);
-			request.addHeader(contentType, headerValue);
-			try (CloseableHttpResponse response = client.execute(request)) {
-				return response;
-			} catch (IOException e){
-				throw e;
-			}
-		} catch (JsonProcessingException e) {
-			throw e;
-		}
-	}
+	public ResponseEntity<Void> deleteUser(UserId userId) {
+		HttpHeaders httpHeaders = new HttpHeaders();
+		httpHeaders.setContentType(MediaType.APPLICATION_JSON_UTF8);
 
-	@Override
-	public Map<String, String> getUserStatus() throws IOException {
-		String url = API_ROOT + "status";
-		Map<String, String>result = new LinkedHashMap<String, String>();
+		HttpEntity httpEntity = new HttpEntity(null, httpHeaders);
 
-		HttpGet request = new HttpGet(url);
-		request.addHeader(contentType, headerValue);
-		try (CloseableHttpResponse response = client.execute(request);) {
-				if(response.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
-				HttpEntity entity = response.getEntity();
-				String jsonString = EntityUtils.toString(entity);
-				result = mapper.readValue(jsonString, Map.class);
-
-				return result;
-			} else {
-				return result;
-			}
-		} catch (IOException e) {
-			throw e;
-		}
+		return restTemplate.exchange(userEndpointFactory.createDeleteUserEndpoint(userId.getValue()), HttpMethod.DELETE, httpEntity, Void.class);
 	}
 
 }
