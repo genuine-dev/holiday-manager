@@ -35,7 +35,7 @@ public class GroupController {
 
 		GroupList result = groupService.getGroupList();
 		model.addAttribute("groupList", result.getGroups());
-		return "group_list";
+		return "group/group_list";
 	}
 
 	@RequestMapping(value="/group/details/{groupId}", method=RequestMethod.GET)
@@ -65,7 +65,7 @@ public class GroupController {
 
 		model.addAttribute("groupMemberList", groupMemberList);
 
-		return "group_details";
+		return "group/group_details";
 	}
 
 	@RequestMapping(value="/group/update/{groupId}", method=RequestMethod.GET)
@@ -108,7 +108,7 @@ public class GroupController {
 		viewGroupMemberList.setGroupId(groupId);
 		model.addAttribute("viewGroupMemberList", viewGroupMemberList);
 
-		return "group_update";
+		return "group/group_update";
 	}
 	@RequestMapping(value="/group/update/complete/{groupId}", method=RequestMethod.POST)
 	public String groupUpdateComplete(@PathVariable("groupId") Integer groupId, @ModelAttribute("viewGroupMemberList")GroupMemberList viewGroupMemberList, Model model) throws Exception {
@@ -131,14 +131,14 @@ public class GroupController {
 			model.addAttribute("isError", false);
 		}
 
-		return "group_update_complete";
+		return "group/group_update_complete";
 	}
 
 	@RequestMapping(value="/group/register", method=RequestMethod.GET)
 	public String groupRegister(@ModelAttribute("postGroupRequest") PostGroupRequest postGroupRequest, Model model) throws Exception {
 		checkAdmin();
 
-		return "group_register";
+		return "group/group_register";
 	}
 
 	@RequestMapping(value="/group/register/complete", method=RequestMethod.POST)
@@ -152,7 +152,7 @@ public class GroupController {
 			model.addAttribute("isError", false);
 		}
 
-		return "group_register_complete";
+		return "group/group_register_complete";
 	}
 
 	@RequestMapping(value="/group/delete/{groupId}", method=RequestMethod.GET)
@@ -168,7 +168,7 @@ public class GroupController {
 			model.addAttribute("isError", false);
 		}
 
-		return "group_delete_complete";
+		return "group/group_delete_complete";
 	}
 
 	public void checkAdmin() {

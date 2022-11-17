@@ -30,7 +30,7 @@ public class UserController {
 	public String userList(Model model) throws Exception {
 		UserList result = service.getUserList();
 		model.addAttribute("userList", result.getUserList());
-		return "user_list";
+		return "user/user_list";
 	}
 
 	@RequestMapping(value="/user/register", method=RequestMethod.GET)
@@ -40,7 +40,7 @@ public class UserController {
 		statusList.put("LEAVE", "休職中");
 		statusList.put("RETIRED", "退職");
 		model.addAttribute("statusList", statusList);
-		return "user_register";
+		return "user/user_register";
 	}
 
 	@RequestMapping(value="/user/register/confirm", method=RequestMethod.POST)
@@ -50,7 +50,7 @@ public class UserController {
 		statusList.put("LEAVE", "休職中");
 		statusList.put("RETIRED", "退職");
 		model.addAttribute("statusList", statusList);
-		return "user_register_confirm";
+		return "user/user_register_confirm";
 	}
 
 	@RequestMapping(value="/user/register/complete", method=RequestMethod.POST)
@@ -61,7 +61,7 @@ public class UserController {
 		} else {
 			model.addAttribute("isError", false);
 		}
-		return "user_register_complete";
+		return "user/user_register_complete";
 	}
 
 	@RequestMapping(value="/user/update/{userId}", method=RequestMethod.GET)
@@ -89,7 +89,7 @@ public class UserController {
 		statusList.put("RETIRED", "退職");
 		model.addAttribute("statusList", statusList);
 		model.addAttribute("userId", userId);
-		return "user_update";
+		return "user/user_update";
 	}
 
 	@RequestMapping(value="/user/update/{userId}/confirm", method=RequestMethod.POST)
@@ -117,7 +117,7 @@ public class UserController {
 		} else {
 			model.addAttribute("validationError", false);
 		}
-		return "user_update_confirm";
+		return "user/user_update_confirm";
 	}
 
 	@RequestMapping(value="/user/update/{userId}/complete", method=RequestMethod.POST)
@@ -136,7 +136,7 @@ public class UserController {
 		} else {
 			model.addAttribute("isError", false);
 		}
-		return "user_update_complete";
+		return "user/user_update_complete";
 	}
 
 	@RequestMapping(value="/user/delete/{userId}", method=RequestMethod.GET)
@@ -154,6 +154,6 @@ public class UserController {
 		} else {
 			model.addAttribute("isError", false);
 		}
-		return "user_delete_complete";
+		return "user/user_delete_complete";
 	}
 }
