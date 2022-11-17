@@ -18,7 +18,7 @@ import java.io.IOException;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-@Controller
+@Controller("user")
 public class UserController {
 	public UserController(UserService service) {
 		this.service = service;
@@ -26,14 +26,14 @@ public class UserController {
 
 	private final UserService service;
 
-	@RequestMapping(value="/user/list", method=RequestMethod.GET)
+	@RequestMapping(value="list", method=RequestMethod.GET)
 	public String userList(Model model) throws Exception {
 		UserList result = service.getUserList();
 		model.addAttribute("userList", result.getUserList());
 		return "user/user_list";
 	}
 
-	@RequestMapping(value="/user/register", method=RequestMethod.GET)
+	@RequestMapping(value="register", method=RequestMethod.GET)
 	public String userRegister(@ModelAttribute("userViewModel") UserViewModel userViewModel, Model model) {
 		Map<String, String> statusList = new LinkedHashMap<String, String>();
 		statusList.put("ACTIVE", "在籍中");
@@ -43,7 +43,7 @@ public class UserController {
 		return "user/user_register";
 	}
 
-	@RequestMapping(value="/user/register/confirm", method=RequestMethod.POST)
+	@RequestMapping(value="register/confirm", method=RequestMethod.POST)
 	public String userRegisterConfirm(@ModelAttribute("userViewModel") UserViewModel userViewModel, Model model) {
 		Map<String, String> statusList = new LinkedHashMap<String, String>();
 		statusList.put("ACTIVE", "在籍中");
@@ -53,7 +53,7 @@ public class UserController {
 		return "user/user_register_confirm";
 	}
 
-	@RequestMapping(value="/user/register/complete", method=RequestMethod.POST)
+	@RequestMapping(value="register/complete", method=RequestMethod.POST)
 	public String userRegisterComplete(@ModelAttribute("userViewModel") UserViewModel userViewModel, Model model) throws IOException {
 		ResponseEntity<Void> response = service.postUser(userViewModel);
 		if(response.getStatusCode() != HttpStatus.OK) {
@@ -64,7 +64,7 @@ public class UserController {
 		return "user/user_register_complete";
 	}
 
-	@RequestMapping(value="/user/update/{userId}", method=RequestMethod.GET)
+	@RequestMapping(value="update/{userId}", method=RequestMethod.GET)
 	public String userUpdate(@PathVariable("userId") Integer userId, @ModelAttribute("userViewModel") UserViewModel userViewModel, Model model) throws IOException {
 		LoginUser user = (LoginUser)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		int loginId = user.getAccount().getUserId();
@@ -92,7 +92,7 @@ public class UserController {
 		return "user/user_update";
 	}
 
-	@RequestMapping(value="/user/update/{userId}/confirm", method=RequestMethod.POST)
+	@RequestMapping(value="update/{userId}/confirm", method=RequestMethod.POST)
 	public String userUpdateConfirm(@PathVariable("userId") Integer userId, @ModelAttribute("userViewModel") UserViewModel userViewModel, Model model) {
 		LoginUser user = (LoginUser)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		int loginId = user.getAccount().getUserId();
@@ -120,7 +120,7 @@ public class UserController {
 		return "user/user_update_confirm";
 	}
 
-	@RequestMapping(value="/user/update/{userId}/complete", method=RequestMethod.POST)
+	@RequestMapping(value="update/{userId}/complete", method=RequestMethod.POST)
 	public String userUpdateComplete(@PathVariable("userId") Integer userId, @ModelAttribute("userViewModel") UserViewModel userViewModel, Model model) throws IOException {
 		LoginUser user = (LoginUser)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		int loginId = user.getAccount().getUserId();
@@ -139,7 +139,7 @@ public class UserController {
 		return "user/user_update_complete";
 	}
 
-	@RequestMapping(value="/user/delete/{userId}", method=RequestMethod.GET)
+	@RequestMapping(value="delete/{userId}", method=RequestMethod.GET)
 	public String userDelete(@PathVariable("userId") Integer userId, Model model) throws IOException {
 		LoginUser user = (LoginUser)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		if(!user.getAccount().isAdminFlg()) {
