@@ -35,7 +35,7 @@ public class GroupController {
 
 		GroupList result = groupService.getGroupList();
 		model.addAttribute("groupList", result.getGroups());
-		return "group/group_list";
+		return "group/list/group_list";
 	}
 
 	@RequestMapping(value="details/{groupId}", method=RequestMethod.GET)
@@ -65,7 +65,7 @@ public class GroupController {
 
 		model.addAttribute("groupMemberList", groupMemberList);
 
-		return "group/group_details";
+		return "group/detail/group_detail";
 	}
 
 	@RequestMapping(value="update/{groupId}", method=RequestMethod.GET)
@@ -108,7 +108,7 @@ public class GroupController {
 		viewGroupMemberList.setGroupId(groupId);
 		model.addAttribute("viewGroupMemberList", viewGroupMemberList);
 
-		return "group/group_update";
+		return "group/update/group_update";
 	}
 	@RequestMapping(value="update/complete/{groupId}", method=RequestMethod.POST)
 	public String groupUpdateComplete(@PathVariable("groupId") Integer groupId, @ModelAttribute("viewGroupMemberList")GroupMemberList viewGroupMemberList, Model model) throws Exception {
@@ -131,14 +131,14 @@ public class GroupController {
 			model.addAttribute("isError", false);
 		}
 
-		return "group/group_update_complete";
+		return "group/update/group_update_complete";
 	}
 
 	@RequestMapping(value="register", method=RequestMethod.GET)
 	public String groupRegister(@ModelAttribute("postGroupRequest") PostGroupRequest postGroupRequest, Model model) throws Exception {
 		checkAdmin();
 
-		return "group/group_register";
+		return "group/register/group_register";
 	}
 
 	@RequestMapping(value="register/complete", method=RequestMethod.POST)
@@ -152,7 +152,7 @@ public class GroupController {
 			model.addAttribute("isError", false);
 		}
 
-		return "group/group_register_complete";
+		return "group/register/group_register_complete";
 	}
 
 	@RequestMapping(value="delete/{groupId}", method=RequestMethod.GET)
@@ -168,7 +168,7 @@ public class GroupController {
 			model.addAttribute("isError", false);
 		}
 
-		return "group/group_delete_complete";
+		return "group/delete/group_delete_complete";
 	}
 
 	public void checkAdmin() {
