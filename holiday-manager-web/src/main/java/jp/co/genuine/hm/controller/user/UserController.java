@@ -1,4 +1,4 @@
-package jp.co.genuine.hm.controller;
+package jp.co.genuine.hm.controller.user;
 
 import jp.co.genuine.hm.model.user.*;
 import jp.co.genuine.hm.service.user.UserService;

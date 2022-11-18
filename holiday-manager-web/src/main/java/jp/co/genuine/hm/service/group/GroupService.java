@@ -1,4 +1,4 @@
-package jp.co.genuine.hm.service.user;
+package jp.co.genuine.hm.service.group;
 
 import jp.co.genuine.hm.model.group.*;
 import org.apache.http.client.methods.CloseableHttpResponse;

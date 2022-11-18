@@ -1,10 +1,11 @@
-package jp.co.genuine.hm.rest.response.user;
+package jp.co.genuine.hm.rest.response.group;
 
 import jp.co.genuine.hm.model.group.Group;
 import jp.co.genuine.hm.model.group.GroupId;
 import jp.co.genuine.hm.model.group.GroupList;
 import jp.co.genuine.hm.model.group.GroupName;
 import jp.co.genuine.hm.model.user.UserList;
+import jp.co.genuine.hm.rest.response.user.UserResponseConverter;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;

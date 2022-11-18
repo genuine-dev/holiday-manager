@@ -1,6 +1,7 @@
-package jp.co.genuine.hm.rest.response.user;
+package jp.co.genuine.hm.rest.response.group;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import jp.co.genuine.hm.rest.response.user.UserResponse;
 
 import java.util.ArrayList;
 import java.util.List;

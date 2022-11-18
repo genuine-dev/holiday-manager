@@ -1,9 +1,9 @@
-package jp.co.genuine.hm.service.user;
+package jp.co.genuine.hm.service.group;
 
 import jp.co.genuine.hm.model.group.*;
 import jp.co.genuine.hm.rest.endpoint.group.GroupEndpointFactory;
-import jp.co.genuine.hm.rest.response.user.GroupResponse;
-import jp.co.genuine.hm.rest.response.user.GroupResponseConverter;
+import jp.co.genuine.hm.rest.response.group.GroupResponse;
+import jp.co.genuine.hm.rest.response.group.GroupResponseConverter;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;

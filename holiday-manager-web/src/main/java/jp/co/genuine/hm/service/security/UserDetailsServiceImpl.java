@@ -1,4 +1,4 @@
-package jp.co.genuine.hm.service.user;
+package jp.co.genuine.hm.service.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 
 import jp.co.genuine.hm.model.user.LoginUser;
 import jp.co.genuine.hm.model.user.UserAccount;
-import jp.co.genuine.hm.repository.user.UserAccountRepository;
+import jp.co.genuine.hm.repository.security.UserAccountRepository;
 
 /**
  * ログイン用サービス

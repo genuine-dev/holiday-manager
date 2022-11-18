@@ -1,9 +1,9 @@
-package jp.co.genuine.hm.controller;
+package jp.co.genuine.hm.controller.group;
 
 import jp.co.genuine.hm.model.group.*;
 import jp.co.genuine.hm.model.user.LoginUser;
 import jp.co.genuine.hm.model.user.User;
-import jp.co.genuine.hm.service.user.GroupService;
+import jp.co.genuine.hm.service.group.GroupService;
 import jp.co.genuine.hm.service.user.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
