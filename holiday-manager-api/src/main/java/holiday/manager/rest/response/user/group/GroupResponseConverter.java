@@ -11,7 +11,7 @@ import java.util.List;
 
 @Component
 public class GroupResponseConverter {
-    private UserResponseConverter userResponseConverter;
+    private final UserResponseConverter userResponseConverter;
 
     public GroupResponseConverter(UserResponseConverter userResponseConverter) {
         this.userResponseConverter = userResponseConverter;
