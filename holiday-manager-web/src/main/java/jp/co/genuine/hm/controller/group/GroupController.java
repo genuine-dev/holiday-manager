@@ -19,7 +19,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import java.util.ArrayList;
 import java.util.List;
 
-@Controller("group")
+@Controller
+@RequestMapping("group")
 public class GroupController {
 	public GroupController(GroupService groupService, UserService userService) {
 		this.groupService = groupService;

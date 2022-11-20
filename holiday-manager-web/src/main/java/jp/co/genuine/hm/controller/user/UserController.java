@@ -16,7 +16,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.io.IOException;
 
-@Controller("user")
+@Controller
+@RequestMapping("user")
 public class UserController {
 	public UserController(UserService service) {
 		this.service = service;
