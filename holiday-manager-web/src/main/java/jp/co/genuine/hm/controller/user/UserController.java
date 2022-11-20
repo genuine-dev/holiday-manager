@@ -15,8 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.io.IOException;
-import java.util.LinkedHashMap;
-import java.util.Map;
 
 @Controller("user")
 public class UserController {
@@ -35,21 +33,13 @@ public class UserController {
 
 	@RequestMapping(value="register", method=RequestMethod.GET)
 	public String userRegister(@ModelAttribute("userViewModel") UserViewModel userViewModel, Model model) {
-		Map<String, String> statusList = new LinkedHashMap<String, String>();
-		statusList.put("ACTIVE", "在籍中");
-		statusList.put("LEAVE", "休職中");
-		statusList.put("RETIRED", "退職");
-		model.addAttribute("statusList", statusList);
+		model.addAttribute("statusList", UserStatusEnum.statusMap());
 		return "user/register/user_register";
 	}
 
 	@RequestMapping(value="register/confirm", method=RequestMethod.POST)
 	public String userRegisterConfirm(@ModelAttribute("userViewModel") UserViewModel userViewModel, Model model) {
-		Map<String, String> statusList = new LinkedHashMap<String, String>();
-		statusList.put("ACTIVE", "在籍中");
-		statusList.put("LEAVE", "休職中");
-		statusList.put("RETIRED", "退職");
-		model.addAttribute("statusList", statusList);
+		model.addAttribute("statusList", UserStatusEnum.statusMap());
 		return "user/register/user_register_confirm";
 	}
 
@@ -83,11 +73,7 @@ public class UserController {
 		userViewModel.setHireDate(result.getHireDate().getValue());
 		userViewModel.setLeftoverHoliday(result.getLeftoverHoliday().getValue().toString());
 
-		Map<String, String> statusList = new LinkedHashMap<String, String>();
-		statusList.put("ACTIVE", "在籍中");
-		statusList.put("LEAVE", "休職中");
-		statusList.put("RETIRED", "退職");
-		model.addAttribute("statusList", statusList);
+		model.addAttribute("statusList", UserStatusEnum.statusMap());
 		model.addAttribute("userId", userId);
 		return "user/update/user_update";
 	}
@@ -100,11 +86,7 @@ public class UserController {
 			throw new AccessDeniedException("loginID and targetID dont match.");
 		}
 
-		Map<String, String> statusList = new LinkedHashMap<String, String>();
-		statusList.put("ACTIVE", "在籍中");
-		statusList.put("LEAVE", "休職中");
-		statusList.put("RETIRED", "退職");
-		model.addAttribute("statusList", statusList);
+		model.addAttribute("statusList", UserStatusEnum.statusMap());
 		model.addAttribute("userId", userId);
 
 		if(!StringUtils.isEmpty(userViewModel.getPassword())) {
