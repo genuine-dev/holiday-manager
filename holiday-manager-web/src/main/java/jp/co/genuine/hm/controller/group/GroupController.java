@@ -33,7 +33,6 @@ public class GroupController {
 	@RequestMapping(value="list", method=RequestMethod.GET)
 	public String userList(Model model) throws Exception {
 		checkAdmin();
-
 		GroupList result = groupService.getGroupList();
 		model.addAttribute("groupList", result.getGroups());
 		return "group/list/group_list";
@@ -42,12 +41,81 @@ public class GroupController {
 	@RequestMapping(value="details/{groupId}", method=RequestMethod.GET)
 	public String groupDetails(@PathVariable("groupId") Integer groupId, Model model) throws Exception {
 		checkAdmin();
+		Group group = groupService.getGroup(new GroupId(groupId));
+		model.addAttribute("group", group);
+		List<GroupMember> groupMemberList = groupMemberList(group);
+		model.addAttribute("groupMemberList", groupMemberList);
+		return "group/detail/group_detail";
+	}
 
-		GroupId groupIdParam = new GroupId();
-		groupIdParam.setValue(groupId);
-		Group result = groupService.getGroup(groupIdParam);
-		model.addAttribute("group", result);
+	@RequestMapping(value="update/{groupId}", method=RequestMethod.GET)
+	public String groupUpdate(@PathVariable("groupId") Integer groupId, @ModelAttribute("viewGroupMemberList")GroupMemberList viewGroupMemberList, Model model) throws Exception {
+		checkAdmin();
 
+		Group group = groupService.getGroup(new GroupId(groupId));
+		model.addAttribute("group", group);
+
+		refreshViewGroupMemberList(groupId, viewGroupMemberList, model, group);
+		return "group/update/group_update";
+	}
+
+	@RequestMapping(value="update/complete/{groupId}", method=RequestMethod.POST)
+	public String groupUpdateComplete(@PathVariable("groupId") Integer groupId, @ModelAttribute("viewGroupMemberList")GroupMemberList viewGroupMemberList, Model model) throws Exception {
+		checkAdmin();
+
+		PutGroupRequest groupNameRequest = new PutGroupRequest(viewGroupMemberList.getGroupName());
+		ResponseEntity<Void> putGroupResponse = groupService.putGroup(groupNameRequest, new GroupId(groupId));
+		checkResponseError(model, putGroupResponse);
+
+		ResponseEntity<Void> postGroupResponse = groupService.postGroupMembers(new GroupId(groupId), viewGroupMemberList);
+		checkResponseError(model, postGroupResponse);
+
+		return "group/update/group_update_complete";
+	}
+
+	@RequestMapping(value="register", method=RequestMethod.GET)
+	public String groupRegister(@ModelAttribute("postGroupRequest") PostGroupRequest postGroupRequest, Model model) throws Exception {
+		checkAdmin();
+
+		return "group/register/group_register";
+	}
+
+	@RequestMapping(value="register/complete", method=RequestMethod.POST)
+	public String groupRegisterComplete(@ModelAttribute("postGroupRequest") PostGroupRequest postGroupRequest, Model model) throws Exception {
+		checkAdmin();
+
+		ResponseEntity<Void> response = groupService.postGroup(postGroupRequest);
+		checkResponseError(model, response);
+
+		return "group/register/group_register_complete";
+	}
+
+	@RequestMapping(value="delete/{groupId}", method=RequestMethod.GET)
+	public String groupDelete(@PathVariable("groupId") Integer groupId, Model model) throws Exception {
+		checkAdmin();
+
+		ResponseEntity<Void> response = groupService.deleteGroup(new GroupId(groupId));
+		checkResponseError(model, response);
+
+		return "group/delete/group_delete_complete";
+	}
+
+	public void checkAdmin() {
+		LoginUser user = (LoginUser)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		if(!user.getAccount().isAdminFlg()) {
+			throw new AccessDeniedException("dont ADMIN.");
+		}
+	}
+
+	private void checkResponseError(Model model, ResponseEntity<Void> response) {
+		if(response.getStatusCode() != HttpStatus.OK) {
+			model.addAttribute("isError", true);
+		} else {
+			model.addAttribute("isError", false);
+		}
+	}
+
+	private List<GroupMember> groupMemberList(Group result) {
 		List<User> managerList = result.getManagerList().getUserList();
 		List<User> memberList = result.getMemberList().getUserList();
 		List<GroupMember> groupMemberList = new ArrayList<GroupMember>();
@@ -63,21 +131,10 @@ public class GroupController {
 			gtoupMember.setMember(true);
 			groupMemberList.add(gtoupMember);
 		});
-
-		model.addAttribute("groupMemberList", groupMemberList);
-
-		return "group/detail/group_detail";
+		return groupMemberList;
 	}
 
-	@RequestMapping(value="update/{groupId}", method=RequestMethod.GET)
-	public String groupUpdate(@PathVariable("groupId") Integer groupId, @ModelAttribute("viewGroupMemberList")GroupMemberList viewGroupMemberList, Model model) throws Exception {
-		checkAdmin();
-
-		GroupId groupIdParam = new GroupId();
-		groupIdParam.setValue(groupId);
-		Group result = groupService.getGroup(groupIdParam);
-		model.addAttribute("group", result);
-
+	private void refreshViewGroupMemberList(Integer groupId, GroupMemberList viewGroupMemberList, Model model, Group result) {
 		List<User> allUserList = userService.getUserList().getUserList();
 		List<User> managerList = result.getManagerList().getUserList();
 		List<User> memberList = result.getMemberList().getUserList();
@@ -108,74 +165,5 @@ public class GroupController {
 		viewGroupMemberList.setGroupName(result.getGroupName().getValue());
 		viewGroupMemberList.setGroupId(groupId);
 		model.addAttribute("viewGroupMemberList", viewGroupMemberList);
-
-		return "group/update/group_update";
-	}
-	@RequestMapping(value="update/complete/{groupId}", method=RequestMethod.POST)
-	public String groupUpdateComplete(@PathVariable("groupId") Integer groupId, @ModelAttribute("viewGroupMemberList")GroupMemberList viewGroupMemberList, Model model) throws Exception {
-		checkAdmin();
-
-		PutGroupRequest groupNameRequest = new PutGroupRequest(viewGroupMemberList.getGroupName());
-		GroupId groupIdParam = new GroupId();
-		groupIdParam.setValue(groupId);
-		ResponseEntity<Void> response = groupService.putGroup(groupNameRequest, groupIdParam);
-		if(response.getStatusCode() != HttpStatus.OK) {
-			model.addAttribute("isError", true);
-		} else {
-			model.addAttribute("isError", false);
-		}
-
-		response = groupService.postGroupMembers(groupIdParam, viewGroupMemberList);
-		if(response.getStatusCode() != HttpStatus.OK) {
-			model.addAttribute("isError", true);
-		} else {
-			model.addAttribute("isError", false);
-		}
-
-		return "group/update/group_update_complete";
-	}
-
-	@RequestMapping(value="register", method=RequestMethod.GET)
-	public String groupRegister(@ModelAttribute("postGroupRequest") PostGroupRequest postGroupRequest, Model model) throws Exception {
-		checkAdmin();
-
-		return "group/register/group_register";
-	}
-
-	@RequestMapping(value="register/complete", method=RequestMethod.POST)
-	public String groupRegisterComplete(@ModelAttribute("postGroupRequest") PostGroupRequest postGroupRequest, Model model) throws Exception {
-		checkAdmin();
-
-		ResponseEntity<Void> response = groupService.postGroup(postGroupRequest);
-		if(response.getStatusCode() != HttpStatus.OK) {
-			model.addAttribute("isError", true);
-		} else {
-			model.addAttribute("isError", false);
-		}
-
-		return "group/register/group_register_complete";
-	}
-
-	@RequestMapping(value="delete/{groupId}", method=RequestMethod.GET)
-	public String groupDelete(@PathVariable("groupId") Integer groupId, Model model) throws Exception {
-		checkAdmin();
-
-		GroupId groupIdParam = new GroupId();
-		groupIdParam.setValue(groupId);
-		ResponseEntity<Void> response = groupService.deleteGroup(groupIdParam);
-		if(response.getStatusCode() != HttpStatus.OK) {
-			model.addAttribute("isError", true);
-		} else {
-			model.addAttribute("isError", false);
-		}
-
-		return "group/delete/group_delete_complete";
-	}
-
-	public void checkAdmin() {
-		LoginUser user = (LoginUser)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		if(!user.getAccount().isAdminFlg()) {
-			throw new AccessDeniedException("dont ADMIN.");
-		}
 	}
 }

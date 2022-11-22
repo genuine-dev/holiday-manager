@@ -47,32 +47,15 @@ public class UserController {
 	@RequestMapping(value="register/complete", method=RequestMethod.POST)
 	public String userRegisterComplete(@ModelAttribute("userViewModel") UserViewModel userViewModel, Model model) throws IOException {
 		ResponseEntity<Void> response = service.postUser(userViewModel);
-		if(response.getStatusCode() != HttpStatus.OK) {
-			model.addAttribute("isError", true);
-		} else {
-			model.addAttribute("isError", false);
-		}
+		checkResponseError(model, response);
 		return "user/register/user_register_complete";
 	}
 
 	@RequestMapping(value="update/{userId}", method=RequestMethod.GET)
 	public String userUpdate(@PathVariable("userId") Integer userId, @ModelAttribute("userViewModel") UserViewModel userViewModel, Model model) throws IOException {
-		LoginUser user = (LoginUser)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		int loginId = user.getAccount().getUserId();
-		if(!user.getAccount().isAdminFlg() && loginId != userId) {
-			throw new AccessDeniedException("loginID and targetID dont match.");
-		}
+		checkPermit(userId);
 
-		UserId userIdModel = new UserId();
-		userIdModel.setValue(userId);
-		User result = service.getUser(userIdModel);
-		userViewModel.setUserName(result.getUserName().getValue());
-		userViewModel.setMailAddress(result.getMailAddress().getValue());
-		userViewModel.setStatus(result.getUserStatus().toString());
-		userViewModel.setPassword(result.getPassword().getValue());
-
-		userViewModel.setHireDate(result.getHireDate().getValue());
-		userViewModel.setLeftoverHoliday(result.getLeftoverHoliday().getValue().toString());
+		refresh(userViewModel, new UserId(userId));
 
 		model.addAttribute("statusList", UserStatusEnum.statusMap());
 		model.addAttribute("userId", userId);
@@ -81,15 +64,60 @@ public class UserController {
 
 	@RequestMapping(value="update/{userId}/confirm", method=RequestMethod.POST)
 	public String userUpdateConfirm(@PathVariable("userId") Integer userId, @ModelAttribute("userViewModel") UserViewModel userViewModel, Model model) {
-		LoginUser user = (LoginUser)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		int loginId = user.getAccount().getUserId();
-		if(!user.getAccount().isAdminFlg() && loginId != userId) {
-			throw new AccessDeniedException("loginID and targetID dont match.");
-		}
+		checkPermit(userId);
 
 		model.addAttribute("statusList", UserStatusEnum.statusMap());
 		model.addAttribute("userId", userId);
 
+		checkValidationError(userViewModel, model);
+		return "user/update/user_update_confirm";
+	}
+
+	@RequestMapping(value="update/{userId}/complete", method=RequestMethod.POST)
+	public String userUpdateComplete(@PathVariable("userId") Integer userId, @ModelAttribute("userViewModel") UserViewModel userViewModel, Model model) throws IOException {
+		checkPermit(userId);
+
+		ResponseEntity<Void> response = service.putUser(new UserId(userId), userViewModel);
+		checkResponseError(model, response);
+		return "user/update/user_update_complete";
+	}
+
+	@RequestMapping(value="delete/{userId}", method=RequestMethod.GET)
+	public String userDelete(@PathVariable("userId") Integer userId, Model model) throws IOException {
+		checkAdmin();
+
+		ResponseEntity<Void> response = service.deleteUser(new UserId(userId));
+		checkResponseError(model, response);
+		return "user/delete/user_delete_complete";
+	}
+
+	private void checkPermit(Integer userId) {
+		checkAdmin();
+
+		LoginUser user = (LoginUser)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		int loginId = user.getAccount().getUserId();
+		if(loginId != userId) {
+			throw new AccessDeniedException("loginID and targetID dont match.");
+		}
+	}
+
+	private void checkAdmin() {
+		LoginUser user = (LoginUser)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		if(!user.getAccount().isAdminFlg()) {
+			throw new AccessDeniedException("dont ADMIN.");
+		}
+	}
+
+	private void checkResponseError(Model model, ResponseEntity<Void> response) {
+		if(response.getStatusCode() != HttpStatus.OK) {
+			model.addAttribute("isError", true);
+			return;
+		}
+
+		model.addAttribute("isError", false);
+	}
+
+	private static void checkValidationError(UserViewModel userViewModel, Model model) {
 		if(!StringUtils.isEmpty(userViewModel.getPassword())) {
 			int passwordLength = userViewModel.getPassword().length();
 			if(6 > passwordLength || passwordLength >= 21) {
@@ -100,43 +128,16 @@ public class UserController {
 		} else {
 			model.addAttribute("validationError", false);
 		}
-		return "user/update/user_update_confirm";
 	}
 
-	@RequestMapping(value="update/{userId}/complete", method=RequestMethod.POST)
-	public String userUpdateComplete(@PathVariable("userId") Integer userId, @ModelAttribute("userViewModel") UserViewModel userViewModel, Model model) throws IOException {
-		LoginUser user = (LoginUser)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		int loginId = user.getAccount().getUserId();
-		if(!user.getAccount().isAdminFlg() && loginId != userId) {
-			throw new AccessDeniedException("loginID and targetID dont match.");
-		}
+	private void refresh(UserViewModel userViewModel, UserId userId) {
+		User user = service.getUser(userId);
+		userViewModel.setUserName(user.getUserName().getValue());
+		userViewModel.setMailAddress(user.getMailAddress().getValue());
+		userViewModel.setStatus(user.getUserStatus().toString());
+		userViewModel.setPassword(user.getPassword().getValue());
 
-		UserId userIdModel = new UserId();
-		userIdModel.setValue(userId);
-		ResponseEntity<Void> response = service.putUser(userIdModel, userViewModel);
-		if(response.getStatusCode() != HttpStatus.OK) {
-			model.addAttribute("isError", true);
-		} else {
-			model.addAttribute("isError", false);
-		}
-		return "user/update/user_update_complete";
-	}
-
-	@RequestMapping(value="delete/{userId}", method=RequestMethod.GET)
-	public String userDelete(@PathVariable("userId") Integer userId, Model model) throws IOException {
-		LoginUser user = (LoginUser)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		if(!user.getAccount().isAdminFlg()) {
-			throw new AccessDeniedException("dont ADMIN.");
-		}
-
-		UserId userIdModel = new UserId();
-		userIdModel.setValue(userId);
-		ResponseEntity<Void> response = service.deleteUser(userIdModel);
-		if(response.getStatusCode() != HttpStatus.OK) {
-			model.addAttribute("isError", true);
-		} else {
-			model.addAttribute("isError", false);
-		}
-		return "user/delete/user_delete_complete";
+		userViewModel.setHireDate(user.getHireDate().getValue());
+		userViewModel.setLeftoverHoliday(user.getLeftoverHoliday().getValue().toString());
 	}
 }
