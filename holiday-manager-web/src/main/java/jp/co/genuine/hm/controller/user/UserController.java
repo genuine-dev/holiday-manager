@@ -92,9 +92,10 @@ public class UserController {
 	}
 
 	private void checkPermit(Integer userId) {
-		checkAdmin();
-
 		LoginUser user = (LoginUser)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		if(user.getAccount().isAdminFlg())
+			return;
+
 		int loginId = user.getAccount().getUserId();
 		if(loginId != userId) {
 			throw new AccessDeniedException("loginID and targetID dont match.");

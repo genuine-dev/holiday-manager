@@ -110,9 +110,10 @@ public class GroupController {
 	private void checkResponseError(Model model, ResponseEntity<Void> response) {
 		if(response.getStatusCode() != HttpStatus.OK) {
 			model.addAttribute("isError", true);
-		} else {
-			model.addAttribute("isError", false);
+			return;
 		}
+
+		model.addAttribute("isError", false);
 	}
 
 	private List<GroupMember> groupMemberList(Group result) {
