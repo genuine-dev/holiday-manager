@@ -51,7 +51,6 @@ public class UserService {
 
     public void putUser(UserId userId, PutUserRequest request) {
         User user = userFactory.create(userId, request);
-        validateService.validate(user);
         userRepository.updateUser(user);
         updateAccount(user);
     }

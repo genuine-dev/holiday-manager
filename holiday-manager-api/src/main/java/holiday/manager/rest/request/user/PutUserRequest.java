@@ -7,6 +7,7 @@ import io.swagger.annotations.ApiModelProperty;
 import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 @ApiModel(description = "ユーザー更新リクエスト")
@@ -17,13 +18,13 @@ public class PutUserRequest {
     @NotBlank
     @ApiModelProperty(example = "山田 太郎", required = true)
     private String userName;
-    @NotBlank
+    @NotNull
     @ApiModelProperty(example = "ACTIVE", required = true)
     private UserStatus status;
-    @NotBlank
+    @NotNull
     @ApiModelProperty(example = "20", required = true)
     private Double leftoverHoliday;
-    @NotBlank
+    @NotNull
     @ApiModelProperty(example = "2020-11-07", required = true)
     @JsonFormat(pattern = "yyyy-MM-dd")
     private Date hireDate;
