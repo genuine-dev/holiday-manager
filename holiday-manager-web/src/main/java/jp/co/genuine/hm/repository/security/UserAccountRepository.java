@@ -1,4 +1,4 @@
-package jp.co.genuine.hm.repository.user;
+package jp.co.genuine.hm.repository.security;
 
 import org.apache.ibatis.annotations.Mapper;
 
