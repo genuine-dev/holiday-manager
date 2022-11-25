@@ -1,4 +1,4 @@
-package holiday.manager.domain.user.group;
+package holiday.manager.domain.group;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;

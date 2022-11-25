@@ -1,14 +1,13 @@
-package holiday.manager.dataaccess.user.group;
+package holiday.manager.dataaccess.group;
 
-import java.util.List;
-
+import holiday.manager.domain.group.Group;
+import holiday.manager.domain.group.GroupId;
+import holiday.manager.domain.group.GroupName;
+import holiday.manager.domain.user.UserId;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
-import holiday.manager.domain.user.UserId;
-import holiday.manager.domain.user.group.Group;
-import holiday.manager.domain.user.group.GroupId;
-import holiday.manager.domain.user.group.GroupName;
+import java.util.List;
 
 @Mapper
 public interface GroupMapper {

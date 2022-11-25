@@ -1,11 +1,10 @@
-package holiday.manager.rest.request.user.group;
+package holiday.manager.rest.request.group;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 
 import org.hibernate.validator.constraints.Length;
 
-import holiday.manager.domain.user.group.GroupName;
 import io.swagger.annotations.ApiModelProperty;
 
 public class PutGroupRequest {

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="holiday.manager.dataaccess.user.group.GroupMapper">
+<mapper namespace="holiday.manager.dataaccess.group.GroupMapper">
 
-    <resultMap id="groupMap" type="holiday.manager.domain.user.group.Group">
+    <resultMap id="groupMap" type="holiday.manager.domain.group.Group">
         <id     property="groupId.value" column="group_id" />
         <result property="groupName.value" column="group_name"/>
         <collection property="managerList.userList" ofType="holiday.manager.domain.user.User">
@@ -15,16 +15,16 @@
         </collection>
     </resultMap>
 
-    <resultMap id="groupExcludeUserMap" type="holiday.manager.domain.user.group.Group">
+    <resultMap id="groupExcludeUserMap" type="holiday.manager.domain.group.Group">
         <id     property="groupId.value" column="group_id" />
         <result property="groupName.value" column="group_name"/>
     </resultMap>
 
-    <resultMap id="groupNameMap" type="holiday.manager.domain.user.group.GroupName">
+    <resultMap id="groupNameMap" type="holiday.manager.domain.group.GroupName">
         <id     property="value" column="name" />
     </resultMap>
 
-    <resultMap id="gropuIdMap" type="holiday.manager.domain.user.group.GroupId">
+    <resultMap id="gropuIdMap" type="holiday.manager.domain.group.GroupId">
         <id     property="value" column="group_id" />
     </resultMap>
 

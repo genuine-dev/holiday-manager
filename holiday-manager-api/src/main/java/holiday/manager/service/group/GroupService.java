@@ -1,10 +1,12 @@
-package holiday.manager.service.user.group;
+package holiday.manager.service.group;
 
+import holiday.manager.domain.group.*;
 import holiday.manager.domain.user.UserId;
 import holiday.manager.domain.user.group.*;
+import holiday.manager.rest.request.group.*;
 import holiday.manager.rest.request.user.group.*;
-import holiday.manager.rest.response.user.group.GroupResponse;
-import holiday.manager.rest.response.user.group.GroupResponseConverter;
+import holiday.manager.rest.response.group.GroupResponse;
+import holiday.manager.rest.response.group.GroupResponseConverter;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

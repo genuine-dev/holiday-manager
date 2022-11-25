@@ -1,8 +1,9 @@
-package holiday.manager.controller.user.group;
+package holiday.manager.controller.group;
 
+import holiday.manager.rest.request.group.*;
 import holiday.manager.rest.request.user.group.*;
-import holiday.manager.rest.response.user.group.GroupResponse;
-import holiday.manager.service.user.group.GroupService;
+import holiday.manager.rest.response.group.GroupResponse;
+import holiday.manager.service.group.GroupService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
