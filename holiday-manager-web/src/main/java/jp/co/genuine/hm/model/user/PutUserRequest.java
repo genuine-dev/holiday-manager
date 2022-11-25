@@ -1,9 +1,11 @@
 package jp.co.genuine.hm.model.user;
 
-import javax.validation.constraints.NotBlank;
-
+import com.fasterxml.jackson.annotation.JsonInclude;
 import org.hibernate.validator.constraints.Length;
 
+import javax.validation.constraints.NotBlank;
+
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class PutUserRequest {
 	@NotBlank
 	private String mailAddress;
