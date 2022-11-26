@@ -8,4 +8,8 @@ public class RuleId {
 	public RuleId() {
 		value = DEFAULT;
 	}
+
+	public RuleId(Integer value) {
+		this.value = value;
+	}
 }

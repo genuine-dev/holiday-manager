@@ -1,0 +1,3 @@
+snap_shot
+dispatcher_latest_event
+event_store
