@@ -1,6 +1,7 @@
-package holiday.manager.dataaccess.user.group;
+package holiday.manager.dataaccess.group;
 
 import holiday.manager.dataaccess.user.UserMapper;
+import holiday.manager.domain.group.*;
 import holiday.manager.domain.user.User;
 import holiday.manager.domain.user.UserId;
 import holiday.manager.domain.user.UserList;

@@ -1,4 +1,4 @@
-package holiday.manager.rest.response.user.group;
+package holiday.manager.rest.response.group;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import holiday.manager.rest.response.user.UserResponse;

@@ -1,4 +1,4 @@
-package holiday.manager.rest.request.user.group;
+package holiday.manager.rest.request.group;
 
 public class GroupMember {
 	private Integer userId;

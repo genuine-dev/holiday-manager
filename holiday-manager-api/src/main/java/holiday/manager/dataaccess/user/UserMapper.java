@@ -4,7 +4,7 @@ import holiday.manager.domain.user.User;
 import holiday.manager.domain.user.UserId;
 import holiday.manager.domain.user.account.AccountId;
 import holiday.manager.domain.user.alert.HolidayAlert;
-import holiday.manager.domain.user.group.GroupId;
+import holiday.manager.domain.group.GroupId;
 import holiday.manager.rest.request.user.parameter.UserQueries;
 import holiday.manager.rest.request.user.parameter.UserSorts;
 import org.apache.ibatis.annotations.Mapper;

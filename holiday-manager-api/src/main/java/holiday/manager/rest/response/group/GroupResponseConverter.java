@@ -1,7 +1,7 @@
-package holiday.manager.rest.response.user.group;
+package holiday.manager.rest.response.group;
 
-import holiday.manager.domain.user.group.Group;
-import holiday.manager.domain.user.group.GroupList;
+import holiday.manager.domain.group.Group;
+import holiday.manager.domain.group.GroupList;
 import holiday.manager.rest.response.user.UserResponse;
 import holiday.manager.rest.response.user.UserResponseConverter;
 import org.springframework.stereotype.Component;

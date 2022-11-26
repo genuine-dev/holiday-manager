@@ -1,4 +1,4 @@
-package holiday.manager.domain.user.group;
+package holiday.manager.domain.group;
 
 public class GroupName {
     private String value;

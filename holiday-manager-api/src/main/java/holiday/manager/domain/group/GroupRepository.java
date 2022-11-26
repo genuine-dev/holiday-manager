@@ -1,4 +1,4 @@
-package holiday.manager.domain.user.group;
+package holiday.manager.domain.group;
 
 import holiday.manager.domain.user.UserId;
 
