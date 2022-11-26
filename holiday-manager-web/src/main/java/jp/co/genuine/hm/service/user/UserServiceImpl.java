@@ -1,13 +1,9 @@
 package jp.co.genuine.hm.service.user;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 import jp.co.genuine.hm.model.user.*;
 import jp.co.genuine.hm.rest.endpoint.user.UserEndpointFactory;
 import jp.co.genuine.hm.rest.response.user.UserResponse;
 import jp.co.genuine.hm.rest.response.user.UserResponseConverter;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -16,22 +12,22 @@ import java.io.IOException;
 
 @Service
 public class UserServiceImpl implements UserService {
-	ObjectMapper mapper = new ObjectMapper();
+	private final RestTemplate restTemplate;
 
-	@Autowired
-	RestTemplate restTemplate;
+	private final UserEndpointFactory userEndpointFactory;
 
-	@Autowired
-	UserEndpointFactory userEndpointFactory;
+	private final UserResponseConverter userResponseConverter;
 
-	@Autowired
-	UserResponseConverter userResponseConverter;
+	public UserServiceImpl(RestTemplate restTemplate, UserEndpointFactory userEndpointFactory, UserResponseConverter userResponseConverter) {
+		this.restTemplate = restTemplate;
+		this.userEndpointFactory = userEndpointFactory;
+		this.userResponseConverter = userResponseConverter;
+	}
 
 	@Override
 	public UserList getUserList() {
 		ResponseEntity<UserResponse[]> responseEntity = restTemplate.getForEntity(userEndpointFactory.createGetUserListEndpoint(), UserResponse[].class);
-		UserResponse[] userResponses = responseEntity.getBody();
-		return userResponseConverter.convert(userResponses);
+		return userResponseConverter.convert(responseEntity.getBody());
 	}
 
 	@Override
@@ -41,47 +37,28 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public ResponseEntity<Void> postUser(UserViewModel parameter) {
-		HttpHeaders httpHeaders = new HttpHeaders();
-		httpHeaders.setContentType(MediaType.APPLICATION_JSON_UTF8);
-
-		HttpEntity httpEntity = new HttpEntity<>(parameter, httpHeaders);
-
+	public ResponseEntity<Void> postUser(UserViewModel userViewModel) {
+		HttpEntity httpEntity = httpEntity(userViewModel);
 		return restTemplate.postForEntity(userEndpointFactory.createPostUserEndpoint(), httpEntity, Void.class);
 	}
 
 	@Override
 	public ResponseEntity<Void> putUser(UserId userId, UserViewModel parameter) throws IOException {
-		String json;
-		try {
-			PutUserRequest param = new PutUserRequest(parameter.getMailAddress(), parameter.getUserName(), parameter.getStatus(), parameter.getLeftoverHoliday(), parameter.getHireDate(), parameter.getPassword());
-			json = mapper.writeValueAsString(param);
-			ObjectNode node = (ObjectNode)mapper.readTree(json);
-			if(node.get("password").asText().isEmpty()) {
-				node.remove("password");
-			}
-			json = mapper.writeValueAsString(node);
-
-			HttpHeaders httpHeaders = new HttpHeaders();
-			httpHeaders.setContentType(MediaType.APPLICATION_JSON_UTF8);
-
-			HttpEntity httpEntity = new HttpEntity<>(json, httpHeaders);
-
-			return restTemplate.exchange(userEndpointFactory.createPutUserEndpoint(userId.getValue()), HttpMethod.PUT, httpEntity, Void.class);
-
-		} catch (JsonProcessingException e) {
-			throw e;
-		}
+		PutUserRequest putUserRequest = new PutUserRequest(parameter.getMailAddress(), parameter.getUserName(), parameter.getStatus(), parameter.getLeftoverHoliday(), parameter.getHireDate(), parameter.getPassword());
+		HttpEntity httpEntity = httpEntity(putUserRequest);
+		return restTemplate.exchange(userEndpointFactory.createPutUserEndpoint(userId.getValue()), HttpMethod.PUT, httpEntity, Void.class);
 	}
 
 	@Override
 	public ResponseEntity<Void> deleteUser(UserId userId) {
-		HttpHeaders httpHeaders = new HttpHeaders();
-		httpHeaders.setContentType(MediaType.APPLICATION_JSON_UTF8);
-
-		HttpEntity httpEntity = new HttpEntity(null, httpHeaders);
-
+		HttpEntity httpEntity = httpEntity(null);
 		return restTemplate.exchange(userEndpointFactory.createDeleteUserEndpoint(userId.getValue()), HttpMethod.DELETE, httpEntity, Void.class);
 	}
 
+	private HttpEntity httpEntity(Object body) {
+		HttpHeaders httpHeaders = new HttpHeaders();
+		httpHeaders.setContentType(MediaType.APPLICATION_JSON_UTF8);
+
+		return new HttpEntity<>(body, httpHeaders);
+	}
 }
