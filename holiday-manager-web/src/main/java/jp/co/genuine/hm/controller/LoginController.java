@@ -19,9 +19,4 @@ public class LoginController {
 		model.addAttribute("iserror",true);
 		return "login";
 	}
-
-	@RequestMapping(value = "/top", method = RequestMethod.GET)
-	public String top(Model model){
-		return "top";
-	}
 }

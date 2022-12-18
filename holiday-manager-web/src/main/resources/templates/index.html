@@ -5,6 +5,41 @@
 <div th:replace="common/header :: header_fragment(title = 'トップページ')"></div>
 <div class="box">
    <h1>トップページです。</h1>
+   <h2>残有給</h2>
+   <span th:text="|残りの有給はあと${remainingDays}日です|">残りの有給数</span>
+   <th:block th:if="${holidayAlert.isNotEmpty()}">
+      <h2>お知らせ</h2>
+      <span th:text="${holidayAlert.displayAlert()}">アラート文言</span>
+   </th:block>
+</div>
+<div class="container">
+   <div class="header text-secondary">
+      <h1>申請履歴</h1>
+   </div>
+   <table class="table table-bordered table-striped">
+      <tbody>
+      <tr th:each="holidayApplication : ${holidayApplications}" th:object="${holidayApplication}">
+         <td th:text="*{date}" style="width:70%"></td>
+         <td th:text="*{kindOfHoliday}" style="width:70%"></td>
+         <td th:text="*{status}" style="width:70%"></td>
+      </tr>
+      </tbody>
+   </table>
+</div>
+<div class="container">
+   <div class="header text-secondary">
+      <h1>承認待ち</h1>
+   </div>
+   <table class="table table-bordered table-striped">
+      <tbody>
+      <tr th:each="applyingHolidayApplication : ${applyingHolidayApplications}" th:object="${applyingHolidayApplication}">
+         <td th:text="*{date}" style="width:70%"></td>
+         <td th:text="*{kindOfHoliday}" style="width:70%"></td>
+         <a th:href="@{/group/details/{id}(id=*{groupId.value})}"><i class="far fa-edit" style="width:15%"></i></a>
+         <a th:href="@{/group/details/{id}(id=*{groupId.value})}"><i class="far fa-edit" style="width:15%"></i></a>
+      </tr>
+      </tbody>
+   </table>
 </div>
 <div th:replace="common/footer :: footer_fragment"></div>
 </body>
