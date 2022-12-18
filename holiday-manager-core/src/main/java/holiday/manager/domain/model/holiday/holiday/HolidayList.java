@@ -204,6 +204,9 @@ public class HolidayList extends AggregateRoot {
      * @return
      */
     public List<HolidayTook> takeHistory() {
+        if(histories == null)
+            return new ArrayList<>();
+
         return histories.stream()
                 .filter(event -> event instanceof HolidayTook)
                 .map(event -> (HolidayTook) event)
