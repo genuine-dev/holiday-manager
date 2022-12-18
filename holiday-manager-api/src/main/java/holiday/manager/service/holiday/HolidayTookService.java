@@ -20,14 +20,14 @@ public class HolidayTookService {
         this.holidayTookResponseConverter = holidayTookResponseConverter;
     }
 
-    public List<HolidayTookResponse> getHolidayTook(UserId userId) {
-        HolidayList holidayList = holidayListService.findHolidayList(userId);
+    public List<HolidayTookResponse> getHolidayTook(Integer userId) {
+        HolidayList holidayList = holidayListService.findHolidayList(new UserId(userId));
         List<HolidayTook> holidayTooks = holidayList.takeHistory();
 
         return holidayTookResponseConverter.convert(holidayTooks);
     }
 
-    public void deleteHolidayTook(UserId userId, String eventId) {
-        holidayListService.cancelTakeHoliday(userId, eventId);
+    public void deleteHolidayTook(Integer userId, String eventId) {
+        holidayListService.cancelTakeHoliday(new UserId(userId), eventId);
     }
 }
