@@ -8,8 +8,6 @@ import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import java.io.IOException;
-
 @Service
 public class UserServiceImpl implements UserService {
 	private final RestTemplate restTemplate;
@@ -43,7 +41,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public ResponseEntity<Void> putUser(UserId userId, UserViewModel parameter) throws IOException {
+	public ResponseEntity<Void> putUser(UserId userId, UserViewModel parameter) {
 		PutUserRequest putUserRequest = new PutUserRequest(parameter.getMailAddress(), parameter.getUserName(), parameter.getStatus(), parameter.getLeftoverHoliday(), parameter.getHireDate(), parameter.getPassword());
 		HttpEntity httpEntity = httpEntity(putUserRequest);
 		return restTemplate.exchange(userEndpointFactory.createPutUserEndpoint(userId.getValue()), HttpMethod.PUT, httpEntity, Void.class);

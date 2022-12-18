@@ -39,7 +39,7 @@ public class GroupController {
 	}
 
 	@RequestMapping(value="details/{groupId}", method=RequestMethod.GET)
-	public String groupDetails(@PathVariable("groupId") Integer groupId, Model model) throws Exception {
+	public String groupDetails(@PathVariable("groupId") Integer groupId, Model model) {
 		checkAdmin();
 		Group group = groupService.getGroup(new GroupId(groupId));
 		model.addAttribute("group", group);
@@ -49,7 +49,7 @@ public class GroupController {
 	}
 
 	@RequestMapping(value="update/{groupId}", method=RequestMethod.GET)
-	public String groupUpdate(@PathVariable("groupId") Integer groupId, @ModelAttribute("viewGroupMemberList")GroupMemberList viewGroupMemberList, Model model) throws Exception {
+	public String groupUpdate(@PathVariable("groupId") Integer groupId, @ModelAttribute("viewGroupMemberList")GroupMemberList viewGroupMemberList, Model model) {
 		checkAdmin();
 
 		Group group = groupService.getGroup(new GroupId(groupId));
@@ -60,7 +60,7 @@ public class GroupController {
 	}
 
 	@RequestMapping(value="update/complete/{groupId}", method=RequestMethod.POST)
-	public String groupUpdateComplete(@PathVariable("groupId") Integer groupId, @ModelAttribute("viewGroupMemberList")GroupMemberList viewGroupMemberList, Model model) throws Exception {
+	public String groupUpdateComplete(@PathVariable("groupId") Integer groupId, @ModelAttribute("viewGroupMemberList")GroupMemberList viewGroupMemberList, Model model) {
 		checkAdmin();
 
 		PutGroupRequest groupNameRequest = new PutGroupRequest(viewGroupMemberList.getGroupName());
@@ -74,14 +74,14 @@ public class GroupController {
 	}
 
 	@RequestMapping(value="register", method=RequestMethod.GET)
-	public String groupRegister(@ModelAttribute("postGroupRequest") PostGroupRequest postGroupRequest, Model model) throws Exception {
+	public String groupRegister(@ModelAttribute("postGroupRequest") PostGroupRequest postGroupRequest, Model model) {
 		checkAdmin();
 
 		return "group/register/group_register";
 	}
 
 	@RequestMapping(value="register/complete", method=RequestMethod.POST)
-	public String groupRegisterComplete(@ModelAttribute("postGroupRequest") PostGroupRequest postGroupRequest, Model model) throws Exception {
+	public String groupRegisterComplete(@ModelAttribute("postGroupRequest") PostGroupRequest postGroupRequest, Model model) {
 		checkAdmin();
 
 		ResponseEntity<Void> response = groupService.postGroup(postGroupRequest);
@@ -91,7 +91,7 @@ public class GroupController {
 	}
 
 	@RequestMapping(value="delete/{groupId}", method=RequestMethod.GET)
-	public String groupDelete(@PathVariable("groupId") Integer groupId, Model model) throws Exception {
+	public String groupDelete(@PathVariable("groupId") Integer groupId, Model model) {
 		checkAdmin();
 
 		ResponseEntity<Void> response = groupService.deleteGroup(new GroupId(groupId));

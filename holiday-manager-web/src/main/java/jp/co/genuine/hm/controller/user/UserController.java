@@ -14,8 +14,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import java.io.IOException;
-
 @Controller
 @RequestMapping("user")
 public class UserController {
@@ -26,7 +24,7 @@ public class UserController {
 	private final UserService service;
 
 	@RequestMapping(value="list", method=RequestMethod.GET)
-	public String userList(Model model) throws Exception {
+	public String userList(Model model) {
 		UserList result = service.getUserList();
 		model.addAttribute("userList", result.getUserList());
 		return "user/list/user_list";
@@ -45,14 +43,14 @@ public class UserController {
 	}
 
 	@RequestMapping(value="register/complete", method=RequestMethod.POST)
-	public String userRegisterComplete(@ModelAttribute("userViewModel") UserViewModel userViewModel, Model model) throws IOException {
+	public String userRegisterComplete(@ModelAttribute("userViewModel") UserViewModel userViewModel, Model model) {
 		ResponseEntity<Void> response = service.postUser(userViewModel);
 		checkResponseError(model, response);
 		return "user/register/user_register_complete";
 	}
 
 	@RequestMapping(value="update/{userId}", method=RequestMethod.GET)
-	public String userUpdate(@PathVariable("userId") Integer userId, @ModelAttribute("userViewModel") UserViewModel userViewModel, Model model) throws IOException {
+	public String userUpdate(@PathVariable("userId") Integer userId, @ModelAttribute("userViewModel") UserViewModel userViewModel, Model model) {
 		checkPermit(userId);
 
 		refresh(userViewModel, new UserId(userId));
@@ -74,7 +72,7 @@ public class UserController {
 	}
 
 	@RequestMapping(value="update/{userId}/complete", method=RequestMethod.POST)
-	public String userUpdateComplete(@PathVariable("userId") Integer userId, @ModelAttribute("userViewModel") UserViewModel userViewModel, Model model) throws IOException {
+	public String userUpdateComplete(@PathVariable("userId") Integer userId, @ModelAttribute("userViewModel") UserViewModel userViewModel, Model model) {
 		checkPermit(userId);
 
 		ResponseEntity<Void> response = service.putUser(new UserId(userId), userViewModel);
@@ -83,7 +81,7 @@ public class UserController {
 	}
 
 	@RequestMapping(value="delete/{userId}", method=RequestMethod.GET)
-	public String userDelete(@PathVariable("userId") Integer userId, Model model) throws IOException {
+	public String userDelete(@PathVariable("userId") Integer userId, Model model)  {
 		checkAdmin();
 
 		ResponseEntity<Void> response = service.deleteUser(new UserId(userId));

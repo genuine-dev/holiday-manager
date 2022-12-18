@@ -26,6 +26,14 @@
 							<a class="dropdown-item" th:href="@{/group/register}">グループ登録</a>
 						</div>
 					</li>
+					<li class="nav-item dropdown">
+						<a sec:authorize="hasRole('ADMIN')" class="nav-link dropdown-toggle" href="#" id="holidayManagementMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							休暇管理
+						</a>
+						<div class="dropdown-menu" aria-labelledby="holidayManagementMenuLink">
+							<a class="dropdown-item" th:href="@{/holiday/took/list}">休暇取得履歴</a>
+						</div>
+					</li>
 				</ul>
 			</div>
 		</nav>
