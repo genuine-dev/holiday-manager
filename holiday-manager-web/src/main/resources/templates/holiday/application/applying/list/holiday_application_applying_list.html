@@ -1,0 +1,23 @@
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head th:replace="common/head :: head_fragment(title = '承認待ち休暇申請一覧')">
+</head>
+<body>
+<div th:replace="common/header :: header_fragment(title = '承認待ち休暇申請一覧')"></div>
+<div class="container">
+    <div class="header text-secondary">
+        <h1>承認待ち休暇申請一覧</h1>
+    </div>
+    <table class="table table-bordered table-striped">
+        <tbody>
+        <tr th:each="applyingHolidayApplication : ${applyingHolidayApplications}" th:object="${applyingHolidayApplication}">
+            <td th:text="*{date}" style="width:70%"></td>
+            <td th:text="*{kindOfHoliday}" style="width:70%"></td>
+            <a th:href="@{/group/details/{id}(id=*{groupId.value})}"><i class="far fa-edit" style="width:15%"></i></a>
+            <a th:href="@{/group/details/{id}(id=*{groupId.value})}"><i class="far fa-edit" style="width:15%"></i></a>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<div th:replace="common/footer :: footer_fragment"></div>
+</body>
+</html>

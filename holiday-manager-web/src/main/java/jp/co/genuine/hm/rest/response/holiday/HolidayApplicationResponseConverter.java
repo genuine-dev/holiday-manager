@@ -3,6 +3,7 @@ package jp.co.genuine.hm.rest.response.holiday;
 import jp.co.genuine.hm.model.holiday.KindOfHoliday;
 import jp.co.genuine.hm.model.holiday.application.HolidayApplication;
 import jp.co.genuine.hm.model.holiday.application.HolidayApplicationId;
+import jp.co.genuine.hm.model.holiday.application.HolidayApplicationStatus;
 import jp.co.genuine.hm.model.holiday.application.HolidayType;
 import jp.co.genuine.hm.model.user.UserId;
 import org.springframework.stereotype.Component;
@@ -27,8 +28,9 @@ public class HolidayApplicationResponseConverter {
         HolidayApplicationId holidayApplicationId = new HolidayApplicationId(holidayApplicationResponse.getId());
         KindOfHoliday kindOfHoliday = KindOfHoliday.valueOf(holidayApplicationResponse.getKind());
         HolidayType holidayType = HolidayType.valueOf(holidayApplicationResponse.getType());
+        HolidayApplicationStatus holidayApplicationStatus = HolidayApplicationStatus.valueOf(holidayApplicationResponse.getStatus());
         Date date = holidayApplicationResponse.getDate();
         UserId applicantId = new UserId(holidayApplicationResponse.getApplicantId());
-        return new HolidayApplication(holidayApplicationId, kindOfHoliday, holidayType, date, applicantId);
+        return new HolidayApplication(holidayApplicationId, kindOfHoliday, holidayType, holidayApplicationStatus, date, applicantId);
     }
 }

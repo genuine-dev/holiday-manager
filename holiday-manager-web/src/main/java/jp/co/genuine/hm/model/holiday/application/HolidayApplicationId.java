@@ -6,4 +6,9 @@ public class HolidayApplicationId {
     public HolidayApplicationId(String value) {
         this.value = value;
     }
+
+    @Deprecated
+    public String getValue() {
+        return value;
+    }
 }

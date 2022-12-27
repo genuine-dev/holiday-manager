@@ -21,7 +21,7 @@
       <tr th:each="holidayApplication : ${holidayApplications}" th:object="${holidayApplication}">
          <td th:text="*{date}" style="width:70%"></td>
          <td th:text="*{kindOfHoliday}" style="width:70%"></td>
-         <td th:text="*{status}" style="width:70%"></td>
+         <td th:text="*{holidayApplicationStatus}" style="width:70%"></td>
       </tr>
       </tbody>
    </table>
@@ -35,8 +35,8 @@
       <tr th:each="applyingHolidayApplication : ${applyingHolidayApplications}" th:object="${applyingHolidayApplication}">
          <td th:text="*{date}" style="width:70%"></td>
          <td th:text="*{kindOfHoliday}" style="width:70%"></td>
-         <a th:href="@{/group/details/{id}(id=*{groupId.value})}"><i class="far fa-edit" style="width:15%"></i></a>
-         <a th:href="@{/group/details/{id}(id=*{groupId.value})}"><i class="far fa-edit" style="width:15%"></i></a>
+         <td><a th:href="@{/holiday/applying/apply/{id}(id=*{holidayApplicationId.value})}"><i class="far fa-edit" style="width:15%"></i></a></td>
+         <td><a th:href="@{/holiday/applying/cancel/{id}(id=*{holidayApplicationId.value})}"><i class="far fa-edit" style="width:15%"></i></a></td>
       </tr>
       </tbody>
    </table>

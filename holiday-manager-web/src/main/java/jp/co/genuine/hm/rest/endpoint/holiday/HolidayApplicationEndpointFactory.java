@@ -13,6 +13,8 @@ public class HolidayApplicationEndpointFactory {
     private String getApplyingHolidayApplicationEndPoint;
     @Value("${holiday-manager-api.endpoint.holiday-application.post-holiday-apply}")
     private String postHolidayApplyEndPoint;
+    @Value("${holiday-manager-api.endpoint.holiday-application.put-holiday-approve}")
+    private String putHolidayApproveEndPoint;
     @Value("${holiday-manager-api.endpoint.holiday-application.delete-holiday-reject}")
     private String deleteHolidayRejectEndPoint;
     @Value("${holiday-manager-api.endpoint.holiday-application.delete-holiday-cancel}")
@@ -28,6 +30,10 @@ public class HolidayApplicationEndpointFactory {
 
     public String createPostHolidayApplyEndPoint() {
         return base + postHolidayApplyEndPoint;
+    }
+
+    public String createPutHolidayApproveEndPoint() {
+        return base + putHolidayApproveEndPoint;
     }
 
     public String createDeleteHolidayRejectEndPoint() {
