@@ -1,7 +1,6 @@
 package holiday.manager.controller.group;
 
 import holiday.manager.rest.request.group.*;
-import holiday.manager.rest.request.user.group.*;
 import holiday.manager.rest.response.group.GroupResponse;
 import holiday.manager.service.group.GroupService;
 import io.swagger.annotations.ApiOperation;

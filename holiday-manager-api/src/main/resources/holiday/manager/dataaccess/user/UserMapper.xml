@@ -295,18 +295,8 @@
             "user".id AS user_id
         FROM
             "user"."user" "user"
-            LEFT OUTER JOIN "user".manager manager
-                ON manager.user_id = "user".id
-            INNER JOIN "user".group "group"
-                ON "group".id = member.group_id
-            LEFT OUTER JOIN "user"."user" managed_members
-                ON managed_members.id = manager.user_id
         WHERE
             "user".deleted = false
-        AND
-            "group".deleted = false
-        AND
-            managed_members.deleted = false
         AND
             "user".id = #{userId.value}
     </select>
