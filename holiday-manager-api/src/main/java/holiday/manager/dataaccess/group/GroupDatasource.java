@@ -5,7 +5,6 @@ import holiday.manager.domain.group.*;
 import holiday.manager.domain.user.User;
 import holiday.manager.domain.user.UserId;
 import holiday.manager.domain.user.UserList;
-import holiday.manager.domain.user.group.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
