@@ -16,12 +16,12 @@ public enum UserStatusEnum {
 			this.label = label;
 		}
 
-	public static Map<String, String> statusMap(){
-		Map<String, String> statusMap = new LinkedHashMap<>();
+	public static Map<String, String> asMap(){
+		Map<String, String> map = new LinkedHashMap<>();
 
 		for(UserStatusEnum userStatusEnum : values())
-			statusMap.put(userStatusEnum.name(), userStatusEnum.getLabel());
+			map.put(userStatusEnum.name(), userStatusEnum.getLabel());
 
-		return statusMap;
+		return map;
 	}
 }

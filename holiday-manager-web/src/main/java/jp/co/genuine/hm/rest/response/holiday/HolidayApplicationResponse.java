@@ -18,6 +18,15 @@ public class HolidayApplicationResponse {
 
     private Integer applicantId;
 
+    public HolidayApplicationResponse() {
+        id = "";
+        kind = "";
+        type = "";
+        status = "";
+        date = null;
+        applicantId = null;
+    }
+
     public HolidayApplicationResponse(String id, String kind, String type, String status, Date date, Integer applicantId) {
         this.id = id;
         this.kind = kind;

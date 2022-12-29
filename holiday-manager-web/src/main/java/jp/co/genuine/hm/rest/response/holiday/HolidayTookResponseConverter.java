@@ -25,7 +25,7 @@ public class HolidayTookResponseConverter {
         Date date = holidayTookResponse.getDate();
         double days = holidayTookResponse.getDays();
         HolidayApplicationId holidayApplicationId = new HolidayApplicationId(holidayTookResponse.getApplicationId());
-        UserId userId = new UserId(holidayTookResponse.getUserId());
-        return new HolidayTook(eventId, kindOfHoliday, date, days, holidayApplicationId, userId);
+        UserId owner = new UserId(holidayTookResponse.getOwner());
+        return new HolidayTook(eventId, kindOfHoliday, date, days, holidayApplicationId, owner);
     }
 }

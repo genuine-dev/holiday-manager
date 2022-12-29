@@ -1,0 +1,56 @@
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head th:replace="common/head :: head_fragment(title = '休暇申請')">
+</head>
+<body>
+	<div th:replace="common/header :: header_fragment(title = '休暇申請')"></div>
+
+	<div class="container">
+		<div class="header text-secondary">
+			<h1>休暇申請</h1>
+		</div>
+		<form data-toggle="validator" role="form" th:action="@{/holiday/application/register/confirm}" method="post" th:object="${holidayApplicationForm}">
+			<div class="form-group has-feedback">
+				<label for="inputName" class="control-label text-secondary">
+					<span class="label label-danger">必須項目</span>　休暇日
+				</label>
+				<div class="input-group date" id="datetimepicker1" data-target-input="nearest">
+					<input th:field="*{date}" type="text" class="form-control datetimepicker-input" data-target="#datetimepicker1" placeholder="yyyy-MM-dd で入力してください" data-required-error="入社日の入力は必須です" required/>
+					<div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker">
+						<div class="input-group-text"><i class="fa fa-calendar"></i></div>
+					</div>
+				</div>
+				<span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+				<div class="help-block with-errors"></div>
+			</div>
+			<div class="form-group has-feedback">
+				<label for="inputName" class="control-label text-secondary">
+					<span class="label label-danger">必須項目</span>　全休半休
+				</label>
+				<div class="col-sm-10">
+					<select th:field="*{holidayType}" id="singleSelect" name="selectedItem">
+						<option th:each="holidayType : ${holidayTypeMap}" th:value="${holidayType.key}"
+								th:text="${holidayType.value}"></option>
+					</select>
+				</div>
+			</div>
+			<div class="form-group has-feedback">
+				<label for="inputName" class="control-label text-secondary">
+					<span class="label label-danger">必須項目</span>　休暇種別
+				</label>
+				<div class="col-sm-10">
+					<select th:field="*{kindOfHoliday}" id="singleSelect" name="selectedItem">
+						<option th:each="kindOfHoliday : ${kindOfHolidayMap}" th:value="${kindOfHoliday.key}"
+								th:text="${kindOfHoliday.value}"></option>
+					</select>
+				</div>
+			</div>
+			<div class="form-group">
+				<button type="submit" class="btn btn-secondary btn-block">確認画面に進む</button>
+			</div>
+		</form>
+	</div>
+
+	<div th:replace="common/footer :: footer_fragment"></div>
+</body>
+</html>

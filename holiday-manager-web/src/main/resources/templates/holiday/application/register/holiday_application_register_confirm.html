@@ -1,0 +1,41 @@
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head th:replace="common/head :: head_fragment(title = '休暇申請')">
+</head>
+<body>
+		<div th:replace="common/header :: header_fragment(title = '休暇申請')"></div>
+
+		<div class="container">
+			<div class="header text-secondary">
+				<h1>休暇申請</h1>
+			</div>
+			<form data-toggle="validator" role="form" id="registerForm"
+				th:action="@{/holiday/application/register/complete}" method="post"
+				th:object="${holidayApplicationForm}">
+				<div class="form-group">
+					<label for="inputName" class="control-label text-secondary"> 休暇日 </label>
+					<input th:value="*{date}" type="text" class="form-control datetimepicker-input" disabled/>
+					<input th:field="*{date}" type="hidden" />
+				</div>
+				<div class="form-group">
+					<label for="inputName" class="control-label text-secondary"> 全休半休 </label>
+					<input th:value="${holidayTypeMap.get('__*{holidayType}__')}" type="text" class="form-control" id="holidayType" disabled />
+					<input th:field="*{holidayType}" type="hidden" />
+				</div>
+				<div class="form-group">
+					<label for="inputName" class="control-label text-secondary"> 休暇種別 </label>
+					<input th:value="${kindOfHolidayMap.get('__*{kindOfHoliday}__')}" type="text" class="form-control" id="kindOfHoliday" disabled />
+					<input th:field="*{kindOfHoliday}" type="hidden" />
+				</div>
+				<div class="form-group">
+					<button type="submit" class="btn btn-secondary btn-block">登録</button>
+				</div>
+				<div class="form-group">
+					<button type="button" class="btn btn-light btn-block" onclick="history.back()">入力画面に戻る</button>
+				</div>
+			</form>
+		</div>
+
+	<div th:replace="common/footer :: footer_fragment"></div>
+</body>
+</html>

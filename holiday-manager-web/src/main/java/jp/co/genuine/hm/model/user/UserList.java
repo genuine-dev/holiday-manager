@@ -12,6 +12,14 @@ public class UserList {
 		this.userList = userList;
 	}
 
+	public User getByUserId(UserId userId) {
+		for(User user : userList)
+			if(user.userId().value().equals(userId.value()))
+				return user;
+
+		return new User();
+	}
+
 	public List<User> getUserList() {
 		return userList;
 	}
