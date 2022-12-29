@@ -12,14 +12,14 @@ public class HolidayTook {
     private Date date;
     private double days;
     private HolidayApplicationId holidayApplicationId;
-    private UserId userId;
+    private UserId owner;
 
-    public HolidayTook(String eventId, KindOfHoliday kindOfHoliday, Date date, double days, HolidayApplicationId holidayApplicationId, UserId userId) {
+    public HolidayTook(String eventId, KindOfHoliday kindOfHoliday, Date date, double days, HolidayApplicationId holidayApplicationId, UserId owner) {
         this.eventId = eventId;
         this.kindOfHoliday = kindOfHoliday;
         this.date = date;
         this.days = days;
         this.holidayApplicationId = holidayApplicationId;
-        this.userId = userId;
+        this.owner = owner;
     }
 }

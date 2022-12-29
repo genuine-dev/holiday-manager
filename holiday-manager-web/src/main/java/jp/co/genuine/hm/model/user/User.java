@@ -1,11 +1,10 @@
 package jp.co.genuine.hm.model.user;
 
-import javax.validation.Valid;
-
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
-
 import jp.co.genuine.hm.model.rule.RuleId;
+
+import javax.validation.Valid;
 
 @JsonInclude(Include.NON_EMPTY)
 public class User {
@@ -58,6 +57,9 @@ public class User {
 		return password == null || password.isEmpty();
 	}
 
+	public UserId userId() {
+		return userId;
+	}
 	public AccountId getAccountId() {
 		return accountId;
 	}

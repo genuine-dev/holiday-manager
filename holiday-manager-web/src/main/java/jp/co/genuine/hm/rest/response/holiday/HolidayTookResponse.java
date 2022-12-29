@@ -11,15 +11,15 @@ public class HolidayTookResponse {
     private Date date;
     private double days;
     private String applicationId;
-    private int userId;
+    private int owner;
 
-    public HolidayTookResponse(String eventId, String kind, Date date, double days, String applicationId, int userId) {
+    public HolidayTookResponse(String eventId, String kind, Date date, double days, String applicationId, int owner) {
         this.eventId = eventId;
         this.kind = kind;
         this.date = date;
         this.days = days;
         this.applicationId = applicationId;
-        this.userId = userId;
+        this.owner = owner;
     }
 
     public String getEventId() {
@@ -42,7 +42,7 @@ public class HolidayTookResponse {
         return applicationId;
     }
 
-    public int getUserId() {
-        return userId;
+    public int getOwner() {
+        return owner;
     }
 }

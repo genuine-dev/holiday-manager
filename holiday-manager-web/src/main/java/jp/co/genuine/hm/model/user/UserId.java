@@ -14,6 +14,10 @@ public class UserId {
 	public UserId() {
 	}
 
+	public Integer value() {
+		return value;
+	}
+
 	public Integer getValue() {
 		return value;
 	}
