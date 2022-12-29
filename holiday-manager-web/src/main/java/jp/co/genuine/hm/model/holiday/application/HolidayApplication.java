@@ -46,4 +46,9 @@ public class HolidayApplication {
     public HolidayApplicationStatus getHolidayApplicationStatus() {
         return holidayApplicationStatus;
     }
+
+    @Deprecated
+    public UserId getApplicantId() {
+        return applicantId;
+    }
 }
