@@ -20,7 +20,7 @@ public class HolidayTookController {
 
     @ApiOperation("有給実績リスト取得")
     @GetMapping("/userId/{user_id}")
-    public ResponseEntity<List<HolidayTookResponse>> getHolidayTook(@PathVariable("user_id") Integer userId) {
+    public ResponseEntity<List<HolidayTookResponse>> getHolidayTooks(@PathVariable("user_id") Integer userId) {
         List<HolidayTookResponse> holidayTookResponses = holidayTookServiceService.getHolidayTook(userId);
         return new ResponseEntity<List<HolidayTookResponse>>(holidayTookResponses, HttpStatus.OK);
     }

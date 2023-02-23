@@ -19,13 +19,16 @@ public class HolidayApplicationResponse {
 
     private Integer applicantId;
 
-    public HolidayApplicationResponse(String id, String kind, String type, String status, Date date, Integer applicantId) {
+    private Integer approverId;
+
+    public HolidayApplicationResponse(String id, String kind, String type, String status, Date date, Integer applicantId, Integer approverId) {
         this.id = id;
         this.kind = kind;
         this.type = type;
         this.status = status;
         this.date = date;
         this.applicantId = applicantId;
+        this.approverId = approverId;
     }
 
     public String getId() {
@@ -50,5 +53,9 @@ public class HolidayApplicationResponse {
 
     public Integer getApplicantId() {
         return applicantId;
+    }
+
+    public Integer getApproverId() {
+        return approverId;
     }
 }

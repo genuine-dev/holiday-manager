@@ -2,6 +2,7 @@ package holiday.manager.rest.response.holiday;
 
 import holiday.manager.application.query.holiday.application.dto.HolidayApplicationDto;
 import holiday.manager.domain.model.holiday.application.HolidayApplication;
+import holiday.manager.domain.model.user.UserId;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -27,8 +28,9 @@ public class HolidayApplicationResponseConverter {
         String status = holidayApplicationDto.getStatus();
         Date date = holidayApplicationDto.getDate();
         Integer applicantId = holidayApplicationDto.getAplicantId();
+        Integer approverId = holidayApplicationDto.getApproverId();
 
-        return new HolidayApplicationResponse(id, kind, type, status, date, applicantId);
+        return new HolidayApplicationResponse(id, kind, type, status, date, applicantId, approverId);
     }
 
     public HolidayApplicationResponse convert(HolidayApplication holidayApplication) {
@@ -38,7 +40,14 @@ public class HolidayApplicationResponseConverter {
         String status = holidayApplication.getStatus().name();
         Date date = holidayApplication.getDate();
         Integer applicantId = holidayApplication.getApplicantId().getValue();
+        Integer approverId = approverId(holidayApplication.getApproverId());
 
-        return new HolidayApplicationResponse(id, kind, type, status, date, applicantId);
+        return new HolidayApplicationResponse(id, kind, type, status, date, applicantId, approverId);
+    }
+
+    private Integer approverId(UserId approverId) {
+        if(approverId == null)
+            return 0;
+        return approverId.getValue();
     }
 }

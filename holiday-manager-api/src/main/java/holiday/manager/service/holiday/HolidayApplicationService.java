@@ -49,6 +49,11 @@ public class HolidayApplicationService {
         return holidayApplicationResponseConverter.convert(holidayApplicationDtos);
     }
 
+    public HolidayApplicationResponse getHolidayApplicationBy(String holidayApplicationId) {
+        HolidayApplicationDto holidayApplicationDto = holidayApplicationQueryService.findById(new HolidayApplicationId(holidayApplicationId));
+        return holidayApplicationResponseConverter.convert(holidayApplicationDto);
+    }
+
     public List<HolidayApplicationResponse> getHolidayApplicationBy(Integer apploverId, HolidayApplicationStatus holidayApplicationStatus) {
         List<HolidayApplicationDto> applyingHolidays = holidayApplicationQueryService.findByStatus(holidayApplicationStatus);
         List<Integer> managementUserIds = userService.findManagementUserIds(apploverId);
