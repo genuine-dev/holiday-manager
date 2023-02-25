@@ -1,20 +1,15 @@
 package holiday.manager.domain.model.holiday.application;
 
-import java.util.Date;
-import java.util.List;
-
 import holiday.manager.domain.model.AggregateRoot;
 import holiday.manager.domain.model.AuthenticationException;
 import holiday.manager.domain.model.DomainEvent;
 import holiday.manager.domain.model.holiday.KindOfHoliday;
-import holiday.manager.domain.model.holiday.application.event.HolidayApplicationApplied;
-import holiday.manager.domain.model.holiday.application.event.HolidayApplicationApproved;
-import holiday.manager.domain.model.holiday.application.event.HolidayApplicationCanceled;
-import holiday.manager.domain.model.holiday.application.event.HolidayApplicationProcessFailed;
-import holiday.manager.domain.model.holiday.application.event.HolidayApplicationProcessed;
-import holiday.manager.domain.model.holiday.application.event.HolidayApplicationRejected;
+import holiday.manager.domain.model.holiday.application.event.*;
 import holiday.manager.domain.model.user.User;
 import holiday.manager.domain.model.user.UserId;
+
+import java.util.Date;
+import java.util.List;
 
 /**
  * 休暇申請
@@ -37,6 +32,13 @@ public class HolidayApplication extends AggregateRoot {
 
 	public HolidayApplication(List<DomainEvent> eventStream, int streamVersion) {
 		super(eventStream, streamVersion);
+		this.id = new HolidayApplicationId();
+		this.kindOfHoliday = KindOfHoliday.PAYED_LEAVE;
+		this.holidayType = HolidayType.FULL_OFF;
+		this.date = new Date();
+		this.status = HolidayApplicationStatus.APPLYING;
+		this.applicantId = new UserId();
+		this.approverId = new UserId();
 	}
 
 	public HolidayApplication(KindOfHoliday kindOfHoliday, HolidayType holidayType, Date date, UserId applicant) {

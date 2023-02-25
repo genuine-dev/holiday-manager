@@ -32,12 +32,14 @@
    </div>
    <table class="table table-bordered table-striped">
       <tbody>
-      <tr th:each="applyingHolidayApplication : ${applyingHolidayApplications}" th:object="${applyingHolidayApplication}">
-         <td th:text="*{date}" style="width:70%"></td>
-         <td th:text="${userList.getByUserId(applyingHolidayApplication.applicantId).userName.value}" style="width:70%"></td>
-         <td th:text="*{kindOfHoliday}" style="width:70%"></td>
-         <td><a th:href="@{/holiday/applying/apply/{id}(id=*{holidayApplicationId.value})}"><i class="far fa-edit" style="width:15%"></i></a></td>
-         <td><a th:href="@{/holiday/applying/cancel/{id}(id=*{holidayApplicationId.value})}"><i class="far fa-edit" style="width:15%"></i></a></td>
+      <tr th:each="applyingHolidayApplication, stat : ${applyingHolidayApplications}" th:object="${applyingHolidayApplication}">
+         <form method="post" name="applyingHolidayApplicationForm${stat.index}" action="?">
+            <td th:text="*{date}" style="width:70%"></td>
+            <td th:text="${userList.getByUserId(applyingHolidayApplication.applicantId).userName.value}" style="width:70%"></td>
+            <td th:text="*{kindOfHoliday}" style="width:70%"></td>
+            <td><button type="submit" name="_method" value="post" th:formaction="@{/holiday/application/applying/apply/id/{id}(id=*{holidayApplicationId.value})}"><i class="far fa-edit" style="width:15%"></i></button></td>
+            <td><button type="submit" name="_method" value="delete" th:formaction="@{/holiday/application/applying/cancel/id/{id}(id=*{holidayApplicationId.value})}"><i class="far fa-edit" style="width:15%"></i></button></td>
+         </form>
       </tr>
       </tbody>
    </table>

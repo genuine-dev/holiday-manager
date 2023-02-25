@@ -2,7 +2,9 @@ package jp.co.genuine.hm.controller.holiday;
 
 import jp.co.genuine.hm.model.holiday.KindOfHoliday;
 import jp.co.genuine.hm.model.holiday.application.HolidayApplication;
+import jp.co.genuine.hm.model.holiday.application.HolidayApplicationStatus;
 import jp.co.genuine.hm.model.holiday.application.HolidayType;
+import jp.co.genuine.hm.model.holiday.application.form.HolidayApplicationApplyForm;
 import jp.co.genuine.hm.model.holiday.application.form.HolidayApplicationForm;
 import jp.co.genuine.hm.model.user.LoginUser;
 import jp.co.genuine.hm.service.holiday.HolidayApplicationService;
@@ -10,9 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -35,6 +35,15 @@ public class HolidayApplicationController {
         model.addAttribute("applyingHolidayApplications", applyingHolidayApplications);
 
         return "holiday/application/applying/list/holiday_application_applying_list";
+    }
+
+    @RequestMapping(path = "applying/apply/id/{id}", method = RequestMethod.POST)
+    public String holidayApplicationApply(@PathVariable(value = "id", required = true) String holidayApplicationId, @ModelAttribute("holidayApplicationApplyForm") HolidayApplicationApplyForm holidayApplicationApplyForm, Model model) {
+        HolidayApplication holidayApplication = holidayApplicationService.getHolidayApplicationById(holidayApplicationId);
+        model.addAttribute("kindOfHolidayMap", KindOfHoliday.asMap());
+        model.addAttribute("holidayTypeMap", HolidayType.asMap());
+        model.addAttribute("holidayApplicationStatusMap", HolidayApplicationStatus.asMap());
+        return "holiday/application/apply/holiday_application_apply";
     }
 
     @RequestMapping(path = "register", method = RequestMethod.GET)

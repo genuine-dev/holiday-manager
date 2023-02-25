@@ -32,13 +32,13 @@ public class UserController {
 
 	@RequestMapping(value="register", method=RequestMethod.GET)
 	public String userRegister(@ModelAttribute("userViewModel") UserViewModel userViewModel, Model model) {
-		model.addAttribute("statusList", UserStatusEnum.statusMap());
+		model.addAttribute("statusList", UserStatusEnum.asMap());
 		return "user/register/user_register";
 	}
 
 	@RequestMapping(value="register/confirm", method=RequestMethod.POST)
 	public String userRegisterConfirm(@ModelAttribute("userViewModel") UserViewModel userViewModel, Model model) {
-		model.addAttribute("statusList", UserStatusEnum.statusMap());
+		model.addAttribute("statusList", UserStatusEnum.asMap());
 		return "user/register/user_register_confirm";
 	}
 
@@ -55,7 +55,7 @@ public class UserController {
 
 		refresh(userViewModel, new UserId(userId));
 
-		model.addAttribute("statusList", UserStatusEnum.statusMap());
+		model.addAttribute("statusList", UserStatusEnum.asMap());
 		model.addAttribute("userId", userId);
 		return "user/update/user_update";
 	}
@@ -64,7 +64,7 @@ public class UserController {
 	public String userUpdateConfirm(@PathVariable("userId") Integer userId, @ModelAttribute("userViewModel") UserViewModel userViewModel, Model model) {
 		checkPermit(userId);
 
-		model.addAttribute("statusList", UserStatusEnum.statusMap());
+		model.addAttribute("statusList", UserStatusEnum.asMap());
 		model.addAttribute("userId", userId);
 
 		checkValidationError(userViewModel, model);

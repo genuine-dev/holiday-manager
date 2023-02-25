@@ -26,18 +26,19 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 									"/css/**"
 								).permitAll()
 				.antMatchers("/user/register/**").hasRole("ADMIN")
-				.anyRequest().authenticated(); // それ以外は全て認証無しの場合アクセス不許可
+				.anyRequest().authenticated() // それ以外は全て認証無しの場合アクセス不許可
+				.and()
 
 		// ログイン設定
-		http.formLogin()
+			.formLogin()
 				.loginProcessingUrl("/login") // 認証処理のパス
 				.loginPage("/login") // ログインフォームのパス
-				.defaultSuccessUrl("/") // 認証成功時の遷移先
+				.defaultSuccessUrl("/", true) // 認証成功時の遷移先
 				.usernameParameter("username").passwordParameter("password") // ユーザー名、パスワードのパラメータ名
-				.and();
+				.and()
 
 		// ログアウト設定
-		http.logout()
+			.logout()
 				.logoutRequestMatcher(new AntPathRequestMatcher("/logout**")) // ログアウト処理のパス
 				.logoutSuccessUrl("/login"); // ログアウト完了時のパス
 

@@ -9,8 +9,10 @@ public class HolidayApplicationEndpointFactory {
     private String base;
     @Value("${holiday-manager-api.endpoint.holiday-application.get-holiday-application}")
     private String getHolidayApplicationEndPoint;
-    @Value("${holiday-manager-api.endpoint.holiday-application.get-applying-holiday-application}")
-    private String getApplyingHolidayApplicationEndPoint;
+    @Value("${holiday-manager-api.endpoint.holiday-application.get-holiday-applications}")
+    private String getHolidayApplicationsEndPoint;
+    @Value("${holiday-manager-api.endpoint.holiday-application.get-applying-holiday-applications}")
+    private String getApplyingHolidayApplicationsEndPoint;
     @Value("${holiday-manager-api.endpoint.holiday-application.post-holiday-apply}")
     private String postHolidayApplyEndPoint;
     @Value("${holiday-manager-api.endpoint.holiday-application.put-holiday-approve}")
@@ -20,12 +22,16 @@ public class HolidayApplicationEndpointFactory {
     @Value("${holiday-manager-api.endpoint.holiday-application.delete-holiday-cancel}")
     private String deleteHolidayCancelEndPoint;
 
-    public String createGetHolidayApplicationEndPoint(Integer applicantId) {
-        return base + String.format(getHolidayApplicationEndPoint, applicantId);
+    public String createGetHolidayApplicationEndPoint(String holidayApplicationId) {
+        return base + String.format(getHolidayApplicationEndPoint, holidayApplicationId);
     }
 
-    public String createGetApplyingHolidayApplicationEndPoint(Integer approverId) {
-        return base + String.format(getApplyingHolidayApplicationEndPoint, approverId);
+    public String createGetHolidayApplicationsEndPoint(Integer applicantId) {
+        return base + String.format(getHolidayApplicationsEndPoint, applicantId);
+    }
+
+    public String createGetApplyingHolidayApplicationsEndPoint(Integer approverId) {
+        return base + String.format(getApplyingHolidayApplicationsEndPoint, approverId);
     }
 
     public String createPostHolidayApplyEndPoint() {

@@ -23,7 +23,7 @@ public class HolidayTookService {
     }
 
     public List<HolidayTook> getHolidayTook(Integer userId) {
-        ResponseEntity<HolidayTookResponse[]> responseEntity = restTemplate.getForEntity(holidayTookEndpointFactory.createGetHolidayTookEndPoint(userId), HolidayTookResponse[].class);
+        ResponseEntity<HolidayTookResponse[]> responseEntity = restTemplate.getForEntity(holidayTookEndpointFactory.createGetHolidayTooksEndPoint(userId), HolidayTookResponse[].class);
         return holidayTookResponseConverter.convert(responseEntity.getBody());
     }
 }

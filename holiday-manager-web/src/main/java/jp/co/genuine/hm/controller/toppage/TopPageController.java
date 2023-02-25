@@ -38,7 +38,7 @@ public class TopPageController {
         HolidayAlert holidayAlert = holidayService.getHolidayAlert(user.getAccount().getUserId());
         model.addAttribute("holidayAlert", holidayAlert);
 
-        List<HolidayApplication> holidayApplications = holidayApplicationService.getHolidayApplication(user.getAccount().getUserId());
+        List<HolidayApplication> holidayApplications = holidayApplicationService.getHolidayApplicationByApplicantId(user.getAccount().getUserId());
         model.addAttribute("holidayApplications", holidayApplications);
 
         UserList userList = userService.getUserList();

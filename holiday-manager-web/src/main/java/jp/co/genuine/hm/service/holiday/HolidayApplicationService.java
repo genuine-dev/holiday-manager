@@ -34,13 +34,18 @@ public class HolidayApplicationService {
         this.postHolidayApplicationRequestConverter = postHolidayApplicationRequestConverter;
     }
 
-    public List<HolidayApplication> getHolidayApplication(Integer applicantId) {
-        ResponseEntity<HolidayApplicationResponse[]> responseEntity = restTemplate.getForEntity(holidayApplicationEndpointFactory.createGetHolidayApplicationEndPoint(applicantId), HolidayApplicationResponse[].class);
+    public List<HolidayApplication> getHolidayApplicationByApplicantId(Integer applicantId) {
+        ResponseEntity<HolidayApplicationResponse[]> responseEntity = restTemplate.getForEntity(holidayApplicationEndpointFactory.createGetHolidayApplicationsEndPoint(applicantId), HolidayApplicationResponse[].class);
+        return holidayApplicationResponseConverter.convert(responseEntity.getBody());
+    }
+
+    public HolidayApplication getHolidayApplicationById(String holidayApplicationId) {
+        ResponseEntity<HolidayApplicationResponse> responseEntity = restTemplate.getForEntity(holidayApplicationEndpointFactory.createGetHolidayApplicationEndPoint(holidayApplicationId), HolidayApplicationResponse.class);
         return holidayApplicationResponseConverter.convert(responseEntity.getBody());
     }
 
     public List<HolidayApplication> getApplyingHolidayApplication(Integer approverId) {
-        ResponseEntity<HolidayApplicationResponse[]> responseEntity = restTemplate.getForEntity(holidayApplicationEndpointFactory.createGetApplyingHolidayApplicationEndPoint(approverId), HolidayApplicationResponse[].class);
+        ResponseEntity<HolidayApplicationResponse[]> responseEntity = restTemplate.getForEntity(holidayApplicationEndpointFactory.createGetApplyingHolidayApplicationsEndPoint(approverId), HolidayApplicationResponse[].class);
         return holidayApplicationResponseConverter.convert(responseEntity.getBody());
     }
 

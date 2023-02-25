@@ -30,12 +30,13 @@ holiday-manager-api:
       get-holiday-days: /holiday/days/userId/%s
       post-holiday-grant: /holiday/grant
     holiday-application:
-      get-holiday-application: /holiday/application/applicantId/%s
-      get-applying-holiday-application: /holiday/application/approverId/%s
+      get-holiday-application: /holiday/application/id/%s
+      get-holiday-applications: /holiday/application/applicantId/%s
+      get-applying-holiday-applications: /holiday/application/approverId/%s
       post-holiday-apply: /holiday/application/apply
       put-holiday-approve: /holiday/application/approve
       delete-holiday-reject: /holiday/application/reject
       delete-holiday-cancel: /holiday/application/cancel
     holiday-took:
-      get-holiday-took: /holiday/took/userId/%s
+      get-holiday-tooks: /holiday/took/userId/%s
       delete-holiday-took: /holiday/took/userId/%s/eventId/%s
